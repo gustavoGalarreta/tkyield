@@ -6,8 +6,8 @@ class CreateTimesheets < ActiveRecord::Migration
       t.integer :project_id
       t.datetime :start_time
       t.datetime :stop_time
-      t.float :total_time
-      t.string :status
+      t.float :total_time, default: 0
+      t.boolean :running, default: false
       t.timestamps null: false
     end
   end
