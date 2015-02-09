@@ -1,9 +1,19 @@
 require 'test_helper'
 
 class TimesheetTest < ActiveSupport::TestCase
+	include Devise::TestHelpers
+
+    def login_user
+    	before(:each) do
+	      @request.env["devise.mapping"] = Devise.mappings[:user]
+	      user = FactoryGirl.create(:user)
+	      user.confirm! # or set a confirmed_at inside the factory. Only necessary if you are using the "confirmable" module
+	      sign_in user
+    	end
+ 	end
 
 	test "create new timesheet" do
-
+		self.login_user
 		user = users(:one)
 
 		client = Client.new(:name =>"Client 1")
@@ -30,15 +40,14 @@ class TimesheetTest < ActiveSupport::TestCase
 		timesheet.project = project
 		timesheet.task = task 
 
-		puts "Saving timesheet #{timesheet.inspect}"
+		timesheet.toggle_timer
 
-		timesheet.start_timer
+		timesheet.toggle_timer
 
-		timesheet.stop_timer
-
-		puts "stoping timer #{timesheet.inspect}"
-		puts "total time => #{timesheet.total_time}"
 		assert timesheet.save
+
+		timesheetsToday = Timesheet.obtaining_total_time_per_day(Time.new)
+		assert timesheetsToday >= 1
 	end
 
 	test "get timesheet" do
