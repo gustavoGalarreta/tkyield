@@ -37,11 +37,10 @@ class User < ActiveRecord::Base
   end
 
   def obtaining_total_time_per_day day
-    Timesheet.get_timesheet_per_day(day).sum(:total_time)
+    get_timesheet_per_day(day).sum(:total_time)
   end
 
   def get_timesheet_per_day day
-    #ask about this created_at, start_time or create another field belongs_to_day
     Timesheet.where(created_at: day.midnight..(day.midnight + 1.day), user_id: self.id)
   end
 

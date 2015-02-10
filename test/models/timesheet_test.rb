@@ -32,18 +32,14 @@ class TimesheetTest < ActiveSupport::TestCase
 
 		assert timesheet.save
 
-		p " asd #{Timesheet.all.count.first}"
-
 		today_timesheets = user.get_timesheet_per_day Time.now
 
 		assert today_timesheets > 0
 
-		
 	end
 
 	test "get timesheet" do
 		timesheets = Timesheet.all
-		puts "reading timesheets"
 	end
 
 end
