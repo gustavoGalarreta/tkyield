@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :projects, :through => :user_projects
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   def password_required?
     super if confirmed?

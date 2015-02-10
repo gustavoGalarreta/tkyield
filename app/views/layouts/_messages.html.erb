@@ -1,0 +1,26 @@
+<div id="alert-messages">
+	<% if !flash[:notice].blank? %>
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<%= flash[:notice].html_safe %>
+		</div>
+	<% end %>
+	<% if !flash[:information].blank? %>
+		<div class="alert alert-info alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<%= flash[:information].html_safe %>
+		</div>
+	<% end %>
+	<% if !flash[:warning].blank? %>
+		<div class="alert alert-warning alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<%= flash[:warning].html_safe %>
+		</div>
+	<% end %>
+	<% if !flash[:alert].blank? %>
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<%= flash[:alert].html_safe %>
+		</div>
+	<% end %>
+</div>
