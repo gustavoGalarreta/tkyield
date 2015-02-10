@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+ 
+form{
+	margin-bottom: 10px;
+}
+
+html{
+	height: 100%;
+}
+
+body {
+	
+	height:  calc(100% - 50px);
+}
+
+#wrapper {
+	height: 100%;
+}
+
+#page-wrapper {
+	min-height: 100%;
+}
+
+
