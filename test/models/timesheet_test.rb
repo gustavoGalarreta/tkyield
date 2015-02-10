@@ -3,8 +3,8 @@ require 'test_helper'
 class TimesheetTest < ActiveSupport::TestCase
 
 	test "create new timesheet" do
-
 		user = users(:one)
+		assert user.save
 
 		client = Client.new(:name =>"Client 1")
 		assert client.save
@@ -30,21 +30,16 @@ class TimesheetTest < ActiveSupport::TestCase
 		timesheet.project = project
 		timesheet.task = task 
 
-		puts "Saving timesheet #{timesheet.inspect}"
-
-		timesheet.start_timer
-
-		timesheet.stop_timer
-
-		puts "stoping timer #{timesheet.inspect}"
-		puts "total time => #{timesheet.total_time}"
 		assert timesheet.save
+
+		today_timesheets = user.get_timesheet_per_day Time.now
+
+		assert today_timesheets > 0
+
 	end
 
 	test "get timesheet" do
 		timesheets = Timesheet.all
-		puts "reading timesheets"
-		puts timesheets.count
 	end
 
 end

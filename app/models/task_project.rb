@@ -1,4 +1,5 @@
 class TaskProject < ActiveRecord::Base
-	belongs_to :project, dependent: :destroy
-	belongs_to :task, dependent: :destroy
+	validates :project, :task , presence: true
+	belongs_to :project
+	belongs_to :task
 end
