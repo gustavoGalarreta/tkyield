@@ -23,11 +23,12 @@
 
   <p>
     <%= f.label :client %><br />
-    <%= f.select :client_id, @clients.collect{ |t| [t.name, t.id]}, {:prompt => "Select a client" } %>
+    <%= f.select :client_id, clients_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a client" } %>
   </p>
 
+    <%= f.label :task_projects %><br />
   <%= f.fields_for :task_projects do |task_form| %>
-    <%= task_form.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" }%>
+    <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" }%>
     <%= task_form.link_to_remove "Remove this task" %>
   <% end %>
   <p><%= f.link_to_add "Add a task", :task_projects %></p>

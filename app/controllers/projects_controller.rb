@@ -15,8 +15,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @tasks = Task.all
-    @clients = Client.all
     @project = Project.new
   end
 

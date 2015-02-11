@@ -1,5 +1,5 @@
 class Timesheet < ActiveRecord::Base
-	validates :project, :task, :user
+	validates :project, :task, :user, presence: true
 	belongs_to :project
 	belongs_to :task
 	belongs_to :user
