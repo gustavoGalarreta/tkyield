@@ -12,10 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <div class="input-group">
+      <span class="input-group-addon">Client name</span>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <br>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-lg btn-warning" %>
   </div>
 <% end %>

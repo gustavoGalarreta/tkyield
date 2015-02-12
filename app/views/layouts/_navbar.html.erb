@@ -7,7 +7,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-       
+        <%= link_to timesheets_path, class: 'navbar-brand' do %>
+           <p><img src="/rz.png" width="20" height="20"> Tekton Yield</p>
+        <% end %>
+
     </div>
     <% if user_signed_in? %>
         <!-- Top Menu Items -->
@@ -34,17 +37,23 @@
             <ul class="nav navbar-nav side-nav">
                 <li>
                     <%= link_to clients_path do %>
-                        <i class="fa fa-fw fa-dashboard"></i> Clients
+                        <i class="fa fa-users"></i> Clients
                     <% end %> 
                 </li>
                 <li>
                     <%= link_to projects_path do %>
-                        <i class="fa fa-fw fa-dashboard"></i> Projects
+                        <i class="fa fa-fw fa-folder-open"></i>
+                        Projects
                     <% end %>
                 </li>
                 <li>
                     <%= link_to tasks_path do %>
-                        <i class="fa fa-fw fa-users"></i> Tasks
+                        <i class="fa fa-fw fa-tasks"></i> Tasks
+                    <% end %> 
+                </li>
+                <li>
+                    <%= link_to timesheets_path do %>
+                        <i class="fa fa-fw fa-dashboard"></i> Timesheet
                     <% end %> 
                 </li>
             </ul>

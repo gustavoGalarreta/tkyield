@@ -8,6 +8,8 @@ class Project < ActiveRecord::Base
 	has_many :users, :through => :user_projects 
 	has_many :timesheets
 
-	accepts_nested_attributes_for :task_projects
-	accepts_nested_attributes_for :tasks
+	accepts_nested_attributes_for :task_projects, :allow_destroy => true
+	accepts_nested_attributes_for :user_projects, :allow_destroy => true
+	#, :reject_if => proc { |a| a['task_id'].blank? }
+	#accepts_nested_attributes_for :tasks, :allow_destroy => true #, :reject_if => proc { |a| a['task_id'].blank? }
 end
