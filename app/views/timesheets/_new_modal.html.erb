@@ -1,0 +1,36 @@
+<%= form_for(new_timesheet, remote: true) do |f| %>
+  <p>
+    <%= f.label :project %><br />
+    <%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" } %>
+  </p>
+  <p>
+    <%= f.label :task %><br /> 
+    <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" } %> 
+  </p>
+    <%= f.hidden_field :belongs_to_day%>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_field :notes %>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <%= f.submit 'Start Timer', :class => 'btn btn-primary'%>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+  $('#timesheet_project_id').change(function () {
+    console.log($('#timesheet_project_id').val())
+    $.ajax({
+          type:'GET', 
+          url: "<%= tasks_projects_path %>",
+          data: {
+            id : $('#timesheet_project_id').val()
+          },
+          dataType: "script"
+        });
+  })
+</script>

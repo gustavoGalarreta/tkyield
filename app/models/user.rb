@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
 
   def stop_timer timesheet
     timesheet.toggle_timer
+    timesheet.save
   end
 
   def obtaining_total_time_per_day day
@@ -34,7 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def get_timesheet_per_day day
-    Timesheet.where(created_at: day.midnight..(day.midnight + 1.day), user_id: self.id)
+    Timesheet.where(belongs_to_day: day.midnight..(day.midnight + 1.day), user_id: self.id)
   end
 
   def get_timesheet_active

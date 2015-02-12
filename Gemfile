@@ -45,6 +45,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Nested Form for conveniently manage multiple nested models in a single form. 
 gem "nested_form"
 
+# \User Flipclock for Javascript buttons and timer
+gem 'flipclockjs-rails', '~> 0.5.5b.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

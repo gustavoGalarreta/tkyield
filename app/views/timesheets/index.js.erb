@@ -1,0 +1,3 @@
+document.getElementById('timesheet_belongs_to_day').setAttribute('value', "<%= @day_selected %>");
+$('#date_title').html('<%= escape_javascript(render(:partial => "timesheet_day")).html_safe %>');
+$('#timesheet-content').html('<%= escape_javascript(render(:partial => "timesheets")).html_safe %>');

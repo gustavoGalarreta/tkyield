@@ -1,0 +1,30 @@
+<% @timesheets.each do |timesheet| %>
+	<div id="timesheet_<%= timesheet.id%>" class="entry-info">
+		<div id="project_client">
+			<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
+		</div>
+		<div id="task_notes">
+			<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
+		</div>
+		<div id="timesheet_timer" class="clock">
+			
+		</div> 
+		<div id="timesheet_start"> 
+			<%= link_to  timesheet.running? ? "Stop" : "Start", toogle_timesheet_timesheet_path(timesheet) %> 
+		</div>
+	</div>
+
+			<script type="text/javascript">
+				var clock = $('.clock').FlipClock(<%= timesheet.total_time %>,{
+					clockFace: 'HourlyCounter',
+					countdown: true,
+					showSeconds: false
+				});
+
+				// clock.start(function() {
+				// this (optional) callback will fire each time the clock flips
+				// });
+			</script>
+
+<% end %>
+</div>
