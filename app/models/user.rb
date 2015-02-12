@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :projects, :through => :user_projects
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
