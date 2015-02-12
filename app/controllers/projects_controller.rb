@@ -16,6 +16,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @project.users << current_user
   end
 
   # GET /projects/1/edit
@@ -25,6 +26,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    
     @project = Project.new(project_params)
     respond_to do |format|
       if @project.save
@@ -56,7 +58,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
+      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.'}
       format.json { head :no_content }
     end
   end
@@ -69,6 +71,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :client_id, :description, task_projects_attributes: [:task_id, :_destroy])
+      params.require(:project).permit(:name, :client_id, :description, task_projects_attributes: [:id, :task_id, :_destroy], user_projects_attributes: [:id, :user_id, :_destroy])
     end
 end

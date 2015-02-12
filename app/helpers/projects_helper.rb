@@ -8,4 +8,8 @@ module ProjectsHelper
 		Task.all
 	end
 
+	def users_helper
+		User.all
+	end		
+
 end

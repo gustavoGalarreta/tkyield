@@ -43,7 +43,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Nested Form for conveniently manage multiple nested models in a single form. 
-gem "nested_form"
+gem 'nested_form', github: 'ryanb/nested_form'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

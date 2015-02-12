@@ -27,12 +27,18 @@
   </p>
 
     <%= f.label :task_projects %><br />
-  <%= f.fields_for :task_projects do |task_form| %>
-    <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" }%>
-    <%= task_form.link_to_remove "Remove this task" %>
-  <% end %>
-  <p><%= f.link_to_add "Add a task", :task_projects %></p>
+    <%= f.fields_for :task_projects do |task_form| %>
+      <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" }%>
+      <%= task_form.link_to_remove "Remove this task" %>
+      <% end %>
+  <p><%= f.link_to_add "Add a Task", :task_projects %></p>
 
+<%= f.label :user_projects %><br />
+    <%= f.fields_for :user_projects do |user_form| %>
+      <%= user_form.select :user_id, users_helper.collect{ |u| [u.full_name, u.id]}, {:prompt => "Select a user" }%>
+      <%= user_form.link_to_remove "Remove this task" %>
+      <% end %>
+  <p><%= f.link_to_add "Add a User", :user_projects %></p>
   <div class="actions">
     <%= f.submit %>
   </div>
