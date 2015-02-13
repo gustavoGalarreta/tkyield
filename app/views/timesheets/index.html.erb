@@ -1,0 +1,45 @@
+<h1> <%= @today.strftime("%A") %> <span> <%= @today.strftime("%d %b") %> </span> </h1> 
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" id="myTab">
+    <li role="presentation"><a id ="first_day_week" href="#home" aria-controls="home" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day %>"> <%= @start_of_week_day.strftime("%A") %></a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day+1.days %>"><%=( @start_of_week_day + 1.days ).strftime("%A") %></a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day+2.days %>"><%=( @start_of_week_day + 2.days ).strftime("%A") %></a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day+3.days %>"><%=( @start_of_week_day + 3.days ).strftime("%A") %></a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day+4.days %>"><%=( @start_of_week_day + 4.days ).strftime("%A") %></a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day+5.days %>"><%=( @start_of_week_day + 5.days ).strftime("%A") %></a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" data-date="<%= @start_of_week_day+6.days %>"><%=( @start_of_week_day + 6.days ).strftime("%A") %></a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">...</div>
+    <div role="tabpanel" class="tab-pane" id="profile">...</div>
+    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $('#myTab a:last').tab('show')
+  })  
+
+
+
+$(function () {
+  var mydiv=document.getElementById('myTab');
+  var arrayCollection = mydiv.children;
+  var arrayTabs = [].slice.call(arrayCollection);
+  arrayTabs.forEach(function (tab, index) {
+    var b = tab.children[0]
+    var a = tab.getElementsByTagName("a").first;
+    console.log(a)
+    console.log(b.getAttribute("data-date"));
+  });
+
+}) 
+
+</script>

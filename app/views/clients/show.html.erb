@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title"><strong>Client name:</strong></h3>
+    </div>
+    <div class="panel-body">
+        <%= @client.name %>
+    </div>
+</div>
+
+<%= link_to 'Edit', edit_client_path(@client), class: "btn btn-primary" %>
+<%= link_to 'Back', clients_path, class: "btn btn-primary"%>

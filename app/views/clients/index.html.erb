@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Clients</h1>
+
+<div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Client Name</th>
+          <th></th>
+                    
+        </tr>
+      </thead>
+      <tbody>
+        <% @clients.each do |client| %>
+          <tr>
+            <td><%= client.id %></td>
+            <td><%= client.name %></td>
+            
+            <td><i class="fa fa-pencil"></i> <%= link_to 'Edit',  edit_client_path(client) %></td>
+
+            <!--
+        <td><%= link_to 'Show', client %></td>
+        <td><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <%= link_to 'New Client', new_client_path , class: "btn btn-lg btn-warning"%>  
+  </div>
+  
