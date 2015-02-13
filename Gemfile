@@ -43,7 +43,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Nested Form for conveniently manage multiple nested models in a single form. 
-gem "nested_form"
+gem 'nested_form', '0.3.2'
+
 
 # \User Flipclock for Javascript buttons and timer
 gem 'flipclockjs-rails', '~> 0.5.5b.1'

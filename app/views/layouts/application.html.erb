@@ -2,9 +2,12 @@
 <html>
 <head>
   <title>Tkyield</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+  <%= favicon_link_tag 'favicon.ico' %>
+
   <%= csrf_meta_tags %>
+  
 </head>
 <body>
 
@@ -12,7 +15,9 @@
             <%= render "layouts/navbar" %>
 			<div id="page-wrapper">
                 <%= render "layouts/messages" %>
-				<%= yield %>
+                <div class="container-fluid"> 
+					<%= yield %>
+				</div>
 			</div>
 		</div>
 	

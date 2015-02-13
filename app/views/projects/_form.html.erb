@@ -12,28 +12,66 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <div class="input-group">
+      <span class="input-group-addon">Name</span>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <br>
   </div>
 
   <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+    <div class="input-group">
+      <span class="input-group-addon">Description</span>
+      <%= f.text_field :description, class: "form-control" %>
+    </div>
+    <br>
   </div>
 
-  <p>
-    <%= f.label :client %><br />
-    <%= f.select :client_id, clients_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a client" } %>
-  </p>
+  <div class="input-group">
+    <span class="input-group-addon">Client</span>
+    <%= f.select :client_id, clients_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a client" } , class: "form-control" %>
+  </div>
+  <br>
+ 
+  <div class="input-group">
+    <span class="input-group-addon">Tasks</span>
+  
+    <%= f.fields_for :task_projects do |task_form| %>
+      
+      <div class="row">
+        <p>
+          <div class="col-md-11">
+            <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" } , class: "form-control" %>
+          </div>
+          <div class="col-md-1">
+            <%= task_form.link_to_remove "X", class: "btn btn-xs btn-danger" %>
+          </div>
+        </p>
+      </div>
+    <% end %>
+    </p>
+    <%= f.link_to_add "Add a Task", :task_projects , class: "btn btn-xs btn-default" %>
+  </div><br>
 
-    <%= f.label :task_projects %><br />
-  <%= f.fields_for :task_projects do |task_form| %>
-    <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" }%>
-    <%= task_form.link_to_remove "Remove this task" %>
-  <% end %>
-  <p><%= f.link_to_add "Add a task", :task_projects %></p>
+  <div class="input-group">
+    <span class="input-group-addon">Users</span>
+    <%= f.fields_for :user_projects do |user_form| %>
+    <div class="row">
+      <p>
+        <div class="col-md-11">
+          <%= user_form.select :user_id, users_helper.collect{ |u| [u.full_name, u.id]}, {:prompt => "Select a user"} , class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= user_form.link_to_remove "X", class: "btn btn-xs btn-danger"%>
+        </div>
+      </p>
+    </div>
+      <% end %>
+    </p>
+    <%= f.link_to_add "Add a User", :user_projects , class: "btn btn-xs btn-default"%>
+  </div><br>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-lg btn-warning" %>
   </div>
 <% end %>
