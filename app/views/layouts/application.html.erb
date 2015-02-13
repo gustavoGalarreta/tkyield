@@ -10,16 +10,18 @@
   
 </head>
 <body>
-
-		<div id="wrapper">
-            <%= render "layouts/navbar" %>
-			<div id="page-wrapper">
-                <%= render "layouts/messages" %>
-                <div class="container-fluid"> 
-					<%= yield %>
-				</div>
+	<div id="wrapper">
+    <%= render "layouts/navbar" %>
+		<div id="page-wrapper">
+      <ol class="breadcrumb">
+        <%= render_breadcrumbs :tag => :li, :separator => "" %>
+      </ol>
+      <%= render "layouts/messages" %>
+      <div class="container-fluid"> 
+			  <%= yield %>
 			</div>
 		</div>
+	</div>
 	
 
 
