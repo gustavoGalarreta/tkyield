@@ -46,6 +46,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'nested_form', '0.3.2'
 
 
+# \User Flipclock for Javascript buttons and timer
+gem 'flipclockjs-rails', '~> 0.5.5b.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
