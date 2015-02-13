@@ -75,6 +75,9 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
+   config.active_record.dump_schema_after_migration = false
+
+  #Mail configuration
    config.action_mailer.default_url_options = { :host => 'development.tektonlabs.com/tkyield_development' }
    ActionMailer::Base.smtp_settings = {
    :address => "smtp.gmail.com",
