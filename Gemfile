@@ -47,6 +47,8 @@ gem 'nested_form', '0.3.2'
 
 gem "seedbank", "~> 0.3.0"
 
+gem "breadcrumbs_on_rails", '2.3.0'
+
 # Use Flipclock for Javascript buttons and timer
 gem 'flipclockjs-rails', '~> 0.5.5b.1'
 

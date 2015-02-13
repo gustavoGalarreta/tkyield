@@ -28,6 +28,10 @@ body {
 	height:  calc(100% - 50px);
 }
 
+.align-right {
+	float: right;
+}
+
 #wrapper {
 	height: 100%;
 }
