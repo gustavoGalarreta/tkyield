@@ -1,11 +1,16 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:tasks, :show, :edit, :update, :destroy]
 
   # GET /projects
   # GET /projects.json
   def index
     @projects = Project.all
+  end
+
+  # GET /project_tasks.js
+  def tasks
+    @tasks = @project.tasks
   end
 
   # GET /projects/1
