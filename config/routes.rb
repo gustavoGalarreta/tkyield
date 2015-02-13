@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :clients
 
   resources :timesheets do
-    get 'toogle_timesheet', on: :member
+    get 'toggle_timesheet', on: :collection
   end
 
 

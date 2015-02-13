@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def get_timesheet_per_day day
-    Timesheet.where(belongs_to_day: day.midnight..(day.midnight + 1.day), user_id: self.id)
+    Timesheet.where(belongs_to_day: day, user_id: self.id)
   end
 
   def get_timesheet_active

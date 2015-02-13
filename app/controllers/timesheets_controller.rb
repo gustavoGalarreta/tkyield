@@ -1,9 +1,9 @@
 class TimesheetsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_timesheet, only: [:toggle_timesheet]
 
   def index
   	@today = Time.new
-    p "ME LLAMO DE NUEVO"
   	@day_selected = ( params[:date] ) ? Time.parse(params[:date]) : @today 
   	@start_of_week_day = @day_selected.beginning_of_week
     @timesheets = current_user.get_timesheet_per_day @day_selected
@@ -21,11 +21,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/1/edit
   def edit
   end
-
-  def show
-    @roject = Project.find_by("id = ?", params[:project_id])
-  end
-
+  
   # POST /timesheets
   # POST /timesheets.json
   def create
@@ -37,15 +33,16 @@ class TimesheetsController < ApplicationController
     @timesheet.save
   end
 
-  def toogle_timesheet
-    p "PARAMS #{params}"
-    
+  def toggle_timesheet
+    current_user.start_timer @timesheet
+    @timesheet.save
+    @timesheets = current_user.get_timesheet_per_day @timesheet.belongs_to_day
   end
 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_timesheet
-    @timesheet = Client.find(params[:id])
+    @timesheet = Timesheet.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
