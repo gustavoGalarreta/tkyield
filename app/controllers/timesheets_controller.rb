@@ -3,7 +3,7 @@ class TimesheetsController < ApplicationController
   before_action :set_timesheet, only: [:toggle_timesheet]
 
   def index
-  	@today = Time.new
+  	@today = Time.zone.now
   	@day_selected = ( params[:date] ) ? Time.parse(params[:date]) : @today 
   	@start_of_week_day = @day_selected.beginning_of_week
     @timesheets = current_user.get_timesheet_per_day @day_selected
@@ -35,8 +35,9 @@ class TimesheetsController < ApplicationController
 
   def toggle_timesheet
     current_user.start_timer @timesheet
+    # @timesheets = current_user.get_timesheet_per_day @timesheet.belongs_to_day
     @timesheet.save
-    @timesheets = current_user.get_timesheet_per_day @timesheet.belongs_to_day
+    render :json => @timesheet.save, :status => :ok
   end
 
   private

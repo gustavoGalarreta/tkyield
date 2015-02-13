@@ -22,8 +22,9 @@
 
 <script type="text/javascript">
 
+  document.getElementById('timesheet_belongs_to_day').setAttribute('value', "<%= @day_selected %>");
+
   $('#timesheet_project_id').change(function () {
-    console.log($('#timesheet_project_id').val())
     $.ajax({
           type:'GET', 
           url: "<%= tasks_projects_path %>",

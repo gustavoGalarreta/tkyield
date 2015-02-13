@@ -1,4 +1,9 @@
 <%= render "timesheet_day" %>
+
+<div id="date_ranges">
+  <%= link_to "Today" , '#', :data => {:date => @today},:id => "today_date" %> 
+</div>
+
 <div role="tabpanel">
 
   <!-- Nav tabs -->
@@ -43,21 +48,6 @@
 
 <script type="text/javascript">
 
-$(function () {
-  var mydiv=document.getElementById('myTab');
-  var arrayCollection = mydiv.children;
-  var arrayTabs = [].slice.call(arrayCollection);
-  arrayTabs.forEach(function (tab, index) {
-    var today = new Date('<%= @today %>')
-    var tabDate = new Date(tab.getAttribute("data-date"))
-    if( tabDate.getDate() == today.getDate() 
-      && tabDate.getMonth() == today.getMonth()
-      && tabDate.getFullYear() == today.getFullYear()){
-      tab.classList.add("active");
-    }
-  });
-}) 
-
 $('#myTab a').click(function (e) {
   e.preventDefault()
   $(this).tab('show')
@@ -67,6 +57,16 @@ $('#myTab a').click(function (e) {
     type:'GET', 
     url: "<%=timesheets_path%>", 
     data: { date : dateForParam },
+    dataType: "script"
+  });
+})
+
+$('#today_date').click(function(){
+  console.log($(this))
+  var dateForParam = $(this).data('date');
+  $.ajax({
+    type:'GET', 
+    url: "<%=timesheets_path%>",
     dataType: "script"
   });
 })
