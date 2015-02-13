@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:tasks, :show, :edit, :update, :destroy]
+  add_breadcrumb "Projects", :projects_path
 
   # GET /projects
   # GET /projects.json
@@ -26,6 +27,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_project_path
   end
 
   # POST /projects

@@ -18,13 +18,13 @@ class Timesheet < ActiveRecord::Base
 
   def start_timer
     self.running = true
-    self.start_time = Time.now
+    self.start_time = Time.zone.now
   end
 
   def stop_timer
     self.running = false
     #self.stop_time = Time.now + 1.hours + 3.minutes
-    self.stop_time = Time.now
+    self.stop_time = Time.zone.now
     self.total_time += calculate_difference
   end
 
