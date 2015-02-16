@@ -6,35 +6,76 @@
 		<div id="task_notes">
 			<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
 		</div>
-		<div id="timesheet_timer_<%= timesheet.id %>" class="clock">
-			
+		<div id="timesheet_timer_<%= timesheet.id %>" class="clock" data-isrunning="<%= timesheet.is_running? %>">
 		</div> 
 		<div id="timesheet_start"> 
-			<%= link_to  timesheet.running? ? "Stop" : "Start", '#',
+			<%= link_to timesheet.running? ? "Stop" : "Start" , '#',
         		:class => 'toggle_timesheet', 
-        		:data => {:id => timesheet.id}  %> 
+        		:data => {:id => timesheet.id},
+        		:id => "timesheet_btn_#{timesheet.id}" %> 
 		</div>
 	</div>
 
-			<script type="text/javascript">
-				var clock = $(".clock").FlipClock(<%= timesheet.total_time %>,{
-					clockFace: 'HourlyCounter',
-					showSeconds: false
-				});
+	<script type="text/javascript">
+		var clock = $("#timesheet_timer_<%= timesheet.id%>").FlipClock(<%= timesheet.total_time %>,{
+			clockFace: 'HourlyCounter',
+			showSeconds: false
+		});
 
-				clock.stop(function() {
-				// this (optional) callback will fire each time the clock flips
-				});
-
-				$('.toggle_timesheet').click(function() {
-					var timesheetId = $(this).data('id');
-					$.ajax({
-					    type:'GET', 
-					    url: "<%= toggle_timesheet_timesheets_path %>", 
-					    data: { id : timesheetId },
-					    dataType: "script"
-					});
-				});
-			</script>
+		clock.stop(function() {
+		// this (optional) callback will fire each time the clock flips
+		});
+	</script>
 <% end %>
-</div>
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		var mydiv=document.getElementById('myTab');
+		var arrayCollection = mydiv.children;
+		var arrayTabs = [].slice.call(arrayCollection);
+		arrayTabs.forEach(function (tab, index) {
+			var today = new Date('<%= @day_selected %>')
+			var tabDate = new Date(tab.getAttribute("data-date"))
+			if( tabDate.getDate() == today.getDate() 
+			&& tabDate.getMonth() == today.getMonth()
+			&& tabDate.getFullYear() == today.getFullYear()){
+				tab.classList.add("active");
+			}else{
+				tab.classList.remove("active");
+			}
+		});
+	});
+
+	$('.toggle_timesheet').click(function() {
+	  var timesheetId = $(this).data('id');
+	  var oldTimesheetId;
+	  $.ajax({
+	    type:'GET', 
+	    url: "<%= toggle_timesheet_timesheets_path %>", 
+	    data: { id : timesheetId },
+	    success: function(response,status) {
+	      $('.clock').each(function() {
+					if($(this).data('isrunning')){
+						oldTimesheetId = $(this).attr('id').substr(16);
+						var elementId = '#timesheet_timer_'.concat(oldTimesheetId)
+						console.log($(elementId));
+						// $('#timesheet_timer_'.concat(oldTimesheetId)).stop(function(){
+
+						// })
+						// $('#timesheet_btn_'.concat(oldTimesheetId)).innerHTML = 'Start';
+						// $(this).dataset.isrunning = "false";
+						console.log(oldTimesheetId);
+					}
+					if($(this).attr('id').substr(16) == timesheetId){
+						var elementId = '#timesheet_timer_'.concat(timesheetId)
+						console.log($(elementId))
+						// $('#timesheet_btn_'.concat(timesheetId)).innerHTML = 'Stop';
+					}
+	      });
+			}
+		});
+	});
+
+</script>
