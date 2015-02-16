@@ -16,37 +16,36 @@
 		</div>
 	</div>
 
-			<script type="text/javascript">
-				var clock = $("#timesheet_timer_<%= timesheet.id%>").FlipClock(<%= timesheet.total_time %>,{
-					clockFace: 'HourlyCounter',
-					showSeconds: false
-				});
+	<script type="text/javascript">
+		var clock = $("#timesheet_timer_<%= timesheet.id%>").FlipClock(<%= timesheet.total_time %>,{
+			clockFace: 'HourlyCounter',
+			showSeconds: false
+		});
 
-				clock.stop(function() {
-				// this (optional) callback will fire each time the clock flips
-				});
-			</script>
+		clock.stop(function() {
+		// this (optional) callback will fire each time the clock flips
+		});
+	</script>
 <% end %>
-</div>
 
 
 <script type="text/javascript">
 	
 	$(document).ready(function() {
 		var mydiv=document.getElementById('myTab');
-	  var arrayCollection = mydiv.children;
-	  var arrayTabs = [].slice.call(arrayCollection);
-	  arrayTabs.forEach(function (tab, index) {
-    var today = new Date('<%= @day_selected %>')
-    var tabDate = new Date(tab.getAttribute("data-date"))
-    if( tabDate.getDate() == today.getDate() 
-      && tabDate.getMonth() == today.getMonth()
-      && tabDate.getFullYear() == today.getFullYear()){
-      	tab.classList.add("active");
-    	}else{
-    		tab.classList.remove("active");
-    	}
-  	});
+		var arrayCollection = mydiv.children;
+		var arrayTabs = [].slice.call(arrayCollection);
+		arrayTabs.forEach(function (tab, index) {
+			var today = new Date('<%= @day_selected %>')
+			var tabDate = new Date(tab.getAttribute("data-date"))
+			if( tabDate.getDate() == today.getDate() 
+			&& tabDate.getMonth() == today.getMonth()
+			&& tabDate.getFullYear() == today.getFullYear()){
+				tab.classList.add("active");
+			}else{
+				tab.classList.remove("active");
+			}
+		});
 	});
 
 	$('.toggle_timesheet').click(function() {

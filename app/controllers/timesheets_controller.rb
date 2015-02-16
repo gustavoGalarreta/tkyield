@@ -15,7 +15,6 @@ class TimesheetsController < ApplicationController
       @default_project = nil
       @tasks = []
     end
-    
   end  
 
   # # GET /timesheets/new
