@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Dashboard", :root_path 
   add_breadcrumb "Clients", :clients_path
 
   # GET /clients
