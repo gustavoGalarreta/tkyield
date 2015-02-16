@@ -8,8 +8,13 @@ class TimesheetsController < ApplicationController
   	@start_of_week_day = @day_selected.beginning_of_week
     @timesheets = current_user.get_timesheet_per_day @day_selected
     @total_time_today = current_user.obtaining_total_time_per_day @day_selected
-    @default_project = Project.all.first # current_user.projects.first
-    @tasks = @default_project.tasks
+    if current_user.projects.any?
+      @default_project = current_user.projects.first
+      @tasks = @default_project.tasks
+    else
+      @default_project = nil
+      @tasks = []
+    end
   end  
 
   # # GET /timesheets/new
