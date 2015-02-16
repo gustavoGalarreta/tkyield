@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
- 
+  add_breadcrumb "Dashboard", :root_path , :only => %w(edit update)
   private
  
   def sign_up_params
