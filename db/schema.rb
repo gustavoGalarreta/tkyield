@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211201427) do
+ActiveRecord::Schema.define(version: 20150217193909) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 20150211201427) do
     t.datetime "updated_at",                                 null: false
     t.string   "notes",          limit: 255
     t.datetime "belongs_to_day"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], :name => "index_timesheets_on_deleted_at"
     t.index ["project_id"], :name => "fk__timesheets_project_id"
     t.index ["task_id"], :name => "fk__timesheets_task_id"
     t.index ["user_id"], :name => "fk__timesheets_user_id"
