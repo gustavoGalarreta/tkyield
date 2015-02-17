@@ -13,10 +13,33 @@
 		<li role="presentation"  data-date="<%= @start_of_week_day+4.days %>"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" ><%=get_date_in_day_format ( @start_of_week_day + 4.days ) %></a></li>
 		<li role="presentation"  data-date="<%= @start_of_week_day+5.days %>"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" ><%=get_date_in_day_format ( @start_of_week_day + 5.days ) %></a></li>
 		<li role="presentation" data-date="<%= @start_of_week_day+6.days %>"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" ><%= get_date_in_day_format ( @start_of_week_day + 6.days ) %></a></li>
+		<li> 
+			<div id="total_per_week">
+				Total:
+				<b id="label_total_per_week"><%= get_seconds_in_hours_minutes(current_user.total_time_per_week @day_selected) %></b>
+			</div>
+		</li>
 	</ul>
 </div>
 
 <script type="text/javascript">
+	
+	$(document).ready(function() {
+		var mydiv=document.getElementById('myTab');
+		var arrayCollection = mydiv.children;
+		var arrayTabs = [].slice.call(arrayCollection);
+		arrayTabs.forEach(function (tab, index) {
+			var today = new Date('<%= @day_selected %>')
+			var tabDate = new Date(tab.getAttribute("data-date"))
+			if( tabDate.getDate() == today.getDate() 
+			&& tabDate.getMonth() == today.getMonth()
+			&& tabDate.getFullYear() == today.getFullYear()){
+				tab.classList.add("active");
+			}else{
+				tab.classList.remove("active");
+			}
+		});
+	});
 
 	$('#myTab a').click(function (e) {
 	  e.preventDefault()
@@ -30,15 +53,4 @@
 	    dataType: "script"
 	  });
 	})
-
-	$('.change_date').click(function(){
-	  var dateForParam = $(this).data('date');
-	  $.ajax({
-	    type:'GET', 
-	    url: "<%=timesheets_path%>",
-	    data: { date : dateForParam },
-	    dataType: "script"
-	  });
-	})
-
 </script>
