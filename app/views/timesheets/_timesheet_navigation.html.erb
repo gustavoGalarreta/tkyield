@@ -53,15 +53,4 @@
 	    dataType: "script"
 	  });
 	})
-
-	$('.change_date').click(function(){
-	  var dateForParam = $(this).data('date');
-	  $.ajax({
-	    type:'GET', 
-	    url: "<%=timesheets_path%>",
-	    data: { date : dateForParam },
-	    dataType: "script"
-	  });
-	})
-
 </script>
