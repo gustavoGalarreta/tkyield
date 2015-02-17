@@ -1,6 +1,8 @@
 class TimesheetsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_timesheet, only: [:toggle_timesheet, :update, :destroy]
+  add_breadcrumb "Dashboard", :root_path 
+  add_breadcrumb "Timesheet", :timesheets_path
 
   def index
   	@today = Time.zone.now
