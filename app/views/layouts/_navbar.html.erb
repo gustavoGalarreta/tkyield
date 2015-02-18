@@ -55,14 +55,14 @@
                 <% if can? :manage, Task %>   
                     <li>
                         <%= link_to tasks_path do %>
-                            <i class="fa fa-fw fa-dashboard"></i> Task
+                            <i class="fa fa-fw fa-tasks"></i> Task
                         <% end %> 
                     </li>
                 <% end %> 
                 <% if can? :manage, User %>   
                     <li>
                         <%= link_to users_path do %>
-                            <i class="fa fa-fw fa-dashboard"></i> User
+                            <i class="fa fa-fw fa-user"></i> User
                         <% end %> 
                     </li>
                 <% end %> 

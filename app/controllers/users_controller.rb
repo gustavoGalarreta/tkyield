@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    load_and_authorize_resource
+  load_and_authorize_resource
 	before_action :authenticate_user!
 	add_breadcrumb "Dashboard", :root_path 
 	add_breadcrumb "Employees", :users_path
@@ -24,7 +24,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -32,14 +31,43 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def projects
+    add_breadcrumb "Manage Projects", :show_user_project_user_path
+  end
+
+  def update_projects
+    respond_to do |format|
+      if @user.update(user_project_params)
+        format.html { redirect_to show_user_project_user_path(@user), notice: 'User was successfully updated.' }
+      else
+        format.html { render :edit }
+      end
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
-  def set_project
-    @project = Project.find(params[:id])
+  def set_user
+    @user = Project.Userfind(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:first_name, :last_name, :role_id, :email)
+  end
+
+  def user_project_params
+    params.require(:user).permit(:first_name, :last_name, :role_id, :email, user_projects_attributes: [:id, :project_id, :_destroy])
   end
 end

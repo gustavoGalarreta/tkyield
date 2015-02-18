@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :projects, :through => :user_projects
   belongs_to :role
-
+  
+  accepts_nested_attributes_for :user_projects, :allow_destroy => true
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def only_if_unconfirmed
