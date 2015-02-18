@@ -25,6 +25,7 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     @project.users << current_user
+    @project.task_projects.build
   end
 
   # GET /projects/1/edit

@@ -27,7 +27,9 @@ body {
 	
 	height:  calc(100% - 50px);
 }
-
+.nested-select{
+	margin-bottom: 10px;
+}
 #not_logged {
 	background-color: white;
 	height: 100%;
