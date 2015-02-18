@@ -30,12 +30,16 @@ class User < ActiveRecord::Base
     timesheet.save
   end
 
-  def obtaining_total_time_per_day day
+  def total_time_per_day day
     get_timesheet_per_day(day).sum(:total_time)
   end
 
+  def total_time_per_week day
+    Timesheet.where(belongs_to_day: day.beginning_of_week.beginning_of_day..day.end_of_week.end_of_day, user_id: self.id).sum(:total_time)
+  end
+
   def get_timesheet_per_day day
-    Timesheet.where(belongs_to_day: day.beginning_of_day..(day.end_of_day), user_id: self.id)
+    Timesheet.where(belongs_to_day: day.beginning_of_day..day.end_of_day, user_id: self.id)
   end
 
   def get_timesheet_active
