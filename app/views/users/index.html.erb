@@ -1,16 +1,19 @@
-<h1 class="page-header"> Users <small> Listing</small> </h1>
+<h1 class="page-header"> Employees <small> Listing</small> </h1>
 
 <div class="col-md-12">
     <table class="table table-striped">
       <thead>
         <tr>
+          <th>First name </th>
+          <th>Last name</th>
           <th>E-mail</th>
-                    
         </tr>
       </thead>
       <tbody>
          <% @users.each do |user| %>
           <tr>
+            <td><%= user.first_name %></td>
+            <td><%= user.last_name %></td>
             <td><%= user.email %></td>
           </tr>
         <% end %>
