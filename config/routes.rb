@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   
   root to: "home#index"
 
-  resources :users , only: [:index]
+  resources :users, only: [:index, :new, :edit, :create, :update] #, as: "collaborator"
 
   resources :tasks
 
   resources :projects do
-  	get 'tasks', on: :collection
+    get 'tasks', on: :collection
   end
 
   resources :clients
@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     get 'toggle_timesheet', on: :collection
   end
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
-
+  devise_for :users, :controllers => { :confirmations => 'confirmations' }
+  devise_scope :user do
+    patch "/confirm" => "confirmations#confirm"
+  end
 
 end
