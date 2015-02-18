@@ -14,7 +14,7 @@
       <tbody>
         <% @projects.each do |project| %>
               <tr>
-              <td> <%= project.client.name %>
+              <td> <%= project.client.name %> </td>
               <td><%= project.name %></td>
               <td><i class="fa fa-eye"></i> <%= link_to 'Show', project %></td>
               <td><i class="fa fa-pencil"></i> <%= link_to 'Edit', edit_project_path(project) %></td>
