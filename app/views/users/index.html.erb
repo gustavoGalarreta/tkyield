@@ -1,3 +1,7 @@
+<% if can? :manage, User %> 
+  <%= link_to 'New User', new_user_path , class: "btn btn-lg btn-warning align-right" %>
+<% end %>
+
 <h1 class="page-header"> Employees <small> Listing</small> </h1>
 
 <div class="col-md-12">
@@ -7,6 +11,7 @@
           <th>First name </th>
           <th>Last name</th>
           <th>E-mail</th>
+          <th>Rol</th>
         </tr>
       </thead>
       <tbody>
@@ -15,6 +20,7 @@
             <td><%= user.first_name %></td>
             <td><%= user.last_name %></td>
             <td><%= user.email %></td>
+            <td><%= user.role.name %></td>
           </tr>
         <% end %>
       </tbody>

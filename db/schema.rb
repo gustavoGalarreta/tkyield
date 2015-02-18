@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217193909) do
+ActiveRecord::Schema.define(version: 20150217205932) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -27,6 +27,12 @@ ActiveRecord::Schema.define(version: 20150217193909) do
     t.datetime "updated_at",              null: false
     t.index ["client_id"], :name => "fk__projects_client_id"
     t.foreign_key ["client_id"], "clients", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_projects_client_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -64,9 +70,12 @@ ActiveRecord::Schema.define(version: 20150217193909) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role_id",                limit: 4
     t.index ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
     t.index ["email"], :name => "index_users_on_email", :unique => true
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+    t.index ["role_id"], :name => "fk__users_role_id"
+    t.foreign_key ["role_id"], "roles", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_users_role_id"
   end
 
   create_table "timesheets", force: :cascade do |t|
