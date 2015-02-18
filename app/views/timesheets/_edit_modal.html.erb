@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="timesheet_modal_<%=timesheet.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="timesheet_modal_<%=timesheet.id%>" tabindex="-1" role="dialog" aria-labelledby="timesheetModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title text-center" id="myModalLabel"> <strong> Edit time entry </strong><span> 
+        <h4 class="modal-title text-center" id="timesheetModalLabel"> <strong> Edit time entry </strong><span> 
         <small><%= @day_selected.strftime("%A, %b %d")  %> </small></span></h4>
       </div>
       <div id="new-timer-form" class="modal-body">
