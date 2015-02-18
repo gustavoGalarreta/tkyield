@@ -10,7 +10,7 @@ gem 'mysql2', '~> 0.3.14'
 gem 'schema_plus', '~> 1.8.6'
 
 # Profiles
-gem "cancan", '~> 1.6.10'
+gem 'cancancan', '~> 1.10'
 
 # Authentication for users
 gem 'devise', '~> 3.4.1'
