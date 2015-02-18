@@ -1,0 +1,29 @@
+.modal 
+	.modal-header > h4 > span{
+	    float: right;
+	    position: absolute;
+	    right: 15px;
+	}
+
+	.input-padding{
+		padding-bottom: 10px;
+
+	}
+
+	.text-area-style{
+		overflow: hidden;
+		word-wrap: break-word;
+		resize: none;
+		height: 56px;
+	}
+
+	.time-field-style{
+		display: block;
+		font-size: 30px;
+		font-weight: 500;
+		height: 56px;
+		line-height: 38px;
+		padding-left: 0;
+		text-align: right;
+	}
+
