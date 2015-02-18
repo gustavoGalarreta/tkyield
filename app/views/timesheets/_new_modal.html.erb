@@ -1,31 +1,34 @@
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModalx" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"> Create new Timer <span> <%= @day_selected.strftime("%A, %b %d")  %> </span></h4>
+        <h4 class="modal-title text-center" id="myModalLabel"><strong>New Time Entry </strong><span> <small><%= @day_selected.strftime("%A, %b %d")  %> </small> </span></h4>
       </div>
       <div id="new-timer-form" class="modal-body">
         <%= form_for(new_timesheet, remote: true) do |f| %>
-          <p>
-            <%= f.label :project %><br />
-            <%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" } %>
-          </p>
-          <p>
-            <%= f.label :task %><br /> 
-            <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" } %> 
-          </p>
+          <div class="input-group input-padding">
+            <span class="input-group-addon">Project</span>
+            <%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" } , class: "form-control"  %>
+          </div>          
+          <div class="input-group input-padding">
+            <span class="input-group-addon">Task</span> 
+            <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" } , class: "form-control"%> 
+          </div>
             <%= f.hidden_field :belongs_to_day%>
-          <div class="field">
-            <%= f.label :notes %><br>
-            <%= f.text_area :notes %>
+          <div class="row">
+            <div class="col-sm-9">
+              <div class="field">
+              <%= f.text_area :notes, class: "form-control text-area-style", :rows => "2", placeholder: "Notes (optional)" %>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="total_time">
+                <%= f.text_field :total_time, class: "form-control time-field-style", placeholder: "0:00"%>
+              </div>
+            </div>
           </div>
-          <div class="total_time">
-            <%= f.label :total_time %><br>
-            <%= f.text_field :total_time %>
-          </div>
-
+          <br>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <%= f.submit 'Start Timer', :class => 'btn btn-primary'%>
