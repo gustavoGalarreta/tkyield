@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     get 'toggle_timesheet', on: :collection
   end
 
-  devise_for :users, :controllers => { :confirmations => 'confirmations' }
+  devise_for :users, :controllers => { :confirmations => 'confirmations', :registrations => 'registrations' }
   devise_scope :user do
     patch "/confirm" => "confirmations#confirm"
   end
