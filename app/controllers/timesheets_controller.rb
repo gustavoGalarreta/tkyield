@@ -7,7 +7,7 @@ class TimesheetsController < ApplicationController
 
   def index
   	@today = Time.zone.now
-  	@day_selected = ( params[:date] ) ? Time.parse(params[:date]) : @today 
+  	@day_selected = ( params[:date] ) ? Time.zone.parse(params[:date]) : @today 
   	preload_variables
   end  
 
