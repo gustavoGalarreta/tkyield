@@ -7,7 +7,7 @@ class TimesheetsController < ApplicationController
 
   def index
   	@today = DateTime.now.to_date    
-    @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today 
+    @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
   	preload_variables("index")
   end  
 
@@ -59,7 +59,6 @@ class TimesheetsController < ApplicationController
         @tasks = []
       end
     else
-      p "@day_selected #{@day_selected}"
       @timesheets = current_user.get_timesheet_per_day @day_selected
       @default_project = @timesheet.project
       @tasks = @default_project.tasks

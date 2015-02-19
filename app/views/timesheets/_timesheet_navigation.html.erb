@@ -8,7 +8,7 @@
 	<ul class="nav nav-tabs" role="tablist" id="dates-tab">
 		<% days_of_week.each do |day| %>
 			<li role="presentation" class=<%= "active" if date_format_on_view(day) == date_format_on_view(@day_selected)%>>
-				<a href="#date-<%= day %>" aria-controls="date-<%= day %>" role="tab" data-toggle="tab" data-day="<%= date_format_on_view(day) %>" data-date="<%= full_date_format(day) %>"> <%= day_name_format(day) %></a>
+				<a href="#date-<%= date_format_on_view(day) %>" aria-controls="date-<%= day %>" role="tab" data-toggle="tab" data-day="<%= date_format_on_view(day) %>" data-date="<%= full_date_format(day) %>"> <%= day_name_format(day) %></a>
 			</li>
 		<% end %>
 		<li> 
