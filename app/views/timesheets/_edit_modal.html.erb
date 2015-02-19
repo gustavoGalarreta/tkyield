@@ -1,10 +1,10 @@
 <!-- Modal -->
-<div class="modal fade" id="timesheet_modal_<%=timesheet.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="timesheet_modal_<%=timesheet.id%>" tabindex="-1" role="dialog" aria-labelledby="timeshee-edit-modal-label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"> Create new Timer <span> <%= @day_selected.strftime("%A, %b %d")  %> </span></h4>
+        <h4 class="modal-title" id="timeshee-edit-modal-label"> Edit Time <span class="small"> <%= full_date_format(timesheet.belongs_to_day) %> </span></h4>
       </div>
       <div id="new-timer-form" class="modal-body">
 		<%= form_for(timesheet, remote: true) do |f| %>

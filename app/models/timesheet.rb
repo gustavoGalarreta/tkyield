@@ -50,4 +50,11 @@ class Timesheet < ActiveRecord::Base
     end
   end
 
+  def self.days_of_week_by_date(date)
+    start_of_week_day = date.beginning_of_week
+    days_of_week = []
+    (0..6).each{ |index| days_of_week << start_of_week_day + index.days }
+    return days_of_week
+  end
+
 end

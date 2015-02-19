@@ -8,7 +8,11 @@ module ApplicationHelper
 		format("%02d:%02d", hours, minutes)
 	end
 
-	def get_date_in_day_format date
+	def day_name_format date
 		date.strftime("%A")
+	end
+
+	def full_date_format date
+		date.strftime("%A, %d %b")
 	end
 end

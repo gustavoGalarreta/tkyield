@@ -1,4 +1,4 @@
-<% @timesheets.each do |timesheet| %>
+<% timesheets.each do |timesheet| %>
 	<div id="timesheet_<%= timesheet.id%>" class="entry-info">
 		<div id="project_client">
 			<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
@@ -15,9 +15,9 @@
         		:id => "timesheet_btn_#{timesheet.id}" %>
 		</div>
 		<div id="timesheet_edit">
-		  <%= link_to 'Edit', '',:data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary btn-lg" %>
+		  <%= link_to 'Edit', '', :data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary btn-lg" %>
 		</div>
-		<%= render partial: 'edit_modal', locals: { timesheet: timesheet } %>
+		<%= render 'edit_modal', timesheet: timesheet %>
 	</div>
 	<script type="text/javascript">
 		var clock = $("#timesheet_timer_<%= timesheet.id%>").FlipClock(<%= timesheet.total_time %>,{
@@ -31,7 +31,7 @@
 	</script>
 <% end %>
 <div id="day_footer">
-	<div id="total_per_day"> Total: <b> <%= get_seconds_in_hours_minutes(current_user.total_time_per_day @day_selected )%> </b></div>
+	<div id="total_per_day"> Total: <b> <%= get_seconds_in_hours_minutes(current_user.total_time_per_day day )%> </b></div>
 </div>
 
 <script type="text/javascript">

@@ -1,38 +1,33 @@
 <div>
   <%= render "timesheet_day" %>
 
-  <div id="date_ranges">
-    <%= link_to "Today" , '#', :data => {:date => @today},:id => "today_date", :class => 'change_date' %> 
-  </div>
   <div id="timesheet_container">
     <div id="timesheet_nav_container">
-      <%= render "timesheet_navigation" %>
+      <%= render "timesheet_navigation", days_of_week: @days_of_week %>
     </div>
     <!-- Tab panes -->
     <div class="tab-content">
-      <div id="timesheet-content" role="tabpanel" class="tab-pane active" id="home"> 
-          <%= render "timesheets" %>
-      </div>
+      <% @timesheets_per_date.each do |timesheets| %>
+        <div role="tabpanel" class="tab-pane <%= 'active' if date_format_on_view(timesheets[:day]) == date_format_on_view(@day_selected)%>" id="date-<%= timesheets[:day] %>">
+          <%= render "timesheets", day: timesheets[:day], timesheets: timesheets[:timesheets] %>
+        </div>
+      <% end %>
     </div>
   </div>
-    <!-- Button trigger modal -->
-  <button id="create-timer" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    +
-  </button>
-
+  <!-- Button trigger modal -->
+  <button id="create-timer" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#timeshee-new-modal"> + </button>
   <%= render "new_modal" %>
-
 </div>
 
 <script type="text/javascript">
 
-  $( document ).on("click",".change_date", function(){
-    var dateForParam = $(this).data('date');
-    $.ajax({
-      type:'GET', 
-      url: "<%=timesheets_path%>",
-      data: { date : dateForParam },
-      dataType: "script"
-    });
-  })
+ $( document ).on("click",".change_date", function(){
+   var dateForParam = $(this).data('date');
+   $.ajax({
+     type:'GET', 
+     url: "<%=timesheets_path%>",
+     data: { date : dateForParam },
+     dataType: "script"
+   });
+ })
 </script>
