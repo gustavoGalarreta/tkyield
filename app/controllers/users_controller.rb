@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-	add_breadcrumb "Dashboard", :root_path 
-	add_breadcrumb "Colaborators", :users_path
+	add_breadcrumb "Dashboard", :root_path
+	add_breadcrumb "Collaborators", :users_path
   before_action :set_user, only: [:resend_confirmation]
 
 	def index
