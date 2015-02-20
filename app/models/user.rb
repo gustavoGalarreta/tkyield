@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     self.role.name == "Employee"
   end
 
+  def is_confirmed?
+    self.confirmed_at != nil
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -62,8 +66,6 @@ class User < ActiveRecord::Base
     days_of_week = Timesheet.days_of_week_by_date(date)
     timesheets = []
     days_of_week.each do |day|
-      p "HOLA #{get_timesheet_per_day(day).count}"
-      p "AADASD "
       timesheets << { day: day, timesheets: get_timesheet_per_day(day) }
     end
     timesheets

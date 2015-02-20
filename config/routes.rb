@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   resources :users , only: [:index, :new, :edit, :create, :update] do
     get 'show_user_project', to: 'users#projects', on: :member 
-    patch 'update_user_project', to: 'users#update_projects', on: :member 
+    patch 'update_user_project', to: 'users#update_projects', on: :member
+    get 'resend_confirmation', to: 'users#resend_confirmation', on: :member
   end
 
   resources :tasks

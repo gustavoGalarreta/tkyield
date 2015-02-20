@@ -23,7 +23,9 @@
             <td><%= user.role.name %></td>
             <td><i class="fa fa-pencil"></i> <%= link_to 'Edit', edit_user_path(user) %></td>
             <td><i class="fa fa-pencil"></i> <%= link_to 'Assign Projects', show_user_project_user_path(user) %></td>
+            <td><%= link_to 'Resend Confirmation', resend_confirmation_user_path(user) %> </td>
           </tr>
+          <!-- <a href="/users/confirmation/new" data-remote="true" data-method="post">Resend confirmation</a> -->
         <% end %>
       </tbody>
     </table>
