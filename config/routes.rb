@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  
   root to: "home#index"
 
   resources :users , only: [:index, :new, :edit, :create, :update] do
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   resources :clients
 
   resources :timesheets do
-    get 'toggle_timesheet', on: :collection
+    get 'toggle_timesheet', on: :member
   end
 
   devise_for :users, :controllers => { :confirmations => 'confirmations', :registrations => 'registrations' }

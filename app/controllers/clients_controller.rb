@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
-  load_and_authorize_resource
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_client, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Dashboard", :root_path 
   add_breadcrumb "Clients", :clients_path

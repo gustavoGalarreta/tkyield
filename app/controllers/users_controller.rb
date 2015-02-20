@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   load_and_authorize_resource
-	before_action :authenticate_user!
 	add_breadcrumb "Dashboard", :root_path 
 	add_breadcrumb "Employees", :users_path
 

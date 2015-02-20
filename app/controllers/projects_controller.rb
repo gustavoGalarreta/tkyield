@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  load_and_authorize_resource
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_project, only: [:tasks, :show, :edit, :update, :destroy]
   add_breadcrumb "Dashboard", :root_path 
   add_breadcrumb "Projects", :projects_path

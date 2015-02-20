@@ -35,14 +35,22 @@
 
 <%= render "new_modal" %>
 <script type="text/javascript">
+  
+  $(document).ready(function(){
+    $('.clock').each(function() {
+      if($(this).data('isrunning')){
+        $(this).countdown('toggle');
+      }
+    })
+  });
 
- $( document ).on("click",".change_date", function(){
-   var dateForParam = $(this).data('date');
-   $.ajax({
-     type:'GET', 
-     url: "<%=timesheets_path%>",
-     data: { date : dateForParam },
-     dataType: "script"
+  $( document ).on("click",".change_date", function(){
+    var dateForParam = $(this).data('date');
+    $.ajax({
+      type:'GET', 
+      url: "<%=timesheets_path%>",
+      data: { date : dateForParam },
+      dataType: "script"
    });
- })
+  })
 </script>
