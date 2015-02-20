@@ -10,7 +10,7 @@
 		  <%= f.fields_for :user_projects do |project| %>
 		      <div class="nested-select row">
 		          <div class="col-sm-10">
-			          <%= project.select :project_id, Project.all.collect{ |u| [u.name, u.id]}, {:prompt => "Select a project select-project"} , class: "form-control select-user" %>
+			          <%= project.select :project_id, Project.all.collect{ |u| [u.name, u.id]}, {:prompt => "Select a project"} , class: "form-control select-project" %>
 			          </div><div class="col-sm-2">
 			          <%= project.link_to_remove "X", class: "btn btn-danger"%>
 		          </div>
@@ -87,14 +87,8 @@
             if (disableMe){
               $(this).attr('disabled', true);
             }
-
           });
-        
         }
-
       });
-
     }
-
-
 </script>
