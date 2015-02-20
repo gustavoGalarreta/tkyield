@@ -33,6 +33,7 @@
 		  				<%= link_to 'Edit', '', :data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary" %>
 					</div>
 					</div>
+					</div>
 		        </td>
 		      </tr>
 		    </tbody>
@@ -44,14 +45,7 @@
 		<%= render 'edit_modal', timesheet: timesheet %>
 	</div>
 	<script type="text/javascript">
-		var clock = $("#timesheet_timer_<%= timesheet.id%>").FlipClock(<%= timesheet.total_time %>,{
-			clockFace: 'HourlyCounter',
-			showSeconds: false
-		});
-
-		clock.stop(function() {
-		// this (optional) callback will fire each time the clock flips
-		});
+		$('#timesheet_timer_<%= timesheet.id %>').countdown({since: '-<%= timesheet.total_time %>s', compact: true, format: 'HMS'});
 	</script>
 <% end %>
 <div id="day_footer">
