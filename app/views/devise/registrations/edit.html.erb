@@ -16,19 +16,21 @@
     <span class="input-group-addon">Last name</span>
     <%= f.text_field :last_name, autofocus: true ,class: "form-control" %>
   </div>
-
-  </br><div class="input-group">
-    <span class="input-group-addon">Password</span>
-    <%= f.password_field :password, autocomplete: "off" ,class: "form-control", placeholder: "leave blank if you don't want to change it" %>
-  </div>
-  </br><div class="input-group">
-    <span class="input-group-addon">Password confirmation </span>
-    <%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control" %>
-  </div>
-  </br><div class="input-group">
+  <hr></hr>
+  <div class="input-group">
       <span class="input-group-addon">Current password</span>
       <%= f.password_field :current_password, autocomplete: "off" ,class: "form-control", placeholder: "we need your current password to confirm your changes" %>
   </div>
+  <hr></hr>
+  <div class="input-group">
+    <span class="input-group-addon">New Password</span>
+    <%= f.password_field :password, autocomplete: "off" ,class: "form-control", placeholder: "leave blank if you don't want to change it" %>
+  </div>
+  </br><div class="input-group">
+    <span class="input-group-addon">New Password confirmation </span>
+    <%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control" %>
+  </div>
+ 
 
   </br><div class="actions">
     <%= f.submit "Update", class: "btn btn-lg btn-warning"%>

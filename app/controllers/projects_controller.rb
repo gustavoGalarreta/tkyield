@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @clients = Client.all
     @projects = Project.all
   end
 
@@ -26,6 +27,7 @@ class ProjectsController < ApplicationController
     @project = Project.new
     @project.users << current_user
     @project.task_projects.build
+    @project.user_projects.build
   end
 
   # GET /projects/1/edit

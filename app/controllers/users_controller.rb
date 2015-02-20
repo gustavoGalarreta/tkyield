@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 	before_action :authenticate_user!
 	add_breadcrumb "Dashboard", :root_path 
-	add_breadcrumb "Employees", :users_path
+	add_breadcrumb "Colaborators", :users_path
 
 	def index
    	@users = User.all
@@ -43,7 +43,8 @@ class UsersController < ApplicationController
   end
 
   def projects
-    add_breadcrumb "Manage Projects", :show_user_project_user_path
+    add_breadcrumb "Assign Projects", :show_user_project_user_path
+
   end
 
   def update_projects

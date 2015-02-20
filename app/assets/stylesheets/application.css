@@ -28,6 +28,13 @@ body {
 	
 	height:  calc(100% - 50px);
 }
+.page-header{
+	margin-top: 0px;
+}
+hr{
+margin-top: 20px;
+
+}
 .modal-date{
 	float: right;
     position: absolute;
