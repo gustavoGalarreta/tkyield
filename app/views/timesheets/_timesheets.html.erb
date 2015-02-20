@@ -1,57 +1,48 @@
 <% timesheets.each do |timesheet| %>
 	<div id="timesheet_<%= timesheet.id%>" class="entry-info">
-		
-		<div class="col-lg-4">
-		  <table class="table table-hover">
-		    <thead>
-		      <tr>
-		        <th>
-		          <div id="project_client">
-					<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
-							</div>
-		        </th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		      <tr>
-		        <td>
-		       	  <div id="task_notes">
-					<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
-				  </div>
-		        </td>
-		      </tr>		      
-		      <tr>
-		        <td>
-		        	<div class="row">
-					<div class="col-lg-6" id="timesheet_start"> 
-						<%= link_to timesheet.running? ? "Stop" : "Start" , '#',
-        					:class => 'toggle_timesheet', 
-        					:data => {:id => timesheet.id},
-        					:id => "timesheet_btn_#{timesheet.id}" %>
-					</div>
-					<div class="col-lg-6" id="timesheet_edit">
-		  				<%= link_to 'Edit', '', :data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary" %>
-					</div>
-					</p>
-		        </td>
-		      </tr>
-		    </tbody>
-		  </table>
-		</div>
-		<div id="timesheet_timer_<%= timesheet.id %>" class="clock" data-isrunning="<%= timesheet.is_running? %>">
-		</div> 
-		
-		<%= render 'edit_modal', timesheet: timesheet %>
+ 	  <ul class="day-view-entry-list">
+		<li class="day-view-entry" style="list-style-type: none;">
+			<table border="0" cellpadding="0" cellspacing="0">
+			  <tbody>
+				  <tr>    
+				    <td>
+				      <div class="entry-info">
+				       	<div id="project_client">
+							<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
+						</div>
+				        <div id="task_notes">
+						<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
+					  </div>
+				      </div>
+				    </td>
+					<td class="entry-time">
+						<div id="timesheet_timer_<%= timesheet.id %>" class="clock" data-isrunning="<%= timesheet.is_running? %>", data-id="<%= timesheet.id %>">
+						</div> 
+					</td>
+					<td class="entry-button">
+				      <div class="col-lg-6" id="timesheet_start"> 				      			
+								<%= link_to timesheet.running? ? "Stop" : "Start" ,toggle_timesheet_timesheet_path(timesheet),
+		        					:class => 'toggle_timesheet btn btn-primary',
+		        					:remote => true,
+		        					:id => "timesheet_btn_#{timesheet.id}" %>
+					  </div>
+				    </td>
+				    <td class="edit-button">
+				      	<div class="col-lg-6" id="timesheet_edit">
+				  			<%= link_to 'Edit', '', :data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary" %>
+					  	</div>
+				    </td>
+				  </tr>
+			  </tbody>
+			</table>
+		</li>
+	</ul>
+	
+	<%= render 'edit_modal', timesheet: timesheet %>
+	
 	</div>
 	<script type="text/javascript">
-		var clock = $("#timesheet_timer_<%= timesheet.id%>").FlipClock(<%= timesheet.total_time %>,{
-			clockFace: 'HourlyCounter',
-			showSeconds: false
-		});
-
-		clock.stop(function() {
-		// this (optional) callback will fire each time the clock flips
-		});
+		$('#timesheet_timer_<%= timesheet.id %>').countdown({since: '-<%= timesheet.current_time %>s', compact: true, format: 'HMS'}).countdown('pause');
 	</script>
 <% end %>
 <div id="day_footer">
@@ -59,35 +50,9 @@
 </div>
 
 <script type="text/javascript">
-	
-	$('.toggle_timesheet').click(function() {
-	  var timesheetId = $(this).data('id');
-	  var oldTimesheetId;
-	  $.ajax({
-	    type:'GET', 
-	    url: "<%= toggle_timesheet_timesheets_path %>", 
-	    data: { id : timesheetId },
-	    success: function(response,status) {
-	      $('.clock').each(function() {
-					if($(this).data('isrunning')){
-						oldTimesheetId = $(this).attr('id').substr(16);
-						var elementId = '#timesheet_timer_'.concat(oldTimesheetId)
-						console.log($(elementId));
-						// $('#timesheet_timer_'.concat(oldTimesheetId)).stop(function(){
-
-						// })
-						// $('#timesheet_btn_'.concat(oldTimesheetId)).innerHTML = 'Start';
-						// $(this).dataset.isrunning = "false";
-						console.log(oldTimesheetId);
-					}
-					if($(this).attr('id').substr(16) == timesheetId){
-						var elementId = '#timesheet_timer_'.concat(timesheetId)
-						console.log($(elementId))
-						// $('#timesheet_btn_'.concat(timesheetId)).innerHTML = 'Stop';
-					}
-	      });
-			}
-		});
-	});
-
+  $('.clock').each(function() {
+    if($(this).data('isrunning')){
+      $(this).countdown('resume');
+    }
+  })		
 </script>

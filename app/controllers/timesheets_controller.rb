@@ -1,6 +1,6 @@
 class TimesheetsController < ApplicationController
-  load_and_authorize_resource
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_timesheet, only: [:toggle_timesheet, :update, :destroy]
   add_breadcrumb "Dashboard", :root_path 
   add_breadcrumb "Timesheet", :timesheets_path
@@ -43,8 +43,8 @@ class TimesheetsController < ApplicationController
 
   def toggle_timesheet
     current_user.start_timer @timesheet
-    @timesheet.save
-    render :json => @timesheet.save, :status => :ok
+    @saved = @timesheet.save
+    # render :json => @timesheet.save, :status => :ok
   end
 
   def preload_variables(action="")
