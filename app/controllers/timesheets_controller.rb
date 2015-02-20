@@ -6,9 +6,9 @@ class TimesheetsController < ApplicationController
   add_breadcrumb "Timesheet", :timesheets_path
 
   def index
-  	@today = Time.zone.now
-  	@day_selected = ( params[:date] ) ? Time.zone.parse(params[:date]) : @today 
-  	preload_variables
+  	@today = DateTime.now.to_date    
+    @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
+  	preload_variables("index")
   end  
 
   def create
@@ -47,17 +47,23 @@ class TimesheetsController < ApplicationController
     render :json => @timesheet.save, :status => :ok
   end
 
-  def preload_variables
-    @start_of_week_day = @day_selected.beginning_of_week
-    @timesheets = current_user.get_timesheet_per_day @day_selected
-    if current_user.projects.any?
-      @default_project = current_user.projects.first
-      @tasks = @default_project.tasks
+  def preload_variables(action="")
+    if action == "index"
+      @timesheets_per_date = current_user.timesheets_of_week_by_date @day_selected
+      @days_of_week = @timesheets_per_date.map{|t| t[:day]}
+      if current_user.projects.any?
+        @default_project = current_user.projects.first
+        @tasks = @default_project.tasks
+      else
+        @default_project = nil
+        @tasks = []
+      end
     else
-      @default_project = nil
-      @tasks = []
+      @timesheets = current_user.get_timesheet_per_day @day_selected
+      @default_project = @timesheet.project
+      @tasks = @default_project.tasks
     end
-  end
+  end  
 
   private
   # Use callbacks to share common setup or constraints between actions.

@@ -21,6 +21,8 @@
             <td><%= user.last_name %></td>
             <td><%= user.email %></td>
             <td><%= user.role.name %></td>
+            <td><i class="fa fa-pencil"></i> <%= link_to 'Edit', edit_user_path(user) %></td>
+            <td><i class="fa fa-pencil"></i> <%= link_to 'Assign Projects', show_user_project_user_path(user) %></td>
           </tr>
         <% end %>
       </tbody>

@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   
   root to: "home#index"
 
-  resources :users, only: [:index, :new, :edit, :create, :update] #, as: "collaborator"
+  resources :users , only: [:index, :new, :edit, :create, :update] do
+    get 'show_user_project', to: 'users#projects', on: :member 
+    patch 'update_user_project', to: 'users#update_projects', on: :member 
+  end
 
   resources :tasks
 
