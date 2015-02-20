@@ -1,45 +1,44 @@
 <% timesheets.each do |timesheet| %>
 	<div id="timesheet_<%= timesheet.id%>" class="entry-info">
-		
-		<div class="col-lg-4">
-		  <table class="table table-hover">
-		    <thead>
-		      <tr>
-		        <th>
-		          <div id="project_client">
-					<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
-							</div>
-		        </th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		      <tr>
-		        <td>
-		       	  <div id="task_notes">
-					<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
-				  </div>
-		        </td>
-		      </tr>		      
-		      <tr>
-		        <td>
-		        	<div class="row">
-					<div class="col-lg-6" id="timesheet_start"> 
-						<%= link_to timesheet.running? ? "Stop" : "Start" , '#',
-        					:class => 'toggle_timesheet', 
-        					:data => {:id => timesheet.id},
-        					:id => "timesheet_btn_#{timesheet.id}" %>
-					</div>
-					<div class="col-lg-6" id="timesheet_edit">
-		  				<%= link_to 'Edit', '', :data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary" %>
-					</div>
-					</div>
-		        </td>
-		      </tr>
-		    </tbody>
-		  </table>
-		</div>
-		<div id="timesheet_timer_<%= timesheet.id %>" class="clock" data-isrunning="<%= timesheet.is_running? %>">
-		</div> 
+ 	  <ul class="day-view-entry-list">
+		<li class="day-view-entry" style="list-style-type: none;">
+			<table border="0" cellpadding="0" cellspacing="0">
+			  <tbody>
+				  <tr>    
+				    <td>
+				      <div class="entry-info">
+				       	<div id="project_client">
+							<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
+						</div>
+				        <div id="task_notes">
+						<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
+					  </div>
+				      </div>
+				    </td>
+					<td class="entry-time">
+					<i class="fa fa-circle-o-notch fa-spin"></i> 
+					</td>
+					<td class="entry-button">
+				      <div class="col-lg-6" id="timesheet_start"> 				      			
+								<%= link_to timesheet.running? ? "Stop" : "Start" , '#',
+		        					:class => 'toggle_timesheet btn btn-primary', 
+		        					:data => {:id => timesheet.id},
+		        					:id => "timesheet_btn_#{timesheet.id}" %>
+					  </div>
+				    </td>
+				    <td class="edit-button">
+				      	<div class="col-lg-6" id="timesheet_edit">
+				  			<%= link_to 'Edit', '', :data => { :toggle => "modal", :target => "#timesheet_modal_#{timesheet.id}" }, :class => "btn btn-primary" %>
+					  	</div>
+				    </td>
+				  </tr>
+			  </tbody>
+			</table>
+		</li>
+	</ul>
+	
+	<div id="timesheet_timer_<%= timesheet.id %>" class="clock" data-isrunning="<%= timesheet.is_running? %>">
+	</div> 
 		
 		<%= render 'edit_modal', timesheet: timesheet %>
 	</div>
