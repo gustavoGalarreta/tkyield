@@ -26,4 +26,12 @@
 		padding-left: 0;
 		text-align: right;
 	}
-
+	
+.rightie{
+	float:right;
+	padding-right: 15px;
+	padding-top: 20px;
+}
+.clock{
+	top: 20px;
+}

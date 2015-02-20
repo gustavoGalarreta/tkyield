@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :projects, :through => :user_projects
   belongs_to :role
-
+  
+  accepts_nested_attributes_for :user_projects, :allow_destroy => true
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def only_if_unconfirmed
@@ -50,11 +51,22 @@ class User < ActiveRecord::Base
   end
 
   def total_time_per_week day
-    Timesheet.where(belongs_to_day: day.beginning_of_week.beginning_of_day..day.end_of_week.end_of_day, user_id: self.id).sum(:total_time)
+    Timesheet.where(belongs_to_day: day.beginning_of_week..day.end_of_week, user_id: self.id).sum(:total_time)
   end
 
   def get_timesheet_per_day day
-    Timesheet.where(belongs_to_day: day.beginning_of_day..day.end_of_day, user_id: self.id)
+    Timesheet.where(belongs_to_day: day, user_id: self.id)
+  end
+
+  def timesheets_of_week_by_date date
+    days_of_week = Timesheet.days_of_week_by_date(date)
+    timesheets = []
+    days_of_week.each do |day|
+      p "HOLA #{get_timesheet_per_day(day).count}"
+      p "AADASD "
+      timesheets << { day: day, timesheets: get_timesheet_per_day(day) }
+    end
+    timesheets
   end
 
   def get_timesheet_active
