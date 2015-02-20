@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  load_and_authorize_resource
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_project, only: [:tasks, :show, :edit, :update, :destroy]
   add_breadcrumb "Dashboard", :root_path 
   add_breadcrumb "Projects", :projects_path
@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @clients = Client.all
     @projects = Project.all
   end
 
@@ -26,6 +27,7 @@ class ProjectsController < ApplicationController
     @project = Project.new
     @project.users << current_user
     @project.task_projects.build
+    @project.user_projects.build
   end
 
   # GET /projects/1/edit

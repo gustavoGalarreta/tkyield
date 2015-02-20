@@ -31,6 +31,16 @@ class Timesheet < ActiveRecord::Base
     return self.total_time
   end
 
+  def current_time
+    if running?
+      now = Time.zone.now
+      time_elapsed = (now - self.start_time).to_f
+      return (total_time + time_elapsed).round(0)
+    else
+      return total_time.round(0)
+    end
+  end
+
   def save_with_parse_total param_total_time
     if param_total_time.match(/\A(([0-9\ ]+)|([0-9\ ]+[:.])|([0-9\ ]+[:.][0-9\ ]+)|([:.][0-9\ ]+))\z/)
       if param_total_time.include? "."

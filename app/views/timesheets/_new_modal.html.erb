@@ -14,7 +14,7 @@
             <span class="input-group-addon">Task</span> 
             <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" } , class: "form-control"%> 
           </div>
-            <%= f.hidden_field :belongs_to_day%>
+            <%= f.hidden_field :belongs_to_day, value: date_format_on_view(@day_selected) %>
           <div class="row">
             <div class="col-sm-9">
               <div class="field">
