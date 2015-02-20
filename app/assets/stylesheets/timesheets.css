@@ -27,11 +27,41 @@
 		text-align: right;
 	}
 	
-.rightie{
+.to-the-right{
 	float:right;
 	padding-right: 15px;
 	padding-top: 20px;
 }
 .clock{
 	top: 20px;
+}
+.day-view-entry {
+border-bottom: 1px solid #cccccc;
+font-size: 14px;
+}
+
+.day-view-entry .entry-info {
+width: 505px;
+word-wrap: break-word;
+}
+
+.day-view-entry .entry-time {
+font-size: 21px;
+font-weight: bold;
+line-height: 39px;
+text-align: right;
+width: 55px; }
+.day-view-entry .entry-button {
+line-height: 37px;
+padding-left: 0;
+padding-right: 0;
+text-align: right;
+width: 90px;}
+.day-view-entry .edit-button {
+line-height: 37px;
+width: 30px;}
+
+#project_client{
+	font-size: 30;
+	font-weight: bold;
 }

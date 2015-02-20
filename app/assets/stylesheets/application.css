@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  *= require flipclock
+ *= jquery.countdown.css
  */
  
 form{
