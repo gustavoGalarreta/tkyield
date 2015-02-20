@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-	add_breadcrumb "Dashboard", :root_path 
+	add_breadcrumb "Dashboard", :root_path
 	add_breadcrumb "Collaborators", :users_path
+  before_action :set_user, only: [:resend_confirmation]
 
 	def index
    	@users = User.all
@@ -57,10 +58,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def resend_confirmation
+    @user.send_confirmation_instructions
+    redirect_to users_path, notice: "Email sent successfully"
+  end
+ 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = Project.Userfind(params[:id])
+    @user = User.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
