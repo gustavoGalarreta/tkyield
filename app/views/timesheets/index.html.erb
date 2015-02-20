@@ -35,14 +35,6 @@
 
 <%= render "new_modal" %>
 <script type="text/javascript">
-  
-  $(document).ready(function(){
-    $('.clock').each(function() {
-      if($(this).data('isrunning')){
-        $(this).countdown('toggle');
-      }
-    })
-  });
 
   $( document ).on("click",".change_date", function(){
     var dateForParam = $(this).data('date');
