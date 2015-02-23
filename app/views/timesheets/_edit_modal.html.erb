@@ -10,7 +10,7 @@
 		<%= form_for(timesheet, remote: true) do |f| %>
 		  <div class="input-group input-padding">
 		  	<span class="input-group-addon">Project</span>
-    		<%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" }, :data => { :timesheetId => timesheet.id } , class: "form-control project_edit_timesheet", :id => "project_new_timesheet_#{timesheet.id}" %>
+    		<%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" }, :data => { :timesheetId => timesheet.id } , class: "form-control project_edit_timesheet", :id => "project_edit_timesheet_#{timesheet.id}" %>
 		  </div>
 		  <div class="input-group input-padding">
 		    <span class="input-group-addon">Task</span>
