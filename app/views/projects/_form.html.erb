@@ -5,7 +5,7 @@
       aria-hidden="true">
       &times;
    </button>
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h4><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h4>
 
       <ul>
       <% @project.errors.full_messages.each do |message| %>
@@ -88,6 +88,10 @@
 <% end %>
 
 <script type="text/javascript">
+    $( document ).ready(function() {
+      validateUnique('.select-user');
+      validateUnique('.select-task');
+    });
     $( document ).on( "change", ".select-task", function() {
       var ultimo;
       $(".select-task").each(function() {

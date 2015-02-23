@@ -44,19 +44,19 @@
                         <% end %> 
                     </li>
                 <% end %> 
+                <% if can? :manage, Task %>   
+                    <li>
+                        <%= link_to tasks_path do %>
+                            <i class="fa fa-fw fa-tasks"></i> Task
+                        <% end %> 
+                    </li>
+                <% end %> 
                 <% if can? :manage, Project %>   
                     <li>
                         <%= link_to projects_path do %>
                             <i class="fa fa-fw fa-folder-open"></i>
                             Projects
                         <% end %>
-                    </li>
-                <% end %> 
-                <% if can? :manage, Task %>   
-                    <li>
-                        <%= link_to tasks_path do %>
-                            <i class="fa fa-fw fa-tasks"></i> Task
-                        <% end %> 
                     </li>
                 <% end %> 
                 <% if can? :manage, User %>   

@@ -6,7 +6,6 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Id</th>
           <th>Client Name</th>
           <th></th>
                     
@@ -15,7 +14,6 @@
       <tbody>
         <% @clients.each do |client| %>
           <tr>
-            <td><%= client.id %></td>
             <td><%= client.name %></td>
             
             <td><i class="fa fa-pencil"></i> <%= link_to 'Edit',  edit_client_path(client) %></td>
