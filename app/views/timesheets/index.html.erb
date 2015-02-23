@@ -45,4 +45,28 @@
       dataType: "script"
    });
   })
+
+  // $('#timesheet_project_id').change(function () {
+  $( document ).on("change","#timesheet_project_id", function(){
+    $.ajax({
+          type:'GET', 
+          url: "<%= tasks_projects_path %>",
+          data: {
+            id : $('#timesheet_project_id').val()    
+          },  
+          dataType: "script"
+        });
+  })  
+
+  $( document ).on("change",".project_edit_timesheet", function(){
+    $.ajax({
+          type:'GET', 
+          url: "<%= tasks_projects_path %>",
+          data: {
+            id : $('.project_edit_timesheet').val(),
+            timesheetId : $(this).data("timesheetid")
+          },
+          dataType: "script"
+        });
+  })
 </script>
