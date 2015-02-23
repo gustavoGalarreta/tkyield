@@ -1,6 +1,5 @@
 class Project < ActiveRecord::Base
   validates :client, :name, :description, presence: true
-
   belongs_to :client
   has_many :task_projects, dependent: :destroy
   has_many :tasks, :through => :task_projects
