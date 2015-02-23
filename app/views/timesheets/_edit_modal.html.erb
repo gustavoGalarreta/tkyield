@@ -10,11 +10,11 @@
 		<%= form_for(timesheet, remote: true) do |f| %>
 		  <div class="input-group input-padding">
 		  	<span class="input-group-addon">Project</span>
-    		<%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" } , class: "form-control" %>
+    		<%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" }, :data => { :timesheetId => timesheet.id } , class: "form-control project_edit_timesheet", :id => "project_new_timesheet_#{timesheet.id}" %>
 		  </div>
 		  <div class="input-group input-padding">
 		    <span class="input-group-addon">Task</span>
-		    <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task"} , class: "form-control"  %> 
+		    <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task"} , class: "form-control", :id => "timesheet_edit_task_#{timesheet.id}"  %> 
 		  </div>
 		    <%= f.hidden_field :belongs_to_day, :id => "timesheet_day_#{timesheet.id}"%>
 		  
@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-sm-3">
 			  <div class="total_time">
-			    <%= f.text_field :total_time, value: (get_seconds_in_hours_minutes timesheet.total_time.to_f ), class: "form-control time-field-style", placeholder: "0:00"%>
+			    <%= f.text_field :total_time, value: (get_seconds_in_hours_minutes timesheet.current_time.to_f ), class: "form-control time-field-style", placeholder: "0:00"%>
 			  </div>
 			</div>
 		  </div>
@@ -42,17 +42,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-
-  $('#timesheet_project_id').change(function () {
-    $.ajax({
-          type:'GET', 
-          url: "<%= tasks_projects_path %>",
-          data: {
-            id : $('#timesheet_project_id').val()
-          },
-          dataType: "script"
-        });
-  })
-</script>
