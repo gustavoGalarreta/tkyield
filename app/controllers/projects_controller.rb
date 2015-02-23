@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
 
   # GET /project_tasks.js
   def tasks
+    @timesheetId = params["timesheetId"].nil? ? nil : params["timesheetId"]
     @tasks = @project.tasks
   end
 
