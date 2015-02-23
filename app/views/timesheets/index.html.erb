@@ -59,12 +59,13 @@
   })  
 
   $( document ).on("change",".project_edit_timesheet", function(){
+    var timesheetId = $(this).data("timesheetid");
     $.ajax({
           type:'GET', 
           url: "<%= tasks_projects_path %>",
           data: {
-            id : $('.project_edit_timesheet').val(),
-            timesheetId : $(this).data("timesheetid")
+            id : $("#project_edit_timesheet_".concat(timesheetId)).val(),
+            timesheetId : timesheetId
           },
           dataType: "script"
         });
