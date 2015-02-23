@@ -10,7 +10,8 @@
 		  <%= f.fields_for :user_projects do |project| %>
 		      <div class="nested-select row">
 		          <div class="col-sm-10">
-			          <%= project.select :project_id, Project.all.collect{ |u| [u.name, u.id]}, {:prompt => "Select a project"} , class: "form-control select-project"%>
+                <%= project.select :project_id, grouped_options_for_select(@grouped_options, project.object.project_id),{:prompt => "Select a project"}, :class => "form-control select-project"%>
+
 			          </div><div class="col-sm-2">
 			          <%= project.link_to_remove "X", class: "btn btn-danger"%>
 		          </div>
@@ -27,6 +28,10 @@
 <% end %>
 
 <script type="text/javascript">
+    $( document ).ready(function() {
+      validateUnique('.select-project');
+    });
+
     $( document ).on( "change", ".select-project", function() {
       var ultimo;
       $(".select-project").each(function() {
@@ -38,13 +43,12 @@
       }
       validateUnique('.select-project');
     });
-
-   
-    $(document).on('nested:fieldAdded', function() {
+    
+    $(document).on('.fieldAdded', function() {
       validateUnique('.select-project');
     });
 
-    $(document).on('nested:fieldRemoved', function() {
+    $(document).on('.fieldRemoved', function() {
       validateUnique('.select-project');
     });  
 

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 	add_breadcrumb "Dashboard", :root_path
 	add_breadcrumb "Collaborators", :users_path
   before_action :set_user, only: [:resend_confirmation]
-
+  
 	def index
    	@users = User.order("first_name, last_name ASC").all
   end
@@ -46,6 +46,11 @@ class UsersController < ApplicationController
   def projects
     add_breadcrumb "Assign Projects", :show_user_project_user_path
 
+    @projects = Project.all.includes (:client)
+    @grouped_options = @projects.inject({}) do |options, project|
+      (options[project.client.name] ||= []) << [project.name, project.id]
+      options
+    end
   end
 
   def update_projects
@@ -75,6 +80,6 @@ class UsersController < ApplicationController
   end
 
   def user_project_params
-    params.require(:user).permit(:first_name, :last_name, :role_id, :email, user_projects_attributes: [:id, :project_id, :_destroy])
+    params.require(:user).permit(user_projects_attributes: [:id, :project_id, :_destroy])
   end
 end
