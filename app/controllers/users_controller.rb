@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:resend_confirmation]
 
 	def index
-   	@users = User.all
+   	@users = User.order("first_name, last_name ASC").all
   end
 
   def new

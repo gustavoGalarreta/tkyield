@@ -8,8 +8,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @clients = Client.all
-    @projects = Project.all
+    @clients = Client.order("name ASC").all
+    @projects = Project.order("name ASC").all
   end
 
   # GET /project_tasks.js
