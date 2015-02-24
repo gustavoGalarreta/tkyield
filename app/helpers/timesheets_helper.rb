@@ -1,7 +1,7 @@
 module TimesheetsHelper
 
 	def projects_helper
-		current_user.projects
+		current_user.projects.order("name ASC")
 	end
 
 	def new_timesheet
