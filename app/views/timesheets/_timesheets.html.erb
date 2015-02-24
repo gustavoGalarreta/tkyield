@@ -8,7 +8,7 @@
 				    <td>
 				      <div class="entry-info">
 				       	<div id="project_client">
-							<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
+							<p> <%= timesheet.project.name %> <span class="small"><%= timesheet.project.client.name %></span> </p>
 						</div>
 				        <div id="task_notes">
 						<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
