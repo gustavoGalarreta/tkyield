@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   # GET /project_tasks.js
   def tasks
     @timesheetId = params["timesheetId"].nil? ? nil : params["timesheetId"]
-    @tasks = @project.tasks
+    @tasks = @project.tasks.order("name ASC").all
   end
 
   # GET /projects/1
