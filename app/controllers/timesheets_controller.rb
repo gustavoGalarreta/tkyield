@@ -53,7 +53,7 @@ class TimesheetsController < ApplicationController
       @days_of_week = @timesheets_per_date.map{|t| t[:day]}
       if current_user.projects.any?
         @default_project = current_user.projects.first
-        @tasks = @default_project.tasks
+        @tasks = @default_project.tasks.order("name ASC")
       else
         @default_project = nil
         @tasks = []
@@ -61,7 +61,7 @@ class TimesheetsController < ApplicationController
     else
       @timesheets = current_user.get_timesheet_per_day @day_selected
       @default_project = @timesheet.project
-      @tasks = @default_project.tasks
+      @tasks = @default_project.tasks.order("name ASC")
     end
   end  
 

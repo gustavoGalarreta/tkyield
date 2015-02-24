@@ -28,7 +28,7 @@
 
 	<div class="input-group">
 		<span class="input-group-addon">Role</span>
-		<%= f.select :role_id, Role.all.collect{ |t| [t.name, t.id]}, {:prompt => "Select a Role" } , class: "form-control" %>
+		<%= f.select :role_id, Role.all.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a Role -" } , class: "form-control" %>
 	</div>
 	<br>
 

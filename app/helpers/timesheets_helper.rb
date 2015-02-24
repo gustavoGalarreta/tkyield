@@ -1,7 +1,12 @@
 module TimesheetsHelper
 
 	def projects_helper
-		current_user.projects
+		projects = current_user.projects.order("name ASC")
+		grouped_options = projects.inject({}) do |options, project|
+			(options[project.client.name] ||= []) << [project.name, project.id]
+			options
+		end
+		return grouped_options
 	end
 
 	def new_timesheet

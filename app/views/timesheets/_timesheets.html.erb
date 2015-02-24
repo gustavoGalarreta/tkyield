@@ -7,12 +7,14 @@
 				  <tr>    
 				    <td>
 				      <div class="entry-info">
-				       	<div id="project_client">
-							<p> <%= timesheet.project.name %> ( <span> <%= timesheet.project.client.name %></span> ) </p>
+				      	<div class="page-header cell-header">
+							<h3>
+								<%= timesheet.project.name %> <small><%= timesheet.project.client.name %></small>
+								<br>
+								<small><span class="timesheet-task"><%= timesheet.task.name %></span>
+								<%= " - #{timesheet.notes}" unless timesheet.notes.empty? %></small>
+							</h3>
 						</div>
-				        <div id="task_notes">
-						<p> <%= timesheet.task.name %> <span> <%= !timesheet.notes.empty? ? "- #{timesheet.notes}" : nil %></span>  </p>
-					  </div>
 				      </div>
 				    </td>
 					<td class="entry-time">

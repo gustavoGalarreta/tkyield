@@ -1,7 +1,7 @@
 module ProjectsHelper
 
 	def clients_helper
-		Client.all
+		Client.all.order("name ASC")
 	end
 
 	def tasks_helper

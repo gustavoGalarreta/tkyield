@@ -100,7 +100,18 @@ width: 90px;}
 line-height: 37px;
 width: 30px;}
 
-#project_client{
-	font-size: 30;
-	font-weight: bold;
+.cell-header{
+	padding-left: 7px;
+	margin: 0;
+	border: none;
+	h3{
+		font-size: 1.4em;
+		margin: 5px 0;
+	}
+	.timesheet-task{
+		color: black;
+	}
+	small{
+		font-size: 0.7em;
+	}
 }
