@@ -10,11 +10,11 @@
 		<%= form_for(timesheet, remote: true) do |f| %>
 		  <div class="input-group input-padding">
 		  	<span class="input-group-addon">Project</span>
-    		<%= f.select :project_id, projects_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a project" }, :data => { :timesheetId => timesheet.id } , class: "form-control project_edit_timesheet", :id => "project_edit_timesheet_#{timesheet.id}" %>
+    		<%= f.select :project_id, grouped_options_for_select(projects_helper, f.object.project_id), {:prompt => " - Select a project -"}, :data => { :timesheetId => timesheet.id } , class: "form-control project_edit_timesheet ", :id => "project_edit_timesheet_#{timesheet.id}" %>
 		  </div>
 		  <div class="input-group input-padding">
 		    <span class="input-group-addon">Task</span>
-		    <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task"} , class: "form-control", :id => "timesheet_edit_task_#{timesheet.id}"  %> 
+		    <%= f.select :task_id, @tasks.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a task -"} , class: "form-control", :id => "timesheet_edit_task_#{timesheet.id}"  %> 
 		  </div>
 		    <%= f.hidden_field :belongs_to_day, :id => "timesheet_day_#{timesheet.id}"%>
 		  

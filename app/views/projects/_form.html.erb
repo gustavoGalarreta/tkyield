@@ -34,7 +34,7 @@
 
   <div class="input-group">
     <span class="input-group-addon">Client</span>
-    <%= f.select :client_id, clients_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a client" } , class: "form-control" %>
+    <%= f.select :client_id, clients_helper.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a client -" } , class: "form-control" %>
   </div>
   <br>
   
@@ -48,7 +48,7 @@
           <%= f.fields_for :task_projects do |task_form| %>
             <div class="nested-select row">
               <div class="col-sm-10 ">
-                <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "Select a task" } , class: "form-control select-task" %>
+                <%= task_form.select :task_id, tasks_helper.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a task -" } , class: "form-control select-task" %>
               </div>
               <div class="col-sm-2">
                 <%= task_form.link_to_remove "X", class: "btn btn-danger" %>
@@ -69,7 +69,7 @@
           <%= f.fields_for :user_projects do |user_form| %>
           <div class="nested-select row">
           <div class="col-sm-10">
-          <%= user_form.select :user_id, users_helper.collect{ |u| [u.full_name, u.id]}, {:prompt => "Select a user"} , class: "form-control select-user" %>
+          <%= user_form.select :user_id, users_helper.collect{ |u| [u.full_name, u.id]}, {:prompt => "- Select a user -"} , class: "form-control select-user" %>
           </div><div class="col-sm-2">
           <%= user_form.link_to_remove "X", class: "btn btn-danger"%>
           </div>
