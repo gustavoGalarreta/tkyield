@@ -1,9 +1,10 @@
 class Timesheet < ActiveRecord::Base
   acts_as_paranoid
-  validates :project, :task, :user, presence: true
   belongs_to :project
   belongs_to :task
   belongs_to :user
+  
+  validates :project, :task, :user, presence: true
 
   def toggle_timer
     is_running? ? stop_timer : start_timer
