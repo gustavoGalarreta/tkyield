@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 	add_breadcrumb "Dashboard", :root_path
 	add_breadcrumb "Collaborators", :users_path
   before_action :set_user, only: [:resend_confirmation]
-  
+
 	def index
    	@users = User.order("first_name, last_name ASC").all
   end
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
 
     @projects = Project.all.includes (:client)
     @grouped_options = @projects.inject({}) do |options, project|
-      (options[project.client.name] ||= []) << [project.name, project.id]
+      (options[project.client_name] ||= []) << [project.name, project.id]
       options
     end
   end
@@ -56,9 +56,9 @@ class UsersController < ApplicationController
   def update_projects
     respond_to do |format|
       if @user.update(user_project_params)
-        format.html { redirect_to show_user_project_user_path(@user), notice: 'User was successfully updated.' }
+        format.html { redirect_to show_user_project_user_path(@user), notice: 'Projects assigned successfully.' }
       else
-        format.html { render :edit }
+        format.html { redirect_to show_user_project_user_path(@user), alert: 'Duplicate assigned project(s)' }
       end
     end
   end
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     @user.send_confirmation_instructions
     redirect_to users_path, notice: "Email sent successfully"
   end
- 
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user

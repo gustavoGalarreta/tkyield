@@ -1,5 +1,4 @@
 module ApplicationHelper
-
 	def get_seconds_in_hours_minutes time
 		# Time.at(time).utc.strftime("%H:%M")
 		minutes = (time / 60) % 60

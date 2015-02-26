@@ -4,7 +4,9 @@ class Project < ActiveRecord::Base
   has_many :task_projects, dependent: :destroy
   has_many :tasks, :through => :task_projects
   has_many :user_projects, dependent: :destroy
-  has_many :users, :through => :user_projects 
+  has_many :users, :through => :user_projects
+
+  delegate :name, :to => :client, :prefix => true
 
   validates :client, :name, :description, presence: true
 
