@@ -2,20 +2,20 @@ class TimesheetsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_timesheet, only: [:toggle_timesheet, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path 
+  add_breadcrumb "Dashboard", :root_path
   add_breadcrumb "Timesheet", :timesheets_path
 
   def index
-  	@today = DateTime.now.to_date    
+  	@today = DateTime.now.to_date
     @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
   	preload_variables("index")
-  end  
+  end
 
   def create
     @timesheet = Timesheet.new(timesheet_params)
     @timesheet.user = current_user
     if @timesheet.save_with_parse_total timesheet_params[:total_time]
-      current_user.start_timer(@timesheet)
+      current_user.start_timer(@timesheet) if @timesheet.total_time == 0
       @day_selected = @timesheet.belongs_to_day
       preload_variables
     else
@@ -49,8 +49,7 @@ class TimesheetsController < ApplicationController
 
   def preload_variables(action="")
     if action == "index"
-      @timesheets_per_date = current_user.timesheets_of_week_by_date @day_selected
-      @days_of_week = @timesheets_per_date.map{|t| t[:day]}
+      @timesheets_per_date, @days_of_week = current_user.timesheets_of_week_by_date @day_selected
       if current_user.projects.any?
         @default_project = current_user.projects.first
         @tasks = @default_project.tasks.order("name ASC")
@@ -63,7 +62,7 @@ class TimesheetsController < ApplicationController
       @default_project = @timesheet.project
       @tasks = @default_project.tasks.order("name ASC")
     end
-  end  
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.

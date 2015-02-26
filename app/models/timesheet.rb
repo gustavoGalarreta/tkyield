@@ -1,9 +1,13 @@
 class Timesheet < ActiveRecord::Base
   acts_as_paranoid
-  validates :project, :task, :user, presence: true
   belongs_to :project
   belongs_to :task
   belongs_to :user
+
+  delegate :name, :to => :project, :prefix => true
+  delegate :name, :to => :task, :prefix => true
+
+  validates :project, :task, :user, presence: true
 
   def toggle_timer
     is_running? ? stop_timer : start_timer
@@ -54,6 +58,9 @@ class Timesheet < ActiveRecord::Base
       else
         self.total_time = param_total_time.to_f * 3600
       end
+      self.save
+    elsif param_total_time.blank?
+      self.total_time = 0
       self.save
     else
       false

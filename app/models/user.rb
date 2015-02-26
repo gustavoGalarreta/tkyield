@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
+  belongs_to :role
   has_many :timesheets
   has_many :user_projects
   has_many :projects, :through => :user_projects
-  belongs_to :role
+
+  delegate :name, :to => :role, :prefix => true
+
   accepts_nested_attributes_for :user_projects, :allow_destroy => true
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def only_if_unconfirmed
@@ -67,7 +71,7 @@ class User < ActiveRecord::Base
     days_of_week.each do |day|
       timesheets << { day: day, timesheets: get_timesheet_per_day(day) }
     end
-    timesheets
+    return timesheets, timesheets.map{|t| t[:day]}
   end
 
   def get_timesheet_active
