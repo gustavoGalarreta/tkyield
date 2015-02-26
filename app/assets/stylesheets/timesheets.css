@@ -107,3 +107,9 @@ width: 30px;}
 	font-weight: bold;
 }
 
+#no_time_entry{
+	height: 200px;
+	padding: 55px;
+	background-color: #F5F5F5;
+	font-style: italic;
+}

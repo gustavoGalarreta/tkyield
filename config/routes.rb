@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'report/index'
+  get 'reports/index'
 
   root to: "home#index"
 

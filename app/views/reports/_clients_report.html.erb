@@ -2,9 +2,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Client Name</th>
-        <th>Total time</th>
-                  
+        <th>Name</th>
+        <th>Hours</th>            
       </tr>
     </thead>
     <tbody>
@@ -20,5 +19,5 @@
 
 
 <div class="align-right">
-  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, clients_path(format: "xlsx"), class: "btn btn-lg btn-primary"%>
+  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, clients_path(format: "xlsx"), class: "btn btn-lg btn-success"%>
 </div>

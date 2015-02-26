@@ -2,14 +2,16 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Project Name</th>
-        <th>Total time</th>
+        <th>Name </th>
+        <th>Clients </th>
+        <th>Hours</th>
       </tr>
     </thead>
     <tbody>
       <% @projects.each do |project| %>
         <tr>
           <td><%= project.name %></td>
+          <td><%= project.client.name %></td>
           <td><%= get_seconds_in_hours_minutes(project.project_total_time) %></td>
         </tr>
       <% end %>
@@ -18,5 +20,5 @@
 </div>
 
 <div class="align-right">
-  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, projects_path(format: "xlsx"), class: "btn btn-lg btn-primary"%>
+  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, projects_path(format: "xlsx"), class: "btn btn-lg btn-success"%>
 </div>
