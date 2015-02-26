@@ -9,6 +9,7 @@ class TimesheetsController < ApplicationController
   	@today = DateTime.now.to_date    
     @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
   	preload_variables("index")
+
   end  
 
   def create

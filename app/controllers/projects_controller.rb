@@ -10,6 +10,11 @@ class ProjectsController < ApplicationController
   def index
     @clients = Client.order("name ASC").all
     @projects = Project.order("name ASC").all
+
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   # GET /project_tasks.js

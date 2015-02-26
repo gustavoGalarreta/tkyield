@@ -72,6 +72,13 @@
                             <i class="fa fa-fw fa-dashboard"></i> Timesheet
                         <% end %> 
                     </li>
+                <% end %>
+                <% if can? :manage, Timesheet %>   
+                    <li>
+                        <%= link_to report_index_path do %>
+                            <i class="fa fa-th-list"></i> Reports
+                        <% end %> 
+                    </li>
                 <% end %> 
             </ul>
           </div>

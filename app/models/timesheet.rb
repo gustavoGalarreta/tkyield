@@ -4,7 +4,7 @@ class Timesheet < ActiveRecord::Base
   belongs_to :project
   belongs_to :task
   belongs_to :user
-
+    
   def toggle_timer
     is_running? ? stop_timer : start_timer
   end

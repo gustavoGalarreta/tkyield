@@ -15,8 +15,9 @@
           <% @tasks.each do |task| %>
           <tr>
             <td><%= task.name %></td>
-            <td><i class="fa fa-pencil"></i> <%= link_to 'Edit', edit_task_path(task) %></td>
-            <td><i class="fa fa-times"></i> <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td> <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_task_path(task),class: "btn btn-default" %></td>
+
+            <td> <%= link_to '<i class="fa fa-times"></i> Delete'.html_safe, task, method: :delete, data: { confirm: 'Are you sure?' } ,class: "btn btn-default"%></td>
           </tr>
         <% end %>
       </tbody>

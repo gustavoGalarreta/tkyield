@@ -1,0 +1,24 @@
+<div class="col-md-12">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Collaborator Name</th>
+        <th>Total worked time</th>
+                  
+      </tr>
+    </thead>
+    <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= user.first_name %> <%= user.last_name %></td>
+          <td><%= get_seconds_in_hours_minutes(user.user_total_time)%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="align-right">
+  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, users_path(format: "xlsx"), class: "btn btn-lg btn-primary"%>
+</div>

@@ -16,8 +16,7 @@
           <tr>
             <td><%= client.name %></td>
             
-            <td><i class="fa fa-pencil"></i> <%= link_to 'Edit',  edit_client_path(client) %></td>
-
+            <td><%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe,  edit_client_path(client) , class: "btn btn-default"%></td>
             <!--
         <td><%= link_to 'Show', client %></td>
         <td><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
