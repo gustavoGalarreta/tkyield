@@ -80,6 +80,13 @@
                         <% end %> 
                     </li>
                 <% end %> 
+                <% if can? :manage, TimeStation %>   
+                    <li>
+                        <%= link_to time_stations_path do %>
+                            <i class="fa fa-clock-o"></i> Time Station
+                        <% end %> 
+                    </li>
+                <% end %> 
             </ul>
           </div>
         <% end %>

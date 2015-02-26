@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   
 
+  resources :time_stations
+
   root to: "home#index"
 
   resources :users , only: [:index, :new, :edit, :create, :update] do
