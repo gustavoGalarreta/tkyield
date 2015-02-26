@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def get_timesheet_per_day day
-    Timesheet.where(belongs_to_day: day, user_id: self.id)
+    Timesheet.where(belongs_to_day: day, user_id: self.id).includes([:project, :task])
   end
 
   def timesheets_of_week_by_date date

@@ -1,6 +1,6 @@
 module ProjectsHelper
 	def projects_helper
-		projects = current_user.projects.order("name ASC")
+		projects = current_user.projects.order("name ASC").includes(:client)
 		grouped_options = projects.inject({}) do |options, project|
 			(options[project.client_name] ||= []) << [project.name, project.id]
 			options
