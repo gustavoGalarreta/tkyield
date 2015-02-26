@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'reports/index'
+  
 
   root to: "home#index"
 
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks
-
+  resources :reports
   resources :projects do
     get 'tasks', on: :collection
   end
