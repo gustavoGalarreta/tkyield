@@ -38,7 +38,9 @@
 	$( document ).on("click",".edit-timer", function(){
 		var timesheetid = $(this).data("timesheet-id");
 		var time = $("#timesheet_timer_" + timesheetid).countdown('getTimes');
-		$("#edit_timesheet_total_time_" + timesheetid).val(time[4] + ":" + time[5]);
+		var hours = time[4];
+		var minutes = time[5] < 10 ? "0" + time[5] : time[5];
+		$("#edit_timesheet_total_time_" + timesheetid).val(hours + ":" + minutes);
 	})
 
 	$( document ).on("click",".change_date", function(){
