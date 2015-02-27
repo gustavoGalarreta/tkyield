@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-
-  
-
   root to: "home#index"
   resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
     get 'show_user_project', to: 'users#projects', on: :member
@@ -9,7 +6,6 @@ Rails.application.routes.draw do
     get 'resend_confirmation', to: 'users#resend_confirmation', on: :member
   end
   resources :tasks
-  # resources :reports
   resources :clients
   resources :projects do
     get 'tasks', on: :collection
@@ -19,12 +15,12 @@ Rails.application.routes.draw do
   end
   namespace :reports do
     get 'list', to: 'reports#index'
-    # resources :user_project, only: :show
     get '/user_project/:user_id/:project_id', to: 'user_project#show', as: "user_project"
     resources :projects, only: :show
     resources :users, only: :show
     resources :clients, only: :show
   end
+  # resources :reports
 
   devise_for :users, :controllers => { :passwords => 'user_device/passwords', :confirmations => 'user_device/confirmations' }
   devise_scope :user do
