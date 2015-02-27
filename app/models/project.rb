@@ -21,5 +21,9 @@ class Project < ActiveRecord::Base
   def project_total_time 
     Timesheet.where(project_id: self.id).sum(:total_time)
   end
+
+  def total_time_in_users
+    Timesheet.total_time_in_users_by_project(self)
+  end
   
 end

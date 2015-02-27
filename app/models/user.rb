@@ -103,5 +103,8 @@ class User < ActiveRecord::Base
     stop_timer get_timesheet_active
   end
 
+  def total_time_in_projects
+    Timesheet.total_time_in_projects_by_user(self)
+  end
 
 end
