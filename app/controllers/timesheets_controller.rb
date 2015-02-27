@@ -6,7 +6,7 @@ class TimesheetsController < ApplicationController
   add_breadcrumb "Timesheet", :timesheets_path
 
   def index
-  	@today = DateTime.now.to_date
+  	@today = Time.zone.now.to_date
     @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
   	preload_variables("index")
   end
