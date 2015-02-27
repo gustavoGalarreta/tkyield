@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def restart_timer timesheet
+    timesheet.start_timer if timesheet.is_running?
+  end
+
   def start_timer timesheet
     if has_a_timer_running?
       cancel_active_timesheet
