@@ -35,11 +35,14 @@
 				ultimo = $( this );
 		});
 		if ($(this).is(ultimo)){
-			$( "#add_project").click();
+			if ( anyOptions(".select-project") )
+				$( "#add_project").click();
+			else
+				$( "#add_project").hide();
 		}
 		validateUnique('.select-project');
 	});
-	
+
 	$(document).on('.fieldAdded', function() {
 		validateUnique('.select-project');
 	});
@@ -48,41 +51,56 @@
 		validateUnique('.select-project');
 	});
 
-	function validateUnique(klass){
-		var arraySelect = new Array();
-		$(klass).each(function() {
-			if ($(this).is(':visible')){
-				arraySelect.push($(this).val());
-			}
-		});
+		function anyOptions(klass){
 
-		$(klass).each(function() {
-			if ($(this).is(':visible')){
-				$(this).children('option').each(function() {
-					$(this).removeAttr('disabled');
-				});
-			}
-		});
-		$(klass).each(function() {
-			if ($(this).is(':visible')){
-				var comboSelectedValue = $(this).val();
-				$(this).children('option').each(function() {
-					var disableMe = false;
-					var thisVal = $(this).val();
-					for(var i=0, len=arraySelect.length; i<len;i++){
-						if (disableMe==false){
-							if (thisVal != comboSelectedValue){
-								if ( thisVal === arraySelect[i] ){
-									disableMe = true;
+			var cantSelect = 0;
+			$(klass).each(function() {
+				if ($(this).is(':visible')){
+					cantSelect++;
+				}     
+			});
+			var cantOption = <%= Project.all.count %>;
+			return cantOption != cantSelect;
+		}
+
+		function validateUnique(klass){
+
+			var arraySelect = new Array();
+			$(klass).each(function() {
+				if ($(this).is(':visible')){
+					arraySelect.push($(this).val());
+				}     
+			});
+			$(klass).each(function() {
+				if ($(this).is(':visible')){
+					$(this).children('option').each(function() {
+						$(this).removeAttr('disabled');
+					});
+				}
+			});
+			$(klass).each(function() {
+
+				if ($(this).is(':visible')){
+
+					var comboSelectedValue = $(this).val();
+					$(this).find('option').each(function() {
+						var disableMe = false;
+						var thisVal = $(this).val();
+						for(var i=0, len=arraySelect.length; i<len;i++){
+							if (disableMe==false){
+								if (thisVal != comboSelectedValue){
+									if ( thisVal === arraySelect[i] ){
+										disableMe = true;
+									}
 								}
 							}
 						}
-					}
-					if (disableMe){
-						$(this).attr('disabled', true);
-					}
-				});
-			}
-		});
-	}
+						if (disableMe){
+							$(this).attr('disabled', true);
+						}
+					});
+				}
+			});
+		}
+
 </script>

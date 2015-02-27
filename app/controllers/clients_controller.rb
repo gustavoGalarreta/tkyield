@@ -10,6 +10,10 @@ class ClientsController < ApplicationController
   # GET /clients.json
   def index
     @clients = Client.order("name ASC").all
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   # GET /clients/1

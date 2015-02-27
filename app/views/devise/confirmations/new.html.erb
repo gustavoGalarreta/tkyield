@@ -14,7 +14,7 @@
   <% end %>
 
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post  ,class: "form-confirm"}) do |f| %>
-  <%= f.password_field :password, autocomplete: "off", autofocus: true, class: "form-control", placeholder: "Password" %>
+  <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email address" %>
   <br>
   <div class="actions">
     <%= f.submit "Resend confirmation instructions" , class: "btn btn-lg btn-warning"%>

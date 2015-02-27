@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  
+
   root to: "home#index"
 
   resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
@@ -9,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks
-
+  resources :reports
   resources :projects do
     get 'tasks', on: :collection
   end
