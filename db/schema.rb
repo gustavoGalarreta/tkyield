@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150226223337) do
+=======
+ActiveRecord::Schema.define(version: 20150219135843) do
+>>>>>>> 4f406f954ae90bc46cf38154742100183fdd6535
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -27,11 +31,6 @@ ActiveRecord::Schema.define(version: 20150226223337) do
     t.datetime "updated_at",              null: false
     t.index ["client_id"], :name => "fk__projects_client_id"
     t.foreign_key ["client_id"], "clients", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_projects_client_id"
-  end
-
-  create_table "reports", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -52,7 +51,6 @@ ActiveRecord::Schema.define(version: 20150226223337) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.index ["project_id"], :name => "fk__task_projects_project_id"
-    t.index ["task_id", "project_id"], :name => "index_task_projects_on_task_id_and_project_id", :unique => true
     t.index ["task_id"], :name => "fk__task_projects_task_id"
     t.foreign_key ["project_id"], "projects", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_task_projects_project_id"
     t.foreign_key ["task_id"], "tasks", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_task_projects_task_id"
@@ -125,7 +123,6 @@ ActiveRecord::Schema.define(version: 20150226223337) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.index ["project_id"], :name => "fk__user_projects_project_id"
-    t.index ["user_id", "project_id"], :name => "index_user_projects_on_user_id_and_project_id", :unique => true
     t.index ["user_id"], :name => "fk__user_projects_user_id"
     t.foreign_key ["project_id"], "projects", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_user_projects_project_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_user_projects_user_id"

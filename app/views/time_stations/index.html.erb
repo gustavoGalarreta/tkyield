@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<%= link_to 'Staff Report', report_path , class: "btn btn-lg btn-primary align-right" %>
 
 <h1 class="page-header"> Time Station <small> for <%= current_user.full_name %></small> </h1>
 
@@ -17,13 +18,9 @@
     <% @current_user.time_stations.each do |time_station| %>
       <tr>
         
-        <td><%= time_station.in_time %></td>
-        <td><%= time_station.out_time %></td>
-        <td><%= time_station.total_time %></td>
-        <td>
-          <div class="col-md-3"><%= link_to '<i class="fa fa-eye"></i> Show'.html_safe, time_station , class: "btn btn-default"%></div>
-          <div class="col-md-3"><%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_time_station_path(time_station) , class: "btn btn-default" %></div>
-          <div class="col-md-3"><%= link_to '<i class="fa fa-times"></i> Destroy'.html_safe, time_station, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-default"%></td>
+        <td><%= datetime_format(time_station.in_time) %></td>
+        <td><%= datetime_format(time_station.out_time) %></td>
+        <td><%= time_station.total_time %> hours</td>
       </tr>
     <% end %>
   </tbody>

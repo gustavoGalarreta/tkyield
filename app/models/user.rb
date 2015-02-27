@@ -5,8 +5,10 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :projects, :through => :user_projects
 
+  delegate :name, :to => :role, :prefix => true
+
   accepts_nested_attributes_for :user_projects, :allow_destroy => true
-  
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
   acts_as_xlsx
 
@@ -45,6 +47,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def restart_timer timesheet
+    timesheet.start_timer if timesheet.is_running?
+  end
+
   def start_timer timesheet
     if has_a_timer_running?
       cancel_active_timesheet
@@ -74,7 +80,7 @@ class User < ActiveRecord::Base
   end
 
   def get_timesheet_per_day day
-    Timesheet.where(belongs_to_day: day, user_id: self.id)
+    Timesheet.where(belongs_to_day: day, user_id: self.id).includes([:project, :task])
   end
 
   def timesheets_of_week_by_date date
@@ -83,7 +89,7 @@ class User < ActiveRecord::Base
     days_of_week.each do |day|
       timesheets << { day: day, timesheets: get_timesheet_per_day(day) }
     end
-    timesheets
+    return timesheets, timesheets.map{|t| t[:day]}
   end
 
   def get_timesheet_active

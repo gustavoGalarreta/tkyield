@@ -1,16 +1,15 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :tasks
   before_action :set_project, only: [:tasks, :show, :edit, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path 
+  add_breadcrumb "Dashboard", :root_path
   add_breadcrumb "Projects", :projects_path
 
   # GET /projects
   # GET /projects.json
   def index
-    @clients = Client.order("name ASC").all
-    @projects = Project.order("name ASC").all
-
+    @clients = Client.order("name ASC").includes(:projects)
+    # @projects = Project.order("name ASC").all
     respond_to do |format|
       format.html
       format.xlsx

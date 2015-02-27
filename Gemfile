@@ -42,7 +42,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Use Nested Form for conveniently manage multiple nested models in a single form. 
+# Use Nested Form for conveniently manage multiple nested models in a single form.
 gem 'nested_form', '0.3.2'
 
 gem "seedbank", "~> 0.3.0"

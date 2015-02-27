@@ -62,6 +62,16 @@ class TimeStationsController < ApplicationController
     end
   end
 
+  def staff_report
+    @time_stations = TimeStation.all
+    
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_station
