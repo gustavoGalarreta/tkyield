@@ -5,7 +5,6 @@ class CreateTimeStations < ActiveRecord::Migration
       t.datetime :in_time
       t.datetime :out_time
       t.float :total_time, default: 0
-
       t.timestamps null: false
     end
   end

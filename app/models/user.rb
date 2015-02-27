@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_projects, :allow_destroy => true
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  acts_as_xlsx
+  #acts_as_xlsx
 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
   end
 
   def cancel_active_timesheet
-    stop_timer get_timesheet_active
+     get_timesheet_active
   end
 
 

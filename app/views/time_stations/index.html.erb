@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-<%= link_to 'Staff Report', report_path , class: "btn btn-lg btn-primary align-right" %>
+<% if can? :manage, TimeStation %>   
+  <%= link_to 'Staff Report', report_path , class: "btn btn-lg btn-primary align-right" %>
+<% end %> 
 
 <h1 class="page-header"> Time Station <small> for <%= current_user.full_name %></small> </h1>
 
@@ -17,7 +19,6 @@
   <tbody>
     <% @current_user.time_stations.each do |time_station| %>
       <tr>
-        
         <td><%= datetime_format(time_station.in_time) %></td>
         <td><%= datetime_format(time_station.out_time) %></td>
         <td><%= time_station.total_time %> hours</td>

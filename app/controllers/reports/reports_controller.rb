@@ -8,6 +8,13 @@ module Reports
       @clients = Client.all
       @users = User.all
       @projects = Project.all.includes(:client)
+
+      @beginning = Date.today.at_beginning_of_week 
+      @end = Date.today.at_end_of_week
+
     end
+
+
+
   end
 end
