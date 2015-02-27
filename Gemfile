@@ -52,6 +52,11 @@ gem "breadcrumbs_on_rails", '2.3.0'
 # Use Flipclock for Javascript buttons and timer
 gem 'flipclockjs-rails', '~> 0.5.5b.1'
 
+#Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
+gem 'acts_as_xlsx', '~> 1.0.6'
+#Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates. 
+gem 'axlsx_rails', '~> 0.3.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

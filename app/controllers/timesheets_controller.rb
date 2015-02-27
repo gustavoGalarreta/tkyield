@@ -26,6 +26,7 @@ class TimesheetsController < ApplicationController
   def update
     @timesheet.assign_attributes(timesheet_params)
     if @timesheet.save_with_parse_total timesheet_params[:total_time]
+      current_user.restart_timer(@timesheet)
       @day_selected = @timesheet.belongs_to_day
       preload_variables
     else

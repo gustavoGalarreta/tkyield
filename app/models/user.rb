@@ -9,9 +9,14 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_projects, :allow_destroy => true
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  acts_as_xlsx
 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
+  end
+
+  def user_total_time 
+    Timesheet.where(user_id: self.id).sum(:total_time)
   end
 
   def password_required?
@@ -41,6 +46,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def restart_timer timesheet
+    timesheet.start_timer if timesheet.is_running?
+  end
+
   def start_timer timesheet
     if has_a_timer_running?
       cancel_active_timesheet
@@ -51,6 +60,14 @@ class User < ActiveRecord::Base
   def stop_timer timesheet
     timesheet.toggle_timer
     timesheet.save
+  end
+
+  def total_time_per_day_til_now day
+    a = 0
+    if has_a_timer_running?
+      a = get_timesheet_active.current_time 
+    end
+    a += total_time_per_day day 
   end
 
   def total_time_per_day day
