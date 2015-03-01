@@ -7,10 +7,7 @@ class UsersController < ApplicationController
 
 	def index
    	@users = User.order("first_name, last_name ASC").includes(:role)
-    respond_to do |format|
-      format.html
-      format.xlsx
-    end
+    
   end
 
   def new

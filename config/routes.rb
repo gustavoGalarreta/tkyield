@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   end
   namespace :reports do
     get 'list', to: 'reports#index'
+    get 'clients_excel', to: 'reports#clients_excel'
+    get 'projects_excel', to: 'reports#projects_excel'
+    get 'collaborators_excel', to: 'reports#collaborators_excel'
     resources :projects, only: :show
     resources :users, only: :show
     resources :clients, only: :show

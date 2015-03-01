@@ -1,6 +1,3 @@
-class Report < ActiveRecord::Base
-
-	
-	
-
+class Report 
+  
 end

@@ -10,14 +10,14 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_projects, :allow_destroy => true
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  #acts_as_xlsx
+
 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
 
-  def user_total_time 
-    Timesheet.where(user_id: self.id).sum(:total_time)
+  def total_time_between_dates beginning, ending
+    Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
   end
 
   def password_required?
