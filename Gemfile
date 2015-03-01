@@ -10,7 +10,7 @@ gem 'mysql2', '~> 0.3.14'
 gem 'schema_plus', '~> 1.8.6'
 
 # Profiles
-gem "cancan", '~> 1.6.10'
+gem 'cancancan', '~> 1.10'
 
 # Authentication for users
 gem 'devise', '~> 3.4.1'
@@ -42,10 +42,21 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Use Nested Form for conveniently manage multiple nested models in a single form. 
+# Use Nested Form for conveniently manage multiple nested models in a single form.
 gem 'nested_form', '0.3.2'
 
 gem "seedbank", "~> 0.3.0"
+
+gem "breadcrumbs_on_rails", '2.3.0'
+
+# Use Flipclock for Javascript buttons and timer
+gem 'flipclockjs-rails', '~> 0.5.5b.1'
+
+#Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
+gem 'acts_as_xlsx', '~> 1.0.6'
+#Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates. 
+gem 'axlsx_rails', '~> 0.3.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -66,3 +77,9 @@ group :development, :test do
   gem 'spring'
 end
 
+group :development do
+  gem 'better_errors', '2.1.1'
+  gem 'binding_of_caller', '0.7.2'
+  gem 'bullet', '4.14.4'
+  gem 'rails_best_practices', '1.15.6'
+end

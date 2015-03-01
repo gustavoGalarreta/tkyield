@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150205212238) do
+ActiveRecord::Schema.define(version: 20150227155550) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -29,6 +29,17 @@ ActiveRecord::Schema.define(version: 20150205212238) do
     t.foreign_key ["client_id"], "clients", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_projects_client_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -41,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150205212238) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.index ["project_id"], :name => "fk__task_projects_project_id"
+    t.index ["task_id", "project_id"], :name => "index_task_projects_on_task_id_and_project_id", :unique => true
     t.index ["task_id"], :name => "fk__task_projects_task_id"
     t.foreign_key ["project_id"], "projects", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_task_projects_project_id"
     t.foreign_key ["task_id"], "tasks", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_task_projects_task_id"
@@ -64,21 +76,42 @@ ActiveRecord::Schema.define(version: 20150205212238) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role_id",                limit: 4
+    t.string   "qr_code",                limit: 255
+    t.integer  "pin_code",               limit: 4
     t.index ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
     t.index ["email"], :name => "index_users_on_email", :unique => true
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+    t.index ["role_id"], :name => "fk__users_role_id"
+    t.foreign_key ["role_id"], "roles", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_users_role_id"
+  end
+
+  create_table "time_stations", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.datetime "in_time"
+    t.datetime "out_time"
+    t.float    "total_time", limit: 24, default: 0.0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.boolean  "working",    limit: 1
+    t.index ["user_id"], :name => "fk__time_stations_user_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_time_stations_user_id"
   end
 
   create_table "timesheets", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.integer  "task_id",    limit: 4
-    t.integer  "project_id", limit: 4
+    t.integer  "user_id",        limit: 4
+    t.integer  "task_id",        limit: 4
+    t.integer  "project_id",     limit: 4
     t.datetime "start_time"
     t.datetime "stop_time"
-    t.float    "total_time", limit: 24, default: 0.0
-    t.boolean  "running",    limit: 1,  default: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.float    "total_time",     limit: 24,  default: 0.0
+    t.boolean  "running",        limit: 1,   default: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "notes",          limit: 255
+    t.date     "belongs_to_day"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], :name => "index_timesheets_on_deleted_at"
     t.index ["project_id"], :name => "fk__timesheets_project_id"
     t.index ["task_id"], :name => "fk__timesheets_task_id"
     t.index ["user_id"], :name => "fk__timesheets_user_id"
@@ -93,6 +126,7 @@ ActiveRecord::Schema.define(version: 20150205212238) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.index ["project_id"], :name => "fk__user_projects_project_id"
+    t.index ["user_id", "project_id"], :name => "index_user_projects_on_user_id_and_project_id", :unique => true
     t.index ["user_id"], :name => "fk__user_projects_user_id"
     t.foreign_key ["project_id"], "projects", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_user_projects_project_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_user_projects_user_id"
