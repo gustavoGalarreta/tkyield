@@ -14,4 +14,14 @@
         });
     })
 
+    $( document ).on("click",".change-date", function(){
+        var dateForParam = $(this).data('date');
+        $.ajax({
+            type:'GET',
+            url: "<%= reports_list_path %>",
+            data: { date : dateForParam },
+            dataType: "script"
+        });
+    })
+
 </script>

@@ -19,9 +19,19 @@
     <% @time_stations.each do |time_station| %>
       <tr>
         <td><%= time_station.user.full_name %>
-        <td><%= datetime_format(time_station.in_time) %></td>
-        <td><%= datetime_format(time_station.out_time) %></td>
-        <td><%= time_station.total_time %> hours</td>
+        <td>
+          <% if !time_station.in_time.nil? %>
+            <%= datetime_format(time_station.in_time) %>
+          <% else %>
+          <%end%>
+        </td>
+        <td>
+          <% if !time_station.out_time.nil? %>
+            <%= datetime_format(time_station.out_time) %>
+          <% else %>
+          <%end%>
+        </td>
+        <td><%= get_seconds_in_hours_minutes(time_station.total_time) %></td>
       </tr>
     <% end %>
   </tbody>

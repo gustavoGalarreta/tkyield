@@ -22,4 +22,8 @@ class Project < ActiveRecord::Base
     Timesheet.where(belongs_to_day: beginning..ending, project_id: self.id).sum(:total_time)
   end
   
+  def total_time
+    Timesheet.where(project_id: self.id).sum(:total_time)
+  end
+
 end

@@ -1,6 +1,7 @@
 class TimeStationsController < ApplicationController
   before_action :set_time_station, only: [:show, :edit, :update, :destroy]
-
+  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Time Station", :time_stations_path
   # GET /time_stations
   # GET /time_stations.json
   def index
@@ -63,8 +64,8 @@ class TimeStationsController < ApplicationController
   end
 
   def staff_report
-    @time_stations = TimeStation.all
-    
+    add_breadcrumb "Staff Report", :report_path
+    @time_stations = TimeStation.all.includes(:user)
     respond_to do |format|
       format.html
       format.xlsx

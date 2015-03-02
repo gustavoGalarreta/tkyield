@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="btn-group col-lg-2" style="
-    padding-top: 20px">
+    <div class="btn-group col-lg-3" style="
+    padding-top: 15px">
         <button type="button" class="change-week btn btn-default" data-date = <%= @day_selected.last_week %>>
             <i class="fa fa-arrow-left"></i>
         </button>
@@ -8,9 +8,13 @@
             <i class="fa fa-arrow-right"></i>
         </button>
     </div> 
-    <div class="col-lg-9">
+    <div class="col-lg-6">
         <h3><strong>This Week :</strong> <small> <%= full_date_format(@beginning) %> - <%= full_date_format(@end) %> </small> </h3> 
     </div>
+    <div class="col-lg-2 to-the-right" style="
+    padding-top: 15px">
+     <%= link_to '<i class="fa fa-arrow-down"></i> Current Week'.html_safe , '#', :data => {:date => @today},:id => "today_date", :class => 'change-date btn btn-primary' %>
+     </div>
 </div>
 <br>
 

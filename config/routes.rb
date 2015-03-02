@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    namespace :v1 do
+      resources :time_stations, only: :create
+      resources :users, only: :index
+    end
+  end
 
   root to: "home#index"
   resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
@@ -27,6 +33,7 @@ Rails.application.routes.draw do
   resources :time_stations
   get 'report', to: 'time_stations#staff_report'
   # resources :reports
+
 
   devise_for :users, :controllers => { :passwords => 'user_device/passwords', :confirmations => 'user_device/confirmations' }
   devise_scope :user do

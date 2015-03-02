@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
     Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
   end
 
+  def total_time
+    Timesheet.where(user_id: self.id).sum(:total_time)
+  end
+
   def password_required?
     super if confirmed?
   end
