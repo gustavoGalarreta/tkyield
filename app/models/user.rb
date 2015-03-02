@@ -1,14 +1,15 @@
 class User < ActiveRecord::Base
   belongs_to :role
   has_many :timesheets
-  has_many :user_projects
+  has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
 
   delegate :name, :to => :role, :prefix => true
 
-  accepts_nested_attributes_for :user_projects, :allow_destroy => true
+  accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+
   acts_as_xlsx
 
   def only_if_unconfirmed
