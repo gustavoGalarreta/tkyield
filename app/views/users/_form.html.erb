@@ -29,6 +29,12 @@
 	</div>
 	<br>
 
+	<div class="input-group">
+		<span class="input-group-addon">Team</span>
+		<%= f.select :team_id, Team.all.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a Team -" } , class: "form-control" %>
+	</div>
+	<br>
+
 	<div class="field">
 		<div class="input-group">
 		  <span class="input-group-addon">QR Code</span>

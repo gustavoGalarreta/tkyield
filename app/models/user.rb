@@ -3,15 +3,11 @@ class User < ActiveRecord::Base
   belongs_to :team
   has_many :timesheets
   has_many :time_stations
-  has_many :user_projects
+  has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
-
   delegate :name, :to => :role, :prefix => true
-
-  accepts_nested_attributes_for :user_projects, :allow_destroy => true
-
+  accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
-
 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
@@ -109,5 +105,8 @@ class User < ActiveRecord::Base
      get_timesheet_active
   end
 
+  def total_time_in_projects
+    Timesheet.total_time_in_projects_by_user(self)
+  end
 
 end

@@ -35,35 +35,6 @@
 		<%if user_signed_in? %>
 		  <div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav side-nav">
-				<% if can? :manage, Client %>
-					<li>
-						<%= link_to clients_path do %>
-							<i class="fa fa-users"></i> Clients
-						<% end %>
-					</li>
-				<% end %>
-				<% if can? :manage, Task %>
-					<li>
-						<%= link_to tasks_path do %>
-							<i class="fa fa-fw fa-tasks"></i> Task
-						<% end %>
-					</li>
-				<% end %>
-				<% if can? :manage, Project %>
-					<li>
-						<%= link_to projects_path do %>
-							<i class="fa fa-fw fa-folder-open"></i>
-							Projects
-						<% end %>
-					</li>
-				<% end %>
-				<% if can? :manage, User %>
-					<li>
-						<%= link_to users_path do %>
-							<i class="fa fa-fw fa-user"></i> Collaborators
-						<% end %>
-					</li>
-				<% end %>
 				<% if can? :manage, Timesheet %>
 					<li>
 						<%= link_to timesheets_path do %>
@@ -71,19 +42,57 @@
 						<% end %>
 					</li>
 				<% end %>
-                <% if can? :manage, Report %>   
-                    <li>
-                        <%= link_to reports_list_path do %>
-                            <i class="fa fa-th-list"></i> Reports
-                        <% end %> 
-                    </li>
-                <% end %> 
+				<% if can? :manage, Client , Task, Project%>
                 <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#manage" class="" aria-expanded="true"><i class="fa fa-fw fa-caret-down"></i> Manage </a>
+                    <ul id="manage" class="collapse in" aria-expanded="true">
+                        <li>
+                            <%= link_to clients_path do %>
+								<i class="fa fa-suitcase"></i> Clients
+							<% end %>
+                        </li>
+                        <li>
+							<%= link_to tasks_path do %>
+								<i class="fa fa-fw fa-tasks"></i> Task
+							<% end %>
+						</li>
+	                    <li>
+	                    	<%= link_to projects_path do %>
+								<i class="fa fa-fw fa-folder-open"></i> Projects
+							<% end %>
+						</li>
+                    </ul>
+                </li> 
+                <% end %>
+				<% if can? :manage, Team ,User %>   
+	                <li>
+	                    <a href="javascript:;" data-toggle="collapse" data-target="#staff" class="" aria-expanded="true"><i class="fa fa-fw fa-caret-down"></i> Staff </a>
+	                    <ul id="staff" class="collapse in" aria-expanded="true">
+							<li>
+		                        <%= link_to teams_path do %>
+		                        	<i class="fa fa-users"></i> Teams
+		                        <% end %> 
+	                    	</li>
+                    	   	<li>
+								<%= link_to users_path do %>
+									<i class="fa fa-fw fa-user"></i> Collaborators
+								<% end %>
+							</li>
+	                    </ul>
+	                </li>
+               	<% end %>
+				<li>
                     <%= link_to time_stations_path do %>
                         <i class="fa fa-clock-o"></i> Time Station
                     <% end %> 
                 </li>
-                
+                <% if can? :manage, Report %>   
+                    <li>
+                        <%= link_to reports_list_path do %>
+                        	<i class="fa fa-th-list"></i> Reports
+                        <% end %> 
+                    </li>
+                <% end %> 
             </ul>
           </div>
         <% end %>

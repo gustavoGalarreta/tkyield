@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227155550) do
+ActiveRecord::Schema.define(version: 20150303165244) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -58,6 +58,14 @@ ActiveRecord::Schema.define(version: 20150227155550) do
     t.foreign_key ["task_id"], "tasks", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_task_projects_task_id"
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], :name => "index_teams_on_deleted_at"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",             limit: 255, default: "", null: false
     t.string   "last_name",              limit: 255, default: "", null: false
@@ -79,11 +87,14 @@ ActiveRecord::Schema.define(version: 20150227155550) do
     t.integer  "role_id",                limit: 4
     t.string   "qr_code",                limit: 255
     t.integer  "pin_code",               limit: 4
+    t.integer  "team_id",                limit: 4
     t.index ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
     t.index ["email"], :name => "index_users_on_email", :unique => true
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
     t.index ["role_id"], :name => "fk__users_role_id"
+    t.index ["team_id"], :name => "fk__users_team_id"
     t.foreign_key ["role_id"], "roles", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_users_role_id"
+    t.foreign_key ["team_id"], "teams", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_users_team_id"
   end
 
   create_table "time_stations", force: :cascade do |t|

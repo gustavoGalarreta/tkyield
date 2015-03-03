@@ -74,4 +74,12 @@ class Timesheet < ActiveRecord::Base
     return days_of_week
   end
 
+  def self.total_time_in_projects_by_user(user)
+    user.timesheets.select("timesheets.project_id, timesheets.user_id, SUM( timesheets.total_time ) AS total").joins(:user).group("timesheets.project_id")
+  end
+
+  def self.total_time_in_users_by_project(project)
+    project.timesheets.select("timesheets.user_id, timesheets.project_id, SUM( timesheets.total_time ) AS total").joins(:project).group("timesheets.user_id")
+  end
+
 end
