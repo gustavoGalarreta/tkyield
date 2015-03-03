@@ -6,8 +6,8 @@ module Reports
     
     def show
       @user = User.find params[:id]
-      add_breadcrumb @user.full_name, :reports_user_path
-      @timesheets = @user.timesheets.includes(:project)
+      add_breadcrumb "Collaborators", :reports_user_path
+      @timesheets = @user.total_time_in_projects
     end
   end
 end

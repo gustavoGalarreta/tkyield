@@ -6,7 +6,7 @@ module Reports
     
     def show
       @client = Client.find params[:id]
-      add_breadcrumb @client.name, :reports_client_path
+      add_breadcrumb "Clients", :reports_client_path
       @projects = @client.projects
     end
   end

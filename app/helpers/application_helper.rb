@@ -14,4 +14,8 @@ module ApplicationHelper
 	def full_date_format date
 		date.strftime("%A, %d %b")
 	end
+
+	def datetime_format date
+		date.strftime("%B %d, %I:%M %p")
+	end
 end

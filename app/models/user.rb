@@ -1,21 +1,23 @@
 class User < ActiveRecord::Base
   belongs_to :role
+  belongs_to :team
   has_many :timesheets
-  has_many :user_projects
+  has_many :time_stations
+  has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
-
   delegate :name, :to => :role, :prefix => true
-
-  accepts_nested_attributes_for :user_projects, :allow_destroy => true
-
+  accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  acts_as_xlsx
 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
 
-  def user_total_time 
+  def total_time_between_dates beginning, ending
+    Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
+  end
+
+  def total_time
     Timesheet.where(user_id: self.id).sum(:total_time)
   end
 
@@ -100,8 +102,11 @@ class User < ActiveRecord::Base
   end
 
   def cancel_active_timesheet
-    stop_timer get_timesheet_active
+     get_timesheet_active
   end
 
+  def total_time_in_projects
+    Timesheet.total_time_in_projects_by_user(self)
+  end
 
 end

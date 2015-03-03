@@ -7,10 +7,7 @@ class UsersController < ApplicationController
 
 	def index
    	@users = User.order("first_name, last_name ASC").includes(:role)
-    respond_to do |format|
-      format.html
-      format.xlsx
-    end
+    
   end
 
   def new
@@ -80,7 +77,7 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role_id, :email)
+    params.require(:user).permit(:first_name, :last_name, :role_id,:team_id, :email,:qr_code, :pin_code)
   end
 
   def user_project_params

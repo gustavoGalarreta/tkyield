@@ -9,8 +9,8 @@
     <tbody>
         <% @users.each do |user| %>
         <tr>
-          <td><i class="fa fa-user"></i> <%= link_to user.full_name, reports_user_path(user) %></td>
-          <td><%= get_seconds_in_hours_minutes(user.user_total_time)%></td>
+          <td><%= link_to user.full_name, reports_user_path(user) %></td>
+          <td><%= get_seconds_in_hours_minutes(user.total_time_between_dates(@beginning,@end))%></td>
         </tr>
       <% end %>
     </tbody>
@@ -19,5 +19,5 @@
 
 
 <div class="align-right">
-  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, users_path(format: "xlsx"), class: "btn btn-lg btn-success"%>
+  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_collaborators_excel_path(format: "xlsx", date: @day_selected), class: "btn btn-lg btn-success"%>
 </div>
