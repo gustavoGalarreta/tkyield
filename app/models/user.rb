@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :role
+  belongs_to :team
   has_many :timesheets
   has_many :time_stations
   has_many :user_projects

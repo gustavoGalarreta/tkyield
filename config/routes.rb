@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :teams
+
   namespace :api do
     namespace :v1 do
       resources :time_stations, only: :create
@@ -22,16 +24,17 @@ Rails.application.routes.draw do
     get 'toggle_timesheet', on: :member
   end
   namespace :reports do
+    get 'dash', to: 'reports#dash'
     get 'list', to: 'reports#index'
     get 'clients_excel', to: 'reports#clients_excel'
     get 'projects_excel', to: 'reports#projects_excel'
     get 'collaborators_excel', to: 'reports#collaborators_excel'
+    get 'report', to: 'reports#staff_report'
     resources :projects, only: :show
     resources :users, only: :show
     resources :clients, only: :show
   end
   resources :time_stations
-  get 'report', to: 'time_stations#staff_report'
   # resources :reports
 
 
