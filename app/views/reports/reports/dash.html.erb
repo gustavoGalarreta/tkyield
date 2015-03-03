@@ -8,7 +8,7 @@
         var dateForParam = $(this).data('date');
         $.ajax({
             type:'GET',
-            url: "<%= reports_list_path %>",
+            url: "<%= reports_dash_path %>",
             data: { date : dateForParam },
             dataType: "script"
         });
@@ -18,7 +18,7 @@
         var dateForParam = $(this).data('date');
         $.ajax({
             type:'GET',
-            url: "<%= reports_list_path %>",
+            url: "<%= reports_dash_path %>",
             data: { date : dateForParam },
             dataType: "script"
         });

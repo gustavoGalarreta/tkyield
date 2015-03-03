@@ -11,6 +11,20 @@ module Reports
       @projects = Project.order("name ASC").all.includes(:client)
     end
 
+    def staff
+        @time_stations = TimeStation.all.includes(:user)
+        respond_to do |format|
+          format.html
+          format.xlsx
+        end
+    end
+
+    def dash
+      @clients = Client.all
+      @users = User.all
+      @projects = Project.all.includes(:client)
+    end
+
     def clients_excel
       @clients = Client.order("name ASC").all
       respond_to do |format|
