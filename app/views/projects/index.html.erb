@@ -24,13 +24,13 @@
 									<%= project.name %>
 								</div>
 								<div class="col-md-2">
-									<i class="fa fa-eye"></i> <%= link_to 'Show', project %>
+									 <%= link_to '<i class="fa fa-eye"></i> Show'.html_safe, project ,class: "btn btn-default"%>
 								</div>
 								<div class="col-md-2">
-									<i class="fa fa-pencil"></i> <%= link_to 'Edit', edit_project_path(project) %>
+									<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_project_path(project),class: "btn btn-default" %>
 								</div>
 								<div class="col-md-2">
-									<i class="fa fa-times"></i> <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %>
+									<%= link_to '<i class="fa fa-times"></i> Destroy'.html_safe, project, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-default" %>
 								</div>
 							</td>
 						</tr>

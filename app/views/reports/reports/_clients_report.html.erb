@@ -10,7 +10,7 @@
       <% @clients.each do |client| %>
         <tr>
           <td><%= link_to client.name, reports_client_path(client) %></td>
-          <td><%= get_seconds_in_hours_minutes(client.client_total_time)%></td>
+          <td><%= get_seconds_in_hours_minutes(client.client_total_time_between_dates(@beginning,@end))%></td>
         </tr>
       <% end %>
     </tbody>
@@ -19,5 +19,5 @@
 
 
 <div class="align-right">
-  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, clients_path(format: "xlsx"), class: "btn btn-lg btn-success"%>
+  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_clients_excel_path(format: "xlsx", date: @day_selected), class: "btn btn-lg btn-success"%>
 </div>

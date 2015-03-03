@@ -1,6 +1,28 @@
-<br>
 <div class="container-fluid">
 	<div class="row">
+		<% if can? :manage, Timesheet %>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-yellow">
+					<%= link_to timesheets_path do %>
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-dashboard fa-4x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<h3>Timesheet</h3>
+							</div>
+						</div>
+					</div>
+						<div class="panel-footer">
+							<span class="pull-left"> View Details </span>
+							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</div>
+				<% end %>
+				</div>
+			</div>
+		<% end %>
 		<% if can? :manage, Client %>
 			<div class="col-lg-3 col-md-6">
 				<div class="panel panel-primary">
@@ -8,7 +30,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
-								<i class="fa fa-users fa-4x"></i>
+								<i class="fa fa-suitcase fa-4x"></i>
 							</div>
 							<div class="col-xs-9 text-right">
 								<h3>Clients</h3>
@@ -70,17 +92,17 @@
 				</div>
 			</div>
 		<% end %>
-		<% if can? :manage, Timesheet %>
+		<% if can? :manage, Team %>
 			<div class="col-lg-3 col-md-6">
 				<div class="panel panel-yellow">
-					<%= link_to timesheets_path do %>
+					<%= link_to teams_path do %>
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
-								<i class="fa fa-dashboard fa-4x"></i>
+								<i class="fa fa-users fa-4x"></i>
 							</div>
 							<div class="col-xs-9 text-right">
-								<h3>Timesheet</h3>
+								<h3>Teams</h3>
 							</div>
 						</div>
 					</div>
@@ -116,9 +138,30 @@
 				</div>
 			</div>
 		<% end %> 
+		<div class="col-lg-3 col-md-6">
+		    <div class="panel panel-green">
+   		      <%= link_to time_stations_path do %> 
+		        <div class="panel-heading">
+		            <div class="row">
+		                <div class="col-xs-3">
+		                    <i class="fa fa-clock-o fa-4x"></i>
+		                </div>
+		                <div class="col-xs-9 text-right">
+		                    <h3>Time Station</h3> 
+		                </div>
+		            </div>
+		        </div>
+		            <div class="panel-footer">
+		                <span class="pull-left"> View Details </span>
+		                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+		                <div class="clearfix"></div>
+		            </div>
+		      <% end %>
+		    </div>
+		</div>
 		<% if can? :manage, Report %> 
 			<div class="col-lg-3 col-md-6">
-				<div class="panel panel-green">
+				<div class="panel panel-red">
 					<%= link_to reports_list_path do %> 
 						<div class="panel-heading">
 							<div class="row">
@@ -138,6 +181,6 @@
 					<% end %>
 				</div>
 			</div>
-		<% end %>
+		<% end %> 
 	</div>
 </div>

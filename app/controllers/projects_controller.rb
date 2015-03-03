@@ -9,11 +9,6 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @clients = Client.order("name ASC").includes(:projects)
-    # @projects = Project.order("name ASC").all
-    respond_to do |format|
-      format.html
-      format.xlsx
-    end
   end
 
   # GET /project_tasks.js
