@@ -7,7 +7,11 @@ module Reports
     def show
       @user = User.find params[:id]
       add_breadcrumb "Collaborators", :reports_user_path
-      @timesheets = @user.total_time_in_projects
+      @today = Time.zone.now.to_date
+      @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
+      @beginning = @day_selected.at_beginning_of_week 
+      @end = @day_selected.at_end_of_week
+      @timesheets = @user.total_time_in_projects_dates(@beginning, @end)
     end
   end
 end

@@ -109,4 +109,8 @@ class User < ActiveRecord::Base
     Timesheet.total_time_in_projects_by_user(self)
   end
 
+  def total_time_in_projects_dates(beginning, ending)
+    Timesheet.total_time_in_projects_by_user_dates(self, beginning, ending)
+  end
+
 end
