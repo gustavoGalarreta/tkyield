@@ -55,9 +55,14 @@ module Reports
     def set_time
       @today = Time.zone.now.to_date
       @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
-      @beginning = @day_selected.at_beginning_of_week 
-      @end = @day_selected.at_end_of_week
+      @type = (params[:type]) ? params[:type] : "Weekly"
+      if @type == "Weekly"
+        @beginning = @day_selected.at_beginning_of_week 
+        @end = @day_selected.at_end_of_week
+      else
+        @beginning = @day_selected.at_beginning_of_month
+        @end = @day_selected.at_end_of_month
+      end
     end
-
   end
 end

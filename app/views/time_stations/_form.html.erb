@@ -1,4 +1,4 @@
-<%= form_for(@time_station) do |f| %>
+<%= form_for(@time_station ,:remote => true)  do |f| %>
   <% if @time_station.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@time_station.errors.count, "error") %> prohibited this time_station from being saved:</h2>
@@ -12,22 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
+    <%= label_tag :pin_code %><br>
+    <%= text_field_tag :pin_code, nil , class: 'keypad'%>
   </div>
-  <div class="field">
-    <%= f.label :in_time %><br>
-    <%= f.datetime_select :in_time %>
-  </div>
-  <div class="field">
-    <%= f.label :out_time %><br>
-    <%= f.datetime_select :out_time %>
-  </div>
-  <div class="field">
-    <%= f.label :total_time %><br>
-    <%= f.text_field :total_time %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+
 <% end %>
+<div id="keypad">
+</div>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+      $('#keypad').keypad();
+  });
+
+</script>

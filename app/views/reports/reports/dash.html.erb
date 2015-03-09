@@ -4,22 +4,13 @@
 
 <script type="text/javascript">
 
-    $( document ).on("click",".change-week", function(){
+    $( document ).on("click",".change-report", function(){
         var dateForParam = $(this).data('date');
+        var typeForParam = $(this).data('type');
         $.ajax({
             type:'GET',
             url: "<%= reports_dash_path %>",
-            data: { date : dateForParam },
-            dataType: "script"
-        });
-    })
-
-    $( document ).on("click",".change-date", function(){
-        var dateForParam = $(this).data('date');
-        $.ajax({
-            type:'GET',
-            url: "<%= reports_dash_path %>",
-            data: { date : dateForParam },
+            data: { type : typeForParam, date : dateForParam },
             dataType: "script"
         });
     })

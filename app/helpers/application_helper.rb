@@ -15,6 +15,10 @@ module ApplicationHelper
 		date.strftime("%A, %d %b")
 	end
 
+	def year_format date
+		date.strftime("%Y")
+	end
+
 	def datetime_format date
 		date.strftime("%B %d, %I:%M %p")
 	end

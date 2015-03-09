@@ -1,19 +1,32 @@
 <div class="row">
+    <div class="btn-group col-lg-3" style="padding-top: 15px">
+        <button type="button" class="change-report btn btn-default <%='active' if @type=='Monthly'%>" data-type = "Monthly" data-date = <%= @day_selected %>> Monthly </button>
+        <button type="button" class="change-report btn btn-default <%='active' if @type=='Weekly'%>" data-type = "Weekly" data-date = <%= @day_selected %>> Weekly </button>
+    </div> 
+</div>
+<div class="row">
     <div class="btn-group col-lg-3" style="
     padding-top: 15px">
-        <button type="button" class="change-week btn btn-default" data-date = <%= @day_selected.last_week %>>
+        <button type="button" class="change-report btn btn-default" data-type = <%= @type %> data-date = <%= @type=='Weekly' ? @day_selected.last_week : @day_selected.last_month%> >
             <i class="fa fa-arrow-left"></i>
         </button>
-        <button type="button" class="change-week btn btn-default" data-date = <%= @day_selected.next_week %>>
+        <button type="button" class="change-report btn btn-default" data-type = <%= @type %> data-date = <%= @type=='Monthly' ? @day_selected.last_week : @day_selected.next_month%> >
             <i class="fa fa-arrow-right"></i>
         </button>
     </div> 
     <div class="col-lg-6">
-        <h3><strong>This Week :</strong> <small> <%= full_date_format(@beginning) %> - <%= full_date_format(@end) %> </small> </h3> 
+        <h3><strong>
+            This
+            <% if @type =="Weekly"%>
+            Week :
+            <% else %>
+            Month :
+            <% end %>
+            </strong> <small> <%= full_date_format(@beginning) %> - <%= full_date_format(@end) %> </small>  <%= year_format(@day_selected) %></h3> 
     </div>
     <div class="col-lg-2 to-the-right" style="
     padding-top: 15px">
-     <%= link_to '<i class="fa fa-arrow-down"></i> Current Week'.html_safe , '#', :data => {:date => @today},:id => "today_date", :class => 'change-date btn btn-primary' %>
+     <%= link_to '<i class="fa fa-arrow-down"></i> Today'.html_safe , '#', :data => {:date => @today, :type => @type},:id => "today_date", :class => 'change-report btn btn-primary' %>
      </div>
 </div>
 <br>

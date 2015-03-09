@@ -25,18 +25,22 @@ class TimeStationsController < ApplicationController
 
   # POST /time_stations
   # POST /time_stations.json
+  
   def create
-    @time_station = TimeStation.new(time_station_params)
-
-    respond_to do |format|
-      if @time_station.save
-        format.html { redirect_to @time_station, notice: 'Time station was successfully created.' }
-        format.json { render :show, status: :created, location: @time_station }
-      else
-        format.html { render :new }
-        format.json { render json: @time_station.errors, status: :unprocessable_entity }
+    puts "osito"
+    puts params
+    @user = User.find_by_pin_code(params[:pin_code])
+    @last_time_station = TimeStation.where(user: @user).last
+    @is_in = true
+    if @user
+      if @last_time_station.nil? or !@last_time_station.out_time.nil?
+        TimeStation.create(user_id: @user.id, in_time: Time.zone.now)
+      elsif @last_time_station.out_time.nil?
+        @last_time_station.update(out_time: Time.zone.now, total_time: Time.zone.now - @last_time_station.in_time)
+        @is_in = false
       end
     end
+
   end
 
   # PATCH/PUT /time_stations/1

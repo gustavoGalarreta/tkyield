@@ -1,0 +1,10 @@
+<% if !@user %>
+	alert("Pin inválido")
+<% elsif @is_in %>
+	alert("Entrada");
+	$("#pin_code").val("");
+<% else %>
+	alert("Salida");
+	$("#pin_code").val("");
+	<% render
+<% end %>
