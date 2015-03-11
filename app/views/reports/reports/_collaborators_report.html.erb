@@ -1,3 +1,7 @@
+<br><div class="row align-right">
+  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_collaborators_excel_path(format: "xlsx", date: @day_selected), class: "btn btn-success"%>
+</div>
+
 <div class="col-md-12">
   <table class="table table-striped">
     <thead>
@@ -17,7 +21,3 @@
   </table>
 </div>
 
-
-<div class="align-right">
-  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_collaborators_excel_path(format: "xlsx", date: @day_selected), class: "btn btn-lg btn-success"%>
-</div>

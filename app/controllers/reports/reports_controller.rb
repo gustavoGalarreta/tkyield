@@ -11,40 +11,31 @@ module Reports
       @projects = Project.order("name ASC").all.includes(:client)
     end
 
-    def staff
-      add_breadcrumb "Reports", :reports_list_path
-      add_breadcrumb "Staff Report", :reports_staff_path
-      @time_stations = TimeStation.all.includes(:user)
-      respond_to do |format|
-        format.html
-        format.xlsx
-      end
-    end
-
     def dash
       add_breadcrumb "Reports", :reports_list_path
       add_breadcrumb "Timesheet report", :reports_dash_path
       @clients = Client.all
       @users = User.all
       @projects = Project.all.includes(:client)
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client])      
     end
 
     def clients_excel
-      @clients = Client.order("name ASC").all
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC")
       respond_to do |format|
         format.xlsx
       end
     end
 
     def projects_excel
-      @projects = Project.order("name ASC").all.includes(:client)
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC")
       respond_to do |format|
         format.xlsx
       end
     end
 
     def collaborators_excel
-      @users = User.order("first_name, last_name ASC").includes(:role)
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC")
       respond_to do |format|
         format.xlsx
       end

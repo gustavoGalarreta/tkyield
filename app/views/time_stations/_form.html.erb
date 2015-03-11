@@ -2,7 +2,6 @@
   <% if @time_station.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@time_station.errors.count, "error") %> prohibited this time_station from being saved:</h2>
-
       <ul>
       <% @time_station.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -12,12 +11,14 @@
   <% end %>
 
   <div class="field">
-    <%= label_tag :pin_code %><br>
-    <%= text_field_tag :pin_code, nil , class: 'keypad'%>
+    <div class="input-group">
+      <span class="input-group-addon"><h2>Pin Code</h2></span>
+      <%= text_field_tag :pin_code, nil , class: 'keypad form-control pin', :autofocus=>true%>
+    </div>
+  <br>
   </div>
-
-
 <% end %>
+
 <div id="keypad">
 </div>
 <script type="text/javascript">

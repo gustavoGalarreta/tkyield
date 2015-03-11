@@ -1,12 +1,12 @@
 class TimeStationsController < ApplicationController
   before_action :set_time_station, only: [:show, :edit, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path
-  add_breadcrumb "Time Station", :time_stations_path
+  add_breadcrumb "Dashboard", :root_path , :only => %w(index show)
+  add_breadcrumb "Time Station", :time_stations_path , :only => %w(index show)
   # GET /time_stations
   # GET /time_stations.json
   def index
-    @time_stations = TimeStation.all
     @current_user = current_user
+    @in_times = TimeStation.where(user_id: @current_user.id, parent_id: nil).includes(:children)
   end
 
   # GET /time_stations/1
@@ -17,6 +17,8 @@ class TimeStationsController < ApplicationController
   # GET /time_stations/new
   def new
     @time_station = TimeStation.new
+    @recent = TimeStation.includes(:user).order("updated_at DESC").first(10)
+
   end
 
   # GET /time_stations/1/edit
@@ -27,16 +29,14 @@ class TimeStationsController < ApplicationController
   # POST /time_stations.json
   
   def create
-    puts "osito"
-    puts params
     @user = User.find_by_pin_code(params[:pin_code])
     @last_time_station = TimeStation.where(user: @user).last
     @is_in = true
     if @user
-      if @last_time_station.nil? or !@last_time_station.out_time.nil?
-        TimeStation.create(user_id: @user.id, in_time: Time.zone.now)
-      elsif @last_time_station.out_time.nil?
-        @last_time_station.update(out_time: Time.zone.now, total_time: Time.zone.now - @last_time_station.in_time)
+      if @last_time_station.nil? or !@last_time_station.parent_id.nil?
+        TimeStation.create(user_id: @user.id)
+      elsif @last_time_station.parent_id.nil? 
+        TimeStation.create(user_id: @user.id, parent_id: @last_time_station.id, total_time: Time.zone.now - @last_time_station.created_at )
         @is_in = false
       end
     end

@@ -1,3 +1,9 @@
+.keypad{
+	width: 70%;
+	margin: auto;
+    margin-bottom: 40px;
+}
+
 .keypad  button {
     margin: 1%;
     width: 31%;
@@ -12,4 +18,5 @@
 .keypad  button.submit {
     background: black;
     color: white;
+    background-color: #337AB7;
 }
