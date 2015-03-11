@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
 	def index
    	@teams = Team.order("name ASC")
+    @users = User.where(team_id: nil).includes(:role)
   end
 
   def new

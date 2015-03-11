@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-lg-6 text-center">
     	<strong>Team</strong>
-    	<%= select_tag "team",options_from_collection_for_select(@teams, "id", "name"), prompt: "- Select a Team -" ,class:"form-control select"%>           
+    	<%= select_tag "team",options_from_collection_for_select(@teams, "id", "name"), prompt: "- Select a Team -" ,class:"form-control select",:data => { :team_id => 1}%>           
     </div>
     <div class="col-lg-6 text-center">
         <strong>Collaborators</strong>

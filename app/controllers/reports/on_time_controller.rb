@@ -6,13 +6,23 @@ module Reports
     
     def index
       add_breadcrumb "On Time Report", :reports_on_time_index_path
-      @time_stations = TimeStation.all
+      @in_times = TimeStation.where(created_at: @beginning..@end,parent_id: nil).includes(:children)
       @teams = Team.all
       @collaborators = User.all
       respond_to do |format|
         format.html
         format.xlsx
       end
+    end
+
+    private
+
+    def set_time
+      @today = Time.zone.now.to_date
+      @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
+      @beginning = @day_selected.at_beginning_of_week 
+      @end = @day_selected.at_end_of_week
+      
     end
   end
 end

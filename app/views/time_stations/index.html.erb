@@ -13,12 +13,13 @@
       <tr>
         <td><%= full_date_format(time_station.created_at)%></td>
         <td>
-          <%= time_format(time_station.created_at) %>
+          <%= datetime_format(time_station.created_at) %>
         </td>
         <td>
            <% if !time_station.children.nil? %>
-            <%= time_format(time_station.children.created_at) %>
+            <%= datetime_format(time_station.children.created_at) %>
           <% else %>
+            --
           <%end%>
         </td>
         <td>
