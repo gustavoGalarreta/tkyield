@@ -1,6 +1,6 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Projects_report") do |sheet|
-  sheet.add_row ["Report:","Projects"]
+  sheet.add_row [" Report:","Projects"]
   sheet.add_row ["From:", @beginning, "to", @end] 
   sheet.add_row [""] 
   sheet.add_row ["Date","Project","Client","Task","Notes","Hours","First name", "Last name","Team"] ## Header values of Excel

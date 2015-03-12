@@ -1,5 +1,7 @@
 class TimeStationsController < ApplicationController
   before_action :set_time_station, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  load_and_authorize_resource :except => :index
   add_breadcrumb "Dashboard", :root_path , :only => %w(index show)
   add_breadcrumb "Time Station", :time_stations_path , :only => %w(index show)
   # GET /time_stations
@@ -40,7 +42,6 @@ class TimeStationsController < ApplicationController
         @is_in = false
       end
     end
-
   end
 
   # PATCH/PUT /time_stations/1
@@ -59,22 +60,21 @@ class TimeStationsController < ApplicationController
 
   # DELETE /time_stations/1
   # DELETE /time_stations/1.json
-  def destroy
-    @time_station.destroy
-    respond_to do |format|
-      format.html { redirect_to time_stations_url, notice: 'Time station was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @time_station.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to time_stations_url, notice: 'Time station was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_station
       @time_station = TimeStation.find(params[:id])
     end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_station_params
-      params.require(:time_station).permit(:user_id, :in_time, :out_time, :total_time)
+      
     end
 end

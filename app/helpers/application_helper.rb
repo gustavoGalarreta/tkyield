@@ -23,6 +23,10 @@ module ApplicationHelper
 		date.strftime("%Y")
 	end
 
+	def date_format date
+		date.strftime("%m/%d/%y")
+	end
+	
 	def time_format date
 		date.strftime("%I:%M %p")
 	end

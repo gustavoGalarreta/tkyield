@@ -4,6 +4,6 @@
 	alert("Bienvenido <%= @user.full_name %>");
 	$("#pin_code").val("");
 <% else %>
-	alert("Salida");
+	alert("Hasta luego <%= @user.full_name %>");
 	$("#pin_code").val("");
 <% end %>

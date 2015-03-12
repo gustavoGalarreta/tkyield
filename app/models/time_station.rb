@@ -2,7 +2,6 @@ class TimeStation < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :parent, :class_name => 'TimeStation'
   	has_one :children, :class_name => 'TimeStation', :foreign_key => 'parent_id'
-
 	acts_as_xlsx
 	
 	def working?

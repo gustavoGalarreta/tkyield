@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 	add_breadcrumb "Dashboard", :root_path
 	add_breadcrumb "Collaborators", :users_path
   before_action :set_user, only: [:resend_confirmation]
+  
 
 	def index
    	@teams = Team.order("name ASC")

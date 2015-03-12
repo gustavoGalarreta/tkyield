@@ -13,7 +13,7 @@ module Reports
 
     def dash
       add_breadcrumb "Reports", :reports_list_path
-      add_breadcrumb "Timesheet report", :reports_dash_path
+      add_breadcrumb "Timesheet Report", :reports_dash_path
       @clients = Client.all
       @users = User.all
       @projects = Project.all.includes(:client)
@@ -47,10 +47,11 @@ module Reports
       @today = Time.zone.now.to_date
       @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
       @type = (params[:type]) ? params[:type] : "Weekly"
+      @tab = (params[:tab]) ? params[:tab] : "tab1"
       if @type == "Weekly"
         @beginning = @day_selected.at_beginning_of_week 
         @end = @day_selected.at_end_of_week
-      else
+      elsif @type == "Monthly"
         @beginning = @day_selected.at_beginning_of_month
         @end = @day_selected.at_end_of_month
       end

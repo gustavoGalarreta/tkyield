@@ -29,11 +29,6 @@ ActiveRecord::Schema.define(version: 20150310193957) do
     t.foreign_key ["client_id"], "clients", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_projects_client_id"
   end
 
-  create_table "reports", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "roles", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -102,7 +97,6 @@ ActiveRecord::Schema.define(version: 20150310193957) do
     t.float    "total_time", limit: 24, default: 0.0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.boolean  "working",    limit: 1
     t.integer  "parent_id",  limit: 4
     t.index ["parent_id"], :name => "fk__time_stations_parent_id"
     t.index ["user_id"], :name => "fk__time_stations_user_id"
