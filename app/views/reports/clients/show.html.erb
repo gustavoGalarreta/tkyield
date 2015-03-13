@@ -1,12 +1,6 @@
-<h2 class="page-header"> <%= @client.name %> <small> Client</small> 
-    <div class="row align-right">
-        <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_client_path(format: "xlsx"), class: "btn btn-success"%>
-    </div>
-</h2>
 <div id="date_navigation">
     <%= render "date_navigation" %>
 </div>
-
 
 <script type="text/javascript">
 
