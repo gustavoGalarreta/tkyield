@@ -20,7 +20,7 @@ module Reports
     end
 
     private 
-
+    
     def set_time
       @today = Time.zone.now.to_date
       @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today

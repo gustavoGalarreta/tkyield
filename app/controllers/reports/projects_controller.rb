@@ -10,6 +10,7 @@ module Reports
       @project = Project.find params[:id]
       add_breadcrumb "Projects", :reports_project_path
       @time = Timesheet.where(belongs_to_day: @beginning..@end,project: @project).includes(:user).order("belongs_to_day ASC")
+      @task_times = @time.includes(:task).group(:task_id).order("belongs_to_day ASC")
       respond_to do |format|
         format.html
         format.js

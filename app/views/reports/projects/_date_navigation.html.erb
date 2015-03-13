@@ -40,17 +40,17 @@
 <div class="tabbable tabs-left">
 <ul class="nav nav-pills nav-justified">
     <li class="<%= 'active' if @tab == 'tab1' %>"><a href="#tab1" data-toggle="tab">
-    <i class="fa fa-users"></i> Clients</a></li>
-    <li class="<%= 'active' if @tab == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
     <i class="fa fa-user"></i> Collaborators</a></li>
+    <li class="<%= 'active' if @tab == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
+    <i class="fa fa-check-square-o"></i> Tasks</a></li>
 </ul>
 
 <div class="tab-content" id="tabContainer">
      <div class="<%= if @tab == 'tab1' then 'tab-pane active'  else 'tab-pane' end%>" id="tab1">
-        <%= render "clients" %>
+        <%= render "collaborators" %>
     </div>
     <div class="<%= if @tab == 'tab2' then 'tab-pane active'  else 'tab-pane' end%>" id="tab2">
-        <%= render "collaborators" %>
+        <%= render "tasks" %>
     </div>
 </div>
 </div>
