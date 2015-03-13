@@ -73,8 +73,5 @@ class TimeStationsController < ApplicationController
     def set_time_station
       @time_station = TimeStation.find(params[:id])
     end
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def time_station_params
-      
-    end
+
 end

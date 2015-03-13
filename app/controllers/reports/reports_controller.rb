@@ -6,36 +6,33 @@ module Reports
     
     def index
       add_breadcrumb "Reports", :reports_list_path
-      @clients = Client.order("name ASC").all
-      @users = User.order("first_name, last_name ASC").includes(:role)
-      @projects = Project.order("name ASC").all.includes(:client)
     end
 
     def dash
       add_breadcrumb "Reports", :reports_list_path
       add_breadcrumb "Timesheet Report", :reports_dash_path
-      @clients = Client.all
-      @users = User.all
-      @projects = Project.all.includes(:client)
+      @clients = Client.order("name")
+      @users = User.order("first_name, last_name")
+      @projects = Project.includes(:client).order("name")
       @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client])      
     end
 
     def clients_excel
-      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC")
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day").order("clients.name")
       respond_to do |format|
         format.xlsx
       end
     end
 
     def projects_excel
-      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC")
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC").order("projects.name")
       respond_to do |format|
         format.xlsx
       end
     end
 
     def collaborators_excel
-      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC")
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC").order("users.name")
       respond_to do |format|
         format.xlsx
       end

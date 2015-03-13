@@ -8,9 +8,9 @@ module Reports
     def show
       @user = User.find params[:id]
       add_breadcrumb "Collaborators", :reports_user_path
-      @timesheets = Timesheet.where(belongs_to_day: @beginning..@end,user: @user)
+      @timesheets = Timesheet.includes(:user).where(belongs_to_day: @beginning..@end,user: @user)
       @project_times = @timesheets.includes(:project).group(:project_id).order("belongs_to_day ASC")
-      @task_times = @timesheets.includes(:task,:user).group(:task_id).order("belongs_to_day ASC")
+      @task_times = @timesheets.includes(:task).group(:task_id).order("belongs_to_day ASC")
       #@time = Timesheet.where(user: @user).includes(:project).order("belongs_to_day ASC")
       respond_to do |format|
         format.html

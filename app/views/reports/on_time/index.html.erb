@@ -3,57 +3,38 @@
 </div>
 <h1 class="page-header"> On Time Report <small> </small> </h1>
 
-<div class="row">
-    <div class="col-lg-6 text-center">
-    	<strong>Team</strong>
-    	<%= select_tag "team",options_from_collection_for_select(@teams, "id", "name"), prompt: "- Select a Team -" ,class:"form-control select",:data => { :team_id => 1}%>           
-    </div>
-    <div class="col-lg-6 text-center">
-        <strong>Collaborators</strong>
-        <%= select_tag "collaborators",options_from_collection_for_select(@collaborators, "id", "full_name"), prompt: "- Select a Collaborator -" ,class:"form-control"%>
-    </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-lg-1 text-center">
-    	From: 
-    </div>
-    <div class="col-lg-5 text-center">
-    	<%= text_field_tag "beginning",nil, class:"form-control datepicker"%>
-    </div>
-    <div class="col-lg-1 text-center">
-    	to:
-    </div>
-    <div class="col-lg-5 text-center">
-    	<%= text_field_tag "end",nil, class:"form-control datepicker"%>
-    </div>
-</div>
-<br>
-<div class="align-right">
-	<%= link_to 'GO <i class="fa fa-hand-o-right"></i>'.html_safe, '#', class: "btn btn-primary"%>
-</div>
-<br>
-<br>
-<div class="tabbable tabs-left">
-<ul class="nav nav-pills nav-justified">
-    <li class="active <%= 'active' if params[:tab] == 'tab1' %>"><a href="#tab1" data-toggle="tab">
-    <i class="fa fa-history"></i> Daily Activity</a></li>
-    <li class="<%= 'active' if params[:tab] == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
-    <i class="fa fa-pie-chart"></i> Sumary Activity</a></li>
-</ul>
-
-<div class="tab-content">
-    <div class="<%= if (params[:tab] == 'tab1' || !params[:tab])then 'tab-pane active'  else 'tab-pane' end%>" id="tab1">
-		<%= render "daily" %>
-    </div>
-    <div class="<%= if params[:tab] == 'tab2' then 'tab-pane active'  else 'tab-pane' end%>" id="tab2">
-		<%= render "summary" %>
-    </div>
-</div>
+<div id="filters">
+    <%= render "filters" %>
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-    $('.datepicker').datepicker();
-  });
+    $(document).ready(function(){
+      $('.datepicker').datepicker();
+    });
+
+
+    function findActiveTab(){
+        var active;
+        $("#tabContainer").children('.tab-pane').each(function() {
+            if ($(this).hasClass("active")){
+                active = $(this);
+            }
+        });
+        return active.attr('id');
+    }
+
+    $( document ).on("click",".filter-report", function(){
+        var teamForParam = $(this).data('team');
+        var collaboratorForParam = $(this).data('collaborator');
+        var beginning = $(this).data('beginning');
+        var end = $(this).data('end');
+        var tabForParam = findActiveTab();
+        $.ajax({
+            type:'GET',
+            url: "<%= reports_on_time_index_path %>",
+            data: { team : teamForParam, date : dateForParam , tab : tabForParam },
+            dataType: "script"
+        });
+    })  
+
 </script>
