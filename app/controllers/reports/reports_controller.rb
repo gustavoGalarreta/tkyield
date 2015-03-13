@@ -12,14 +12,18 @@ module Reports
     end
 
     def staff
-        @time_stations = TimeStation.all.includes(:user)
-        respond_to do |format|
-          format.html
-          format.xlsx
-        end
+      add_breadcrumb "Reports", :reports_list_path
+      add_breadcrumb "Staff Report", :reports_staff_path
+      @time_stations = TimeStation.all.includes(:user)
+      respond_to do |format|
+        format.html
+        format.xlsx
+      end
     end
 
     def dash
+      add_breadcrumb "Reports", :reports_list_path
+      add_breadcrumb "Timesheet report", :reports_dash_path
       @clients = Client.all
       @users = User.all
       @projects = Project.all.includes(:client)
