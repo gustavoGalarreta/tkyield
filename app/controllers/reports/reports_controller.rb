@@ -32,7 +32,7 @@ module Reports
     end
 
     def collaborators_excel
-      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC").order("users.name")
+      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC").order("users.first_name, users.last_name")
       respond_to do |format|
         format.xlsx
       end
