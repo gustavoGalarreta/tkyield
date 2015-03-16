@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
   delegate :name, :to => :role, :prefix => true
+  delegate :name, :to => :team, :prefix => true, allow_nil: true
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
@@ -33,11 +34,11 @@ class User < ActiveRecord::Base
   end
 
   def is_manager?
-    self.role.name == "Manager"
+    self.role_name == "Manager"
   end
 
   def is_employee?
-    self.role.name == "Employee"
+    self.role_name == "Employee"
   end
 
   def is_confirmed?
