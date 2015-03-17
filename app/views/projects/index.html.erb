@@ -9,7 +9,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% client.projects.each_with_index do |project, index| %>
+				<% client.projects.order("name").each_with_index do |project, index| %>
 					<tr>
 						<td>
 							<div class="col-md-6">
