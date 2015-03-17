@@ -7,30 +7,35 @@ module Reports
     
     def index
       add_breadcrumb "On Time Report", :reports_on_time_index_path
-      @in_times = TimeStation.where(created_at: @beginning..@end,parent_id: nil).includes(:children).order("created_at ASC")
-      if params[:team]
-        @in_times = @in_times.joins(:user).where(:users => { :team_id => @selected_team}) 
-      elsif params[:team] and params [:collaborator]
-        @in_times = @in_times.where(user: @selected_collaborator)
+      
+      @filtered_users = User.all.order("first_name, last_name")
+      if !params[:team].blank? and params[:collaborator].blank?
+        @filtered_users = User.where(team_id: @selected_team)
+      elsif !params[:collaborator].blank?
+        @filtered_users = User.where(id: @selected_collaborator)
       end
 
       @teams = Team.all
       @collaborators = User.all
+      
       respond_to do |format|
         format.html
         format.xlsx
       end
+
     end
 
     private
 
     def set_time
+    
       @tab = (params[:tab]) ? params[:tab] : "tab1"
       @today = Time.zone.now.to_date
-      @selected_team = Team.find(params[:team]) if params[:team]
-      @selected_collaborator = User.find(params[:collaborator]) if params[:collaborator]
-      @beginning = (params[:beginning]) ? Date.parse(params[:beginning]) : @today.at_beginning_of_week 
-      @end = (params[:beginning]) ? Date.parse(params[:beginning]) : @today.at_end_of_week
+      @selected_team = Team.find(params[:team]) if !params[:team].blank?
+      @selected_collaborator = User.find(params[:collaborator]) if !params[:collaborator].blank?
+      @beginning = (!params[:beginning].blank?) ? DateTime.strptime(params[:beginning], "%m/%d/%Y") : @today.at_beginning_of_week 
+      @end = (!params[:end].blank?) ? DateTime.strptime(params[:end], "%m/%d/%Y") : @today.at_end_of_week
+    
     end
   end
 end
