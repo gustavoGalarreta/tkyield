@@ -7,7 +7,7 @@ module Reports
     
     def index
       add_breadcrumb "On Time Report", :reports_on_time_index_path
-      @in_times = TimeStation.where(created_at: @beginning..@end,parent_id: nil).includes(:children)
+      @in_times = TimeStation.where(created_at: @beginning..@end,parent_id: nil).includes(:children).order("created_at ASC")
       if params[:team]
         @in_times = @in_times.joins(:user).where(:users => { :team_id => @selected_team}) 
       elsif params[:team] and params [:collaborator]
