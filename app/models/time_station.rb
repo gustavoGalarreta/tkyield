@@ -4,11 +4,14 @@ class TimeStation < ActiveRecord::Base
   	has_one :children, :class_name => 'TimeStation', :foreign_key => 'parent_id'
 	acts_as_xlsx
 
-	def total_per_day_between_dates( beginning, ending)
+	def self.totals_per_day_between_dates( beginning, ending, user)
 		i =  (ending - beginning).to_i
-		total_per_day = []
-		(0..i).each{ |index| total_per_day << TimeStation.where(created_at: beginning+index.days..beginning+index.days).sum(:total_time) }
-		return total_per_day
+		totals_per_day = []
+		(0..i).each{ |index| totals_per_day << TimeStation.where(user: user, created_at: (beginning+index.days).beginning_of_day .. (beginning+index.days).end_of_day ).sum(:total_time) }
+		return totals_per_day
 	end
   	
+  	def self.total_per_date (beginning, ending, user)
+  		TimeStation.where(user: user,created_at: beginning.beginning_of_day .. ending.end_of_day).sum(:total_time)
+  	end	
 end

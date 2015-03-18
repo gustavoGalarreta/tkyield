@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :teams
-
   namespace :api do
     namespace :v1 do
       resources :time_stations, only: :create
       resources :users, only: :index
     end
   end
-
   root to: "home#index"
   resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
     get 'show_user_project', to: 'users#projects', on: :member
@@ -19,6 +16,9 @@ Rails.application.routes.draw do
   resources :clients
   resources :projects do
     get 'tasks', on: :collection
+  end
+  resources :teams do
+    get 'collaborators', on: :collection
   end
   resources :timesheets, except: [:show, :new, :edit] do
     get 'toggle_timesheet', on: :member

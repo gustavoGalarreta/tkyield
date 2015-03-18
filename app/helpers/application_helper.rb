@@ -23,6 +23,9 @@ module ApplicationHelper
 		date.strftime("%Y")
 	end
 
+	def day_and_date_format date
+		date.strftime("%A, %m/%d")
+	end
 	def date_format date
 		date.strftime("%m/%d/%y")
 	end
