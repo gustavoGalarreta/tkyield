@@ -16,7 +16,7 @@ module Reports
       end
 
       @teams = Team.all
-      @collaborators = User.all
+      @collaborators = User.order("first_name, last_name")
       
       respond_to do |format|
         format.html
