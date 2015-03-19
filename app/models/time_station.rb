@@ -11,7 +11,7 @@ class TimeStation < ActiveRecord::Base
 		return totals_per_day
 	end
   	
-  	def self.total_per_date (beginning, ending, user)
+  	def self.total_between_dates (beginning, ending, user)
   		TimeStation.where(user: user,created_at: beginning.beginning_of_day .. ending.end_of_day).sum(:total_time)
   	end	
 end
