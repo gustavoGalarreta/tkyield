@@ -7,6 +7,14 @@ module ApplicationHelper
 		format("%02d:%02d", hours, minutes)
 	end
 
+	def total_time_excel_format time
+		# Time.at(time).utc.strftime("%H:%M")
+		minutes = (time / 60) % 60
+		hours = time / (60 * 60)
+
+		format("%02d.%02d", hours, minutes)
+	end
+
 	def full_date_format date
 		date.strftime("%A, %d %b")
 	end
@@ -23,6 +31,9 @@ module ApplicationHelper
 		date.strftime("%Y")
 	end
 
+	def day_and_date_format date
+		date.strftime("%A, %m/%d")
+	end
 	def date_format date
 		date.strftime("%m/%d/%y")
 	end
