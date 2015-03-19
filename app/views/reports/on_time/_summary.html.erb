@@ -8,7 +8,7 @@
   <tbody>
     <% @filtered_users.each do |user| %>
       <tr>
-        <% t = TimeStation.total_per_date(@beginning,@end,user.id) %>
+        <% t = TimeStation.total_between_dates(@beginning,@end,user.id) %>
         <td><%= user.full_name %></td>
         <td> <%= get_seconds_in_hours_minutes(t) %> </td>
       </tr>
