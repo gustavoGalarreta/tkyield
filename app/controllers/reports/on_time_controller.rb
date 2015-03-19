@@ -33,7 +33,7 @@ module Reports
       @today = Time.zone.now.to_date
       @selected_team = Team.find(params[:team]) if !params[:team].blank?
       @selected_collaborator = User.find(params[:collaborator]) if !params[:collaborator].blank?
-      @beginning = (!params[:beginning].blank?) ? DateTime.strptime(params[:beginning], "%m/%d/%Y") : @today.at_beginning_of_week 
+      @beginning = (!params[:beginning].blank?) ? DateTime.strptime(params[:beginning], "%m/%d/%Y") : @today.at_beginning_of_week
       @end = (!params[:end].blank?) ? DateTime.strptime(params[:end], "%m/%d/%Y") : @today.at_end_of_week
     
     end
