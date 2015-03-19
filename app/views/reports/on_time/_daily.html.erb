@@ -4,7 +4,7 @@
         <th> Collaborator </th>
         <% days = days_between_dates(@beginning, @end) %>
         <% days.each do |day| %>
-          <th><%= day_and_date_format(day) %></th>
+          <th><%= date_format(day) %></th>
         <% end %>
       </tr>
   </thead>
