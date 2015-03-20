@@ -1,5 +1,14 @@
-<br><div class="row align-right">
-  <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_collaborators_excel_path(format: "xlsx", date: @day_selected, type: @type), class: "btn btn-success"%>
+<br>
+<div class="row">
+  <div class="col-lg-2">
+    <strong>Filter teams:</strong>
+  </div>
+  <div class="col-lg-3">
+    <%= select_tag "team",options_from_collection_for_select(@teams, "id", "name", @selected_team.try(:id)), prompt: "- Select a team -" ,class:"form-control filter_collaborators", :data => { :beginning => @beginning, :end => @end, date: @day_selected, type: @type}%>
+  </div>
+  <div class="align-right">
+    <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_collaborators_excel_path(format: "xlsx", date: @day_selected, type: @type, :teamId => @selected_team.try(:id)), class: "btn btn-success"%>
+  </div>
 </div>
 
 <div class="col-md-12">
@@ -22,4 +31,3 @@
     </tbody>
   </table>
 </div>
-
