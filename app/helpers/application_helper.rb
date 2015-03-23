@@ -10,8 +10,6 @@ module ApplicationHelper
 	def total_time_excel_format time
 		# Time.at(time).utc.strftime("%H:%M")
 		minutes = (time / 60) % 60 
-		hours = time / (60 * 60)
-
 		
 		format("%.2f", hours)
 	end
