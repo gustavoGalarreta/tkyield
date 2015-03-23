@@ -16,12 +16,15 @@ wb.add_worksheet(name: "StaffReport") do |sheet|
   days = days_between_dates(@beginning, @end)
   row = ["Collaborators"]
   row.concat(days)
+  row << "Total"
   sheet.add_row row ## Header values of Excel
 
   @filtered_users.each do |user|
     total = TimeStation.totals_per_day_between_dates(@beginning,@end,user)
+    t = TimeStation.total_between_dates(@beginning,@end,user)
     rows = [user.full_name]
     rows.concat(total.map{|t| total_time_excel_format(t)})
+    rows << total_time_excel_format(t)
     sheet.add_row rows
   end
 
