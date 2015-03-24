@@ -52,8 +52,12 @@ class TimesheetsController < ApplicationController
     if action == "index"
       @timesheets_per_date, @days_of_week = current_user.timesheets_of_week_by_date @day_selected
       if current_user.projects.any?
-        @default_project = current_user.projects.first
+        @default_project = current_user.projects.order("name ASC").first
         @tasks = @default_project.tasks.order("name ASC")
+        @tasks_hash = {}
+        current_user.projects.each do |pro| 
+          @tasks_hash[pro.id] = pro.tasks  
+        end
       else
         @default_project = nil
         @tasks = []
