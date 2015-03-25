@@ -55,7 +55,7 @@ class TimesheetsController < ApplicationController
         @default_project = current_user.projects.order("name ASC").first
         @tasks = @default_project.tasks.order("name ASC")
         @tasks_hash = {}
-        current_user.projects.each do |pro| 
+        current_user.projects.includes(:tasks).each do |pro| 
           @tasks_hash[pro.id] = pro.tasks  
         end
       else

@@ -1,9 +1,9 @@
 class Project < ActiveRecord::Base
   belongs_to :client
   has_many :timesheets
-  has_many :task_projects, dependent: :destroy
+  has_many :task_projects, dependent: :nullify
   has_many :tasks, :through => :task_projects
-  has_many :user_projects, dependent: :destroy
+  has_many :user_projects, dependent: :nullify
   has_many :users, :through => :user_projects
   delegate :name, :to => :client, :prefix => true
   validates :client, :name, :description, presence: true
@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
   
   accepts_nested_attributes_for :task_projects, :allow_destroy => true, :reject_if => proc { |t| t['task_id'].blank? }
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['user_id'].blank? }
-
+  acts_as_paranoid
   #, :reject_if => proc { |a| a['task_id'].blank? }
   #accepts_nested_attributes_for :tasks, :allow_destroy => true #, :reject_if => proc { |a| a['task_id'].blank? }
 
