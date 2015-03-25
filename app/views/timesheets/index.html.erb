@@ -37,15 +37,6 @@
 <script type="text/javascript">
 var tasks_hash = <%= @tasks_hash.to_json.html_safe %>
 	
-	$( document ).ready(function() {
-		var project_id = $('#timesheet_project_id').val();
-		var tasks = tasks_hash[project_id];
-		$("#timesheet_edit_task").html("<option value=''>- Select a task -</option>");
-		$.each(tasks, function( index, value ) {
-		  $("#timesheet_edit_task").append('<option value=' + value["id"] + '>' + value["name"] + '</option>');
-		});		
-	});
-
 	$( document ).on("click",".edit-timer", function(){
 		var timesheetid = $(this).data("timesheet-id");
 		var time = $("#timesheet_timer_" + timesheetid).countdown('getTimes');
