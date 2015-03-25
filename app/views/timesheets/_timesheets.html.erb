@@ -40,7 +40,7 @@
 				</table>
 			</li>
 		</ul>
-		<%= render 'edit_modal', timesheet: timesheet, tasks: tasks, day_selected: @day_selected %>
+		<%= render 'edit_modal', timesheet: timesheet, tasks: timesheet.project.tasks, day_selected: @day_selected %>
 	</div>
 	<script type="text/javascript">
 		$('#timesheet_timer_<%= timesheet.id %>').countdown({since: '-<%= timesheet.current_time %>s', compact: true, format: 'HM'}).countdown('pause');
