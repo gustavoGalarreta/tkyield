@@ -30,7 +30,7 @@
 					<br>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit" %>
+						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit", :disable_with => "Processing"%>
 					</div>
 				<% end %>
 			</div>
