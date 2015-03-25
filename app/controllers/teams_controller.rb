@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_team, only: [:show, :edit, :update, :destroy, :collaborators]
   add_breadcrumb "Dashboard", :root_path
   add_breadcrumb "Tasks", :teams_path
