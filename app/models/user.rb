@@ -95,15 +95,17 @@ class User < ActiveRecord::Base
   end
 
   def get_timesheet_active
-    Timesheet.where(running: true, user_id: self.id).first
+    Timesheet.where(running: true, user_id: self.id)
   end
 
   def has_a_timer_running?
-    get_timesheet_active != nil
+    !get_timesheet_active.first.nil? 
   end
 
   def cancel_active_timesheet
-     get_timesheet_active
+    get_timesheet_active.each do |t|
+      t.stop_timer
+    end
   end
 
   def total_time_in_projects
