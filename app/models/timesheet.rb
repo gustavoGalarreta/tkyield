@@ -1,7 +1,7 @@
 class Timesheet < ActiveRecord::Base
   acts_as_paranoid
-  belongs_to :project
-  belongs_to :task
+  belongs_to :project , -> { with_deleted }
+  belongs_to :task, -> { with_deleted }
   belongs_to :user
 
   delegate :name, :to => :project, :prefix => true

@@ -30,7 +30,8 @@
 					<br>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit" %>
+						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit", data: { "loading-text" => "Loading..." } %>
+			
 					</div>
 				<% end %>
 			</div>
@@ -47,4 +48,11 @@
 		else
 			newTimesheetSubmit.val("Save Timer");
 	});
+	$('#new_timesheet').on('ajax:beforeSend', function (e, xhr, settings){
+	   $(this).find('input[type=submit]').button('loading');
+	}).on ('ajax:complete', function (e, xhr, status){
+	   $(this).find('input[type=submit]').button('reset');
+	});
 </script>
+
+
