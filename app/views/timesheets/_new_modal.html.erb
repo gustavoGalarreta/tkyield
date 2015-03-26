@@ -30,14 +30,15 @@
 					<br>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit", :disable_with => "Processing"%>
+						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit"%>
+						<asp:Button ID="new_timesheet_submit" runat="server" OnClick="btnSubmit_Click"/>
 					</div>
 				<% end %>
 			</div>
 		</div>
 	</div>
 </div>
-
+<div id="loading-modal"></div>
 <script type="text/javascript">
 	var newTimesheetTotalTime = $("#new_timesheet_total_time");
 	var newTimesheetSubmit = $("#new_timesheet_submit");
@@ -47,4 +48,9 @@
 		else
 			newTimesheetSubmit.val("Save Timer");
 	});
+
+	$('#new_timesheet_submit').click(function(){
+		$(this).replaceWith("<img src="/images/ajax-loader.gif" alt="Please wait.." />");
+	});
+
 </script>
