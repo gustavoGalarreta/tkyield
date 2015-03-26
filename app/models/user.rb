@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
   end
 
   def cancel_active_timesheet
-     get_timesheet_active
+    get_timesheet_active.stop_timer
   end
 
   def total_time_in_projects
