@@ -76,7 +76,6 @@ var tasks_hash = <%= @tasks_hash.to_json.html_safe %>
 		var timesheetId = $(this).data("timesheetid");
 		var project_id =  $("#project_edit_timesheet_".concat(timesheetId)).val();
 		var tasks = tasks_hash[project_id];
-
 		$("#timesheet_edit_task_".concat(timesheetId)).html("<option value=''>- Select a task -</option>");
 		$.each(tasks, function( index, value ) {
 		  $("#timesheet_edit_task_".concat(timesheetId)).append('<option value=' + value["id"] + '>' + value["name"] + '</option>');

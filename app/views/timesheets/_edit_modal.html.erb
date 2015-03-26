@@ -41,13 +41,11 @@
 </div>
 
 <script type="text/javascript">
-
 	$('#edit_timesheet').on('ajax:beforeSend', function (e, xhr, settings){
 	   $(this).find('input[type=submit]').button('loading');
 	}).on ('ajax:complete', function (e, xhr, status){
 	   $(this).find('input[type=submit]').button('reset');
 	});
-
 </script>
 
 

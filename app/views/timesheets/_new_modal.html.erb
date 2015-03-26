@@ -40,7 +40,6 @@
 </div>
 
 <script type="text/javascript">
-
 	var newTimesheetTotalTime = $("#new_timesheet_total_time");
 	var newTimesheetSubmit = $("#new_timesheet_submit");
 	newTimesheetTotalTime.keyup(function(){
@@ -49,13 +48,11 @@
 		else
 			newTimesheetSubmit.val("Save Timer");
 	});
-
 	$('#new_timesheet').on('ajax:beforeSend', function (e, xhr, settings){
 	   $(this).find('input[type=submit]').button('loading');
 	}).on ('ajax:complete', function (e, xhr, status){
 	   $(this).find('input[type=submit]').button('reset');
 	});
-
 </script>
 
 
