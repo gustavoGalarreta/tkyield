@@ -81,4 +81,5 @@ class Timesheet < ActiveRecord::Base
   def self.total_time_in_users_by_project(project)
     project.timesheets.select("timesheets.user_id, timesheets.project_id, SUM( timesheets.total_time ) AS total").joins(:project).group("timesheets.user_id")
   end
+
 end
