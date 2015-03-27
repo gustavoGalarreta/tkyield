@@ -32,12 +32,12 @@
 <br>
 <br>
 <div class="tabbable tabs-left">
-<ul class="nav nav-pills nav-justified">
-    <li class="<%= 'active' if @tab == 'tab1' %>"><a href="#tab1" data-toggle="tab">
-    <i class="fa fa-history"></i> Daily Activity</a></li>
-    <li class="<%= 'active' if @tab == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
-    <i class="fa fa-pie-chart"></i> Summary Activity</a></li>
-</ul>
+    <ul class="nav nav-pills nav-justified">
+        <li class="<%= 'active' if @tab == 'tab1' %>"><a href="#tab1" data-toggle="tab">
+        <i class="fa fa-history"></i> Daily Activity</a></li>
+        <li class="<%= 'active' if @tab == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
+        <i class="fa fa-pie-chart"></i> Summary Activity</a></li>
+    </ul>
 <div class="tab-content" id="tabContainer">
     <div class="<%= if @tab == 'tab1' then 'tab-pane active'  else 'tab-pane' end%>" id="tab1">
 		<%= render "daily" %>
