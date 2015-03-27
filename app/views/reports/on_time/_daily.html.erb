@@ -1,28 +1,21 @@
-<table class="table table-striped table-responsive">
+<table class="table table-striped table-responsive" style="overflow: auto;">
   <thead>
       <tr>
         <th> Collaborator </th>
         <% days = days_between_dates(@beginning, @end) %>
         <% days.each do |day| %>
-          <th><%= day_name_format(day) %></th>
+          <th><%= date_format(day) %></th>
         <% end %>
       </tr>
   </thead>
   <tbody>
-    <% @in_times.each do |time_station| %>
+    <% @filtered_users.each do |user| %>
       <tr>
-        <td><%= time_station.user.full_name %></td>
-        <% total = time_station.total_per_day_between_dates(@beginning,@end) %>
+        <% total = TimeStation.totals_per_day_between_dates(@beginning,@end,user.id) %>
+        <td><%= user.full_name %></td>
         <% total.each do |t| %>
-        <td> <%= get_seconds_in_hours_minutes(t) %> </td>
+          <td> <%= get_seconds_in_hours_minutes(t) %> </td>
         <%end%>
-        <td>
-        <% if !time_station.children.nil? %>
-        <%= full_date_format(time_station.created_at)%> <%= get_seconds_in_hours_minutes(time_station.children.total_time) %> hours
-        <% else %>
-        <%= get_seconds_in_hours_minutes(time_station.total_time) %> hours
-        <%end%>
-        </td>
       </tr>
     <% end %>
   </tbody>

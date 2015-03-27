@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @in_times.reverse.each do |time_station| %>
+    <% @in_times.each do |time_station| %>
       <tr>
         <td><%= full_date_format(time_station.created_at)%></td>
         <td>

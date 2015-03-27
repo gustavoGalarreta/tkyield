@@ -35,6 +35,8 @@
 <%= render 'new_modal', tasks: @tasks, day_selected: @day_selected %>
 
 <script type="text/javascript">
+var tasks_hash = <%= @tasks_hash.to_json.html_safe %>
+	
 	$( document ).on("click",".edit-timer", function(){
 		var timesheetid = $(this).data("timesheet-id");
 		var time = $("#timesheet_timer_" + timesheetid).countdown('getTimes');
@@ -54,19 +56,31 @@
 	})
 
 	$( document ).on("change","#timesheet_project_id", function(){
-		$.ajax({
+		var project_id = $('#timesheet_project_id').val();
+		var tasks = tasks_hash[project_id];
+		$("#timesheet_edit_task").html("<option value=''>- Select a task -</option>");
+		$.each(tasks, function( index, value ) {
+		  $("#timesheet_edit_task").append('<option value=' + value["id"] + '>' + value["name"] + '</option>');
+		});		
+		/*$.ajax({
 			type:'GET',
 			url: "<%= tasks_projects_path %>",
 			data: {
 				id : $('#timesheet_project_id').val()
 			},
 			dataType: "script"
-		});
+		}); */
 	})
 
 	$( document ).on("change",".project_edit_timesheet", function(){
 		var timesheetId = $(this).data("timesheetid");
-		$.ajax({
+		var project_id =  $("#project_edit_timesheet_".concat(timesheetId)).val();
+		var tasks = tasks_hash[project_id];
+		$("#timesheet_edit_task_".concat(timesheetId)).html("<option value=''>- Select a task -</option>");
+		$.each(tasks, function( index, value ) {
+		  $("#timesheet_edit_task_".concat(timesheetId)).append('<option value=' + value["id"] + '>' + value["name"] + '</option>');
+		});
+		/*$.ajax({
 			type:'GET',
 			url: "<%= tasks_projects_path %>",
 			data: {
@@ -74,6 +88,6 @@
 				timesheetId : timesheetId
 			},
 			dataType: "script"
-		});
+		});*/
 	})
 </script>

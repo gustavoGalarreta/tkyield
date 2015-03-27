@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :collaborators]
   add_breadcrumb "Dashboard", :root_path
   add_breadcrumb "Tasks", :teams_path
   
@@ -9,6 +10,9 @@ class TeamsController < ApplicationController
     @teams = Team.all.order("name ASC").all
   end
 
+  def collaborators
+    @collaborators = @team.nil? ? User.order("first_name, last_name") : @team.users.order("first_name, last_name")
+  end
   # GET /teams/1
   # GET /teams/1.json
   def show
@@ -67,7 +71,7 @@ class TeamsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = Team.find(params[:id])
+      @team = Team.find(params[:id]) unless params[:id].blank?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

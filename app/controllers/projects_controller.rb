@@ -8,13 +8,13 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @clients = Client.order("name ASC").includes(:projects)
+    @clients = Client.order("name")
   end
 
   # GET /project_tasks.js
   def tasks
     @timesheetId = params["timesheetId"].nil? ? nil : params["timesheetId"]
-    @tasks = @project.tasks.order("name ASC").all
+    @tasks = @project.tasks.order("name").all
   end
 
   # GET /projects/1
