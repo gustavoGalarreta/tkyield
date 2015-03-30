@@ -9,10 +9,10 @@
           </tr>
         </thead>
         <tbody>
-          <% @time.group(:user_id).each do |time| %>
+          <% @users.each do |user| %>
             <tr>
-              <td><%= link_to time.user.full_name, reports_user_path(time.user) %></td>
-              <td><%= get_seconds_in_hours_minutes(time.user.total_time_per_project(time.project.id,@beginning,@end)) %></td>
+              <td><%= link_to user.full_name, reports_user_path(user) %></td>
+              <td><%= get_seconds_in_hours_minutes(user.total) %></td>
             </tr>
           <% end %>
         </tbody>

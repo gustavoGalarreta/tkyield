@@ -9,8 +9,8 @@ module Reports
     def show
       @project = Project.find params[:id]
       add_breadcrumb "Projects", :reports_project_path
-      @time = Timesheet.where(belongs_to_day: @beginning..@end,project: @project).includes(:user).order("belongs_to_day ASC")
-      @task_times = @time.includes(:task).group(:task_id).order("belongs_to_day ASC")
+      @users = User.between_dates_and_project(@beginning, @end, @project).order("first_name, last_name")
+      @tasks = Task.between_dates_and_project(@beginning, @end, @project).order("name")
       respond_to do |format|
         format.html
         format.js

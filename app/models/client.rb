@@ -2,10 +2,13 @@ class Client < ActiveRecord::Base
   has_many :projects
 
   validates :name, presence: true
-  
 
-  def client_total_time_between_dates beginning, ending
-  	Timesheet.joins(project: :client).where(belongs_to_day: beginning..ending,projects: {client_id: self.id}).sum(:total_time)
+  def total_time_between_dates(beginning, ending)
+  	Timesheet.joins(project: :client).where(projects: {client_id: self.id}, belongs_to_day: beginning..ending).sum(:total_time)
+  end
+
+  def self.between_dates beginning, ending
+  	self.select("clients.*, SUM( timesheets.total_time ) AS total").joins(projects: :timesheets).where("timesheets.belongs_to_day BETWEEN ? AND ?", beginning, ending).group("projects.id")
   end
 
   def total_time

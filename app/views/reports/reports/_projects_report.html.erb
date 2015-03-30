@@ -12,13 +12,11 @@
     </thead>
     <tbody>
       <% @projects.each do |project| %>
-        <% if project.project_total_time_between_dates(@beginning,@end) > 0 %>
-          <tr>
-            <td><%= link_to project.name, reports_project_path(project, date: @day_selected, type: @type)%></td>
-            <td><%= project.client.name %></td>
-            <td><%= get_seconds_in_hours_minutes(project.project_total_time_between_dates(@beginning,@end)) %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <td><%= link_to project.name, reports_project_path(project, date: @day_selected, type: @type)%></td>
+          <td><%= project.client.name %></td>
+          <td><%= get_seconds_in_hours_minutes(project.total) %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>

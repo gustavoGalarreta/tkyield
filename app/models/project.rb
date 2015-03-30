@@ -15,8 +15,17 @@ class Project < ActiveRecord::Base
   #, :reject_if => proc { |a| a['task_id'].blank? }
   #accepts_nested_attributes_for :tasks, :allow_destroy => true #, :reject_if => proc { |a| a['task_id'].blank? }
 
-  def project_total_time_between_dates beginning, ending
-    Timesheet.where(belongs_to_day: beginning..ending, project_id: self.id).sum(:total_time)
+  def total_time_between_dates(beginning, ending)
+    Timesheet.where(project_id: self.id, belongs_to_day: beginning..ending).sum(:total_time)
+  end
+
+  def self.between_dates_and_client beginning, ending, client
+    projects = self.select("projects.*, SUM( timesheets.total_time ) AS total").joins(:timesheets).where("timesheets.belongs_to_day BETWEEN ? AND ?", beginning, ending).group("projects.id")
+    return client.nil? ? projects : projects.where("projects.client_id = ?", client.id)
+  end
+
+  def self.between_dates beginning, ending
+    self.between_dates_and_client(beginning, ending, nil)
   end
 
   def total_time_in_users
@@ -27,8 +36,12 @@ class Project < ActiveRecord::Base
     Timesheet.where(project_id: self.id).sum(:total_time)
   end
 
-  def total_time_per_task (task,beginning, ending)
+  def total_time_per_task(task, beginning, ending)
     Timesheet.where(belongs_to_day: beginning..ending,project: self, task: task).sum(:total_time)
+  end
+
+  def total_time_per_task_and_user(task,beginning, ending, user)
+    Timesheet.where(belongs_to_day: beginning..ending,project: self, task: task, user: user).sum(:total_time)
   end
 
   def stop_timesheets
