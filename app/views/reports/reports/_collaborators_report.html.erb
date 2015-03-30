@@ -21,12 +21,10 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <% if user.total_time_between_dates(@beginning,@end) > 0 %>
-          <tr>
-            <td><%= link_to user.full_name, reports_user_path(user, date: @day_selected, type: @type) %></td>
-            <td><%= get_seconds_in_hours_minutes(user.total_time_between_dates(@beginning,@end))%></td>
-          </tr>
-        <% end %>
+        <tr>
+          <td><%= link_to user.full_name, reports_user_path(user, date: @day_selected, type: @type) %></td>
+          <td><%= get_seconds_in_hours_minutes(user.total)%></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
