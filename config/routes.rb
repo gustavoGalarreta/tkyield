@@ -31,9 +31,15 @@ Rails.application.routes.draw do
     get 'collaborators_excel', to: 'reports#collaborators_excel'
     get '/user_project/:user_id/:project_id', to: 'user_project#show', as: "user_project"
     resources :on_time, only: :index
-    resources :projects, only: :show
-    resources :users, only: :show
-    resources :clients, only: :show
+    resources :projects, only: :show do
+      get 'project_excel', to: 'projects#project_excel'
+    end
+    resources :users, only: :show do
+      get 'user_excel', to: 'users#user_excel'
+    end
+    resources :clients, only: :show do
+      get 'client_excel', to: 'clients#client_excel'
+    end
   end
   resources :time_stations
   # resources :reports
