@@ -32,7 +32,6 @@ module Reports
     def set_time
       @today = Time.zone.now.to_date
       @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today
-      puts @day_selected
       @type = (params[:type]) ? params[:type] : "Weekly"
       @tab = (params[:tab]) ? params[:tab] : "tab1"
       if @type == "Weekly"
