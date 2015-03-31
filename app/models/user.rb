@@ -10,12 +10,35 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  def only_if_unconfirmed
-    pending_any_confirmation {yield}
-  end
-
   def total_time_between_dates beginning, ending
     Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
+  end
+
+  def self.between_dates_and_team_and_projects beginning, ending, team, projects
+    users = self.select("users.*, SUM( timesheets.total_time ) AS total").joins(:timesheets).where("timesheets.belongs_to_day BETWEEN ? AND ?", beginning, ending).group("users.id")
+    users = users.where("users.team_id = ?", team.id) unless team.nil?
+    users = users.where("timesheets.project_id IN (?)", projects.map{|x| x.id}) unless projects.nil?
+    return users
+  end
+
+  def self.between_dates_and_projects beginning, ending, projects
+    self.between_dates_and_team_and_projects(beginning, ending, nil, projects)
+  end
+
+  def self.between_dates_and_project beginning, ending, project
+    self.between_dates_and_team_and_projects(beginning, ending, nil, [project])
+  end
+
+  def self.between_dates_and_team beginning, ending, team
+    self.between_dates_and_team_and_projects(beginning, ending, team, nil)
+  end
+
+  def self.between_dates beginning, ending
+    self.between_dates_and_team_and_projects(beginning, ending, nil)
+  end
+
+  def only_if_unconfirmed
+    pending_any_confirmation {yield}
   end
 
   def total_time

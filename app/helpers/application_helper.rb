@@ -18,7 +18,7 @@ module ApplicationHelper
 	end
 
 	def day_name_format date
-		date.strftime("%A")
+		date.strftime("%a %d")
 	end
 
 	def month_format date

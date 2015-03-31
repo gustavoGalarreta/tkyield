@@ -9,10 +9,10 @@
           </tr>
         </thead>
         <tbody>
-          <% @task_times.includes(:project).each do |time| %>
+          <% @tasks.each do |task| %>
             <tr>
-              <td><%= time.task.name %> </td>
-              <td><%= get_seconds_in_hours_minutes(time.project.total_time_per_task(time.task,@beginning,@end)) %></td>
+              <td><%= task.name %> </td>
+              <td><%= get_seconds_in_hours_minutes(task.total) %></td>
             </tr>
           <% end %>
         </tbody>

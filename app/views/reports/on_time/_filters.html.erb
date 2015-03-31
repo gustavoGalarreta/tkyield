@@ -5,8 +5,8 @@
 <%= form_tag(reports_on_time_index_path,  {:method => :get} ) do %>
     <div class="row">
         <div class="col-lg-6 text-center">
-        	<strong>Team</strong>
-        	<%= select_tag "team",options_from_collection_for_select(@teams, "id", "name", @selected_team.try(:id)), prompt: "- Select a Team -" ,class:"form-control selected_team_id",:data => { :teamId => @team}, :id => "selected_team_#{@team}"%>
+            <strong>Team</strong>
+            <%= select_tag "team",options_from_collection_for_select(@teams, "id", "name", @selected_team.try(:id)), prompt: "- Select a Team -" ,class:"form-control selected_team_id",:data => { :teamId => @team}, :id => "selected_team_#{@team}"%>
             
         </div>
         <div class="col-lg-6 text-center">
@@ -45,10 +45,10 @@
         </ul>
         <div class="tab-content" id="tabContainer">
             <div class="<%= if @tab == 'tab1' then 'tab-pane active'  else 'tab-pane' end%>" id="tab1" style="overflow: auto;">
-        		<%= render "daily" %>
+                <%= render "daily" %>
             </div>
             <div class="<%= if @tab == 'tab2' then 'tab-pane active'  else 'tab-pane' end%>" id="tab2" style="overflow: auto;">
-        		<%= render "summary" %>
+                <%= render "summary" %>
             </div>
         </div>
     </div>
