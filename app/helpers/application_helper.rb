@@ -37,7 +37,7 @@ module ApplicationHelper
 		date.strftime("%m/%d/%Y")
 	end
 
-	def date_format2 date
+	def date_format_with_hyphen date
 		date.strftime("%Y-%m-%d")
 	end
 	
