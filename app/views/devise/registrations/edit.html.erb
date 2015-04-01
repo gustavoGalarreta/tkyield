@@ -13,20 +13,35 @@
       </div>
     </div>
     <% end %>
-
-  <div class="input-group">
-    <span class="input-group-addon">E-mail</span>
-    <%= f.email_field :email, autofocus: true ,class: "form-control" %>
-  </div>
-
-  </br><div class="input-group">
-    <span class="input-group-addon">First name</span>
-    <%= f.text_field :first_name, autofocus: true ,class: "form-control" %>
-  </div>
-
-  </br><div class="input-group">
-    <span class="input-group-addon">Last name</span>
-    <%= f.text_field :last_name, autofocus: true ,class: "form-control" %>
+  
+  <div class="row">
+    <% if !current_user.avatar.nil? %>
+      <div class="col-lg-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= image_tag current_user.avatar.url(:medium), class: "img-rounded", width: "200", height:"200"%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="col-lg-9">
+      <div class="input-group">
+        <span class="input-group-addon">Avatar</span>
+        <%= f.file_field :avatar,class: "form-control" %>
+      </div><br>
+      <div class="input-group">
+        <span class="input-group-addon">E-mail</span>
+        <%= f.email_field :email, autofocus: true ,class: "form-control" %>
+      </div>
+      </br><div class="input-group">
+        <span class="input-group-addon">First name</span>
+        <%= f.text_field :first_name, autofocus: true ,class: "form-control" %>
+      </div>
+      </br><div class="input-group">
+        <span class="input-group-addon">Last name</span>
+        <%= f.text_field :last_name, autofocus: true ,class: "form-control" %>
+      </div>
+    </div>
   </div>
   <hr></hr>
   <div class="input-group">

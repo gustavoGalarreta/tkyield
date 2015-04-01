@@ -49,6 +49,8 @@ gem "seedbank", "~> 0.3.0"
 
 gem "breadcrumbs_on_rails", '2.3.0'
 
+gem "paperclip", "~> 4.2"
+
 # Use Flipclock for Javascript buttons and timer
 gem 'flipclockjs-rails', '~> 0.5.5b.1'
 
