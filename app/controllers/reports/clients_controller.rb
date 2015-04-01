@@ -2,23 +2,32 @@ module Reports
   class ClientsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_time
+    before_action :set_client
     add_breadcrumb "Dashboard", :root_path 
     add_breadcrumb "Reports", :reports_list_path 
     add_breadcrumb "Timesheet Report", :reports_dash_path
     def show
-      @client = Client.find(params[:id])
       add_breadcrumb "Clients", :reports_client_path
-      @projects = Project.between_dates_and_client(@beginning, @end, @client).includes(:client).order("name")
+      @projects = Project.between_dates_and_client(@beginning, @end, @client).order("name")
       @users = User.between_dates_and_projects(@beginning, @end, @projects).order("first_name, last_name")
-      @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day").order("clients.name")
       respond_to do |format|
         format.html
         format.js
+      end
+    end
+
+    def client_excel
+      @timesheets = Timesheet.find_by_dates_and_client(@beginning,@end,@client)
+      respond_to do |format|
         format.xlsx
       end
     end
 
     private 
+
+    def set_client
+      @client = Client.find(params[:id] || params[:client_id])
+    end
 
     def set_time
       @today = Time.zone.now.to_date

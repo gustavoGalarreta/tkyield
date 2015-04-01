@@ -11,7 +11,7 @@
         <tbody>
           <% @project_times.each do |time| %>
   	        <tr>
-  	          <td><%= link_to time.project.name, reports_project_path(time.project) %> </td>
+  	          <td><%= link_to time.project.name, reports_user_project_path(time.user,time.project, :date => date_format_with_hyphen(@day_selected), :type => @type ) %></td>
   	          <td><%= get_seconds_in_hours_minutes(time.user.total_time_per_project(time.project,@beginning,@end)) %></td>
   	        </tr>
   	      <% end %>
