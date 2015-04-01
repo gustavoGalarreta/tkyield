@@ -9,6 +9,18 @@ class Timesheet < ActiveRecord::Base
 
   validates :project, :task, :user, presence: true
 
+  def self.find_by_dates_and_client(beginning,ending,client)
+    Timesheet.where(belongs_to_day: beginning..ending, project: client.projects).includes(:user, project: [:client]).order("belongs_to_day ASC")
+  end
+  
+  def self.find_by_dates_and_project(beginning,ending,project)
+    Timesheet.where(belongs_to_day: beginning..ending, project: project).includes(:user, project: [:client]).order("belongs_to_day ASC")
+  end
+
+  def self.find_by_dates_and_user(beginning,ending,user)
+    Timesheet.where(belongs_to_day: beginning..ending, user: user).includes(:user, project: [:client]).order("belongs_to_day ASC")
+  end
+
   def toggle_timer
     is_running? ? stop_timer : start_timer
   end
