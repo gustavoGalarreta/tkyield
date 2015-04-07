@@ -1,4 +1,4 @@
-<h2 class="form-signin-heading">Log in <small>User</small></h2>
+<h2 class="form-signin-heading">Log in <small>Account</small></h2>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "form-signin"}) do |f| %>
     <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email address" %>
     <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password" %>
@@ -13,5 +13,6 @@
     <%= f.submit "Log in", class: "btn btn-lg btn-success btn-block" %>
   </div>
   <br>
-  <center><%= link_to "Forgot your password?", new_password_path(resource_name) %><br /></center>
+  <center><%= render "accounts/shared/links" %></center>
 <% end %>
+

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
-  validates :qr_code, uniqueness: true
+  validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 

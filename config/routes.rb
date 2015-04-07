@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
 
+  root to: "home#index"
+  get 'logforms', to: 'home#login'
   namespace :api do
     namespace :v1 do
       resources :time_stations, only: :create
       resources :users, only: :index
     end
   end
-  root to: "home#index"
   resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
     get 'show_user_project', to: 'users#projects', on: :member
     patch 'update_user_project', to: 'users#update_projects', on: :member
@@ -43,11 +44,13 @@ Rails.application.routes.draw do
   end
   resources :time_stations
   # resources :reports
-
-
   devise_for :users, :controllers => { :passwords => 'user_device/passwords', :confirmations => 'user_device/confirmations' }
   devise_scope :user do
     patch "/confirm" => "user_device/confirmations#confirm"
+  end
+  devise_for :accounts, :controllers => { :passwords => 'account_devise/passwords', :confirmations => 'account_devise/confirmations'}
+  devise_scope :account do
+    patch "/confirm" => "account_devise/confirmations#confirm"
   end
 
 end
