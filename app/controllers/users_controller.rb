@@ -83,4 +83,5 @@ class UsersController < ApplicationController
   def user_project_params
     params.require(:user).permit(user_projects_attributes: [:id, :project_id, :_destroy])
   end
+
 end
