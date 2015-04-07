@@ -1,4 +1,23 @@
-<h1 class="page-header"> <%= resource_name.to_s.humanize %> <small> Editing</small> </h1>
+<style type="text/css">
+  .codes{
+    height: 70px;
+    line-height: 70px;
+  }
+</style>
+<h1 class="page-header row">
+  <div class="col-lg-8">
+    <%= resource_name.to_s.humanize %> <small> Editing</small>
+  </div>
+  <div class="col-lg-2 text-right codes">
+    <a href="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=<%=@user.qr_code%>&chld=M|0" target="blank">
+      <img src="https://chart.googleapis.com/chart?cht=qr&chs=50x50&chl=<%=@user.qr_code%>&chld=M|0"> </img>     
+    </a>
+  </div>
+  <div class="col-lg-2 codes">
+    <h2><small>Pin Code</small>  <%= @user.pin_code %> </h2>
+  </div>
+</h1>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
