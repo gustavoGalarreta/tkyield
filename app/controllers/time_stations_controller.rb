@@ -8,7 +8,7 @@ class TimeStationsController < ApplicationController
   # GET /time_stations.json
   def index
     @current_user = current_user
-    @in_times = TimeStation.where(user_id: @current_user.id, parent_id: nil).includes(:children).paginate(:page => params[:page], :per_page => 10)
+    @in_times = TimeStation.where(user_id: @current_user.id, parent_id: nil).includes(:children).order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /time_stations/1
