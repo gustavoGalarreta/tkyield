@@ -65,3 +65,11 @@ margin-top: 20px;
 #page-wrapper {
 	min-height: 100%;
 }
+
+.codes{
+	height: 70px;
+	line-height: 70px;
+	h2{
+		margin: 10px 0;
+	}
+}
