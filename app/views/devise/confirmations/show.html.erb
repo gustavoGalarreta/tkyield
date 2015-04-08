@@ -1,5 +1,6 @@
-<h1 class="page-header">Create Password for Account</h1>
-<h3 class="form-confirm-heading"> You're almost done! Now create a password to securely access your account. </h3>
+<% unless resource.is_administrator? %>
+  <h1 class="page-header">Create Password for Account</h1>
+  <h3 class="form-confirm-heading"> You're almost done! Now create a password to securely access your account. </h3>
   <% if resource.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-danger alert-dismissable">
@@ -13,13 +14,14 @@
       </div>
     </div>
   <% end %>
-<%= form_for(resource, :as => resource_name, :url => confirm_path, html: {class: "form-confirm"}) do |f| %>
-  <%= f.password_field :password, autocomplete: "off", autofocus: true, class: "form-control", placeholder: "Password" %>
-  <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm password"%>
-  <div>
-  	<%= f.hidden_field :confirmation_token, :value => @original_token %>
-  </div>
-  <br><div class="actions">
-    <%= f.submit "Confirm account" , class: "btn btn-lg btn-warning"%>
-  </div>
+  <%= form_for(resource, :as => resource_name, :url => confirm_path, html: {class: "form-confirm"}) do |f| %>
+    <%= f.password_field :password, autocomplete: "off", autofocus: true, class: "form-control", placeholder: "Password" %>
+    <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm password"%>
+    <div>
+      <%= f.hidden_field :confirmation_token, :value => @original_token %>
+    </div>
+    <br><div class="actions">
+      <%= f.submit "Confirm account" , class: "btn btn-lg btn-warning"%>
+    </div>
+  <% end %>
 <% end %>

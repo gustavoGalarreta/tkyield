@@ -1,7 +1,6 @@
-class UsersController < ApplicationController
-  before_action :authenticate_user!
+class UsersController < DashboardController
   load_and_authorize_resource
-	add_breadcrumb "Dashboard", :root_path
+	add_breadcrumb "Dashboard", :dashboard_path
 	add_breadcrumb "Collaborators", :users_path
   before_action :set_user, only: [:resend_confirmation]
 

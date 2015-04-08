@@ -1,20 +1,14 @@
-<style type="text/css">
-  .codes{
-    height: 70px;
-    line-height: 70px;
-  }
-</style>
 <h1 class="page-header row">
-  <div class="col-lg-8">
+  <div class="col-lg-7 col-xs-5">
     <%= resource_name.to_s.humanize %> <small> Editing</small>
   </div>
-  <div class="col-lg-2 text-right codes">
+  <div class="col-lg-2  col-xs-3 text-right codes">
     <a href="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=<%=@user.qr_code%>&chld=M|0" target="blank">
-      <img src="https://chart.googleapis.com/chart?cht=qr&chs=50x50&chl=<%=@user.qr_code%>&chld=M|0"> </img>     
+      <img src="https://chart.googleapis.com/chart?cht=qr&chs=50x50&chl=<%=@user.qr_code%>&chld=M|0"></img>      
     </a>
   </div>
-  <div class="col-lg-2 codes">
-    <h2><small>Pin Code</small>  <%= @user.pin_code %> </h2>
+  <div class="col-lg-3 col-xs-4 text-right codes">
+    <h2><small>Pin Code</small> <%= @user.pin_code %></h2>
   </div>
 </h1>
 

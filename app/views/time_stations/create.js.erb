@@ -1,9 +1,18 @@
 <% if !@user %>
-	alert("Pin inválido")
+	$('#modal-title-text').text('	');
+	$('#modal-msg').html('<h3>Pin inválido</h3>');
+	$('#ontime-modal').modal('show');
+	setTimeout(function(){$("#ontime-modal").modal('hide')}, 3000);
 <% elsif @is_in %>
-	alert("Bienvenido <%= @user.full_name %>");
+	$('#modal-title-text').text('Bienvenid@');
+	$('#modal-msg').html('<h2><%= image_tag @user.avatar.url(:thumb), class: "img-circle", width: "60", height:"60"%></h2><h3><%=@user.full_name%></h3>');
+	$('#ontime-modal').modal('show');
+	setTimeout(function(){$("#ontime-modal").modal('hide')}, 3000);
 	$("#pin_code").val("");
 <% else %>
-	alert("Hasta luego <%= @user.full_name %>");
+	$('#modal-title-text').text('Hasta luego');
+	$('#modal-msg').html('<h2><%= image_tag @user.avatar.url(:thumb), class: "img-circle", width: "60", height:"60"%></h2><h3><%=@user.full_name%></h3>');
+	$('#ontime-modal').modal('show');
+	setTimeout(function(){$("#ontime-modal").modal('hide')}, 3000);
 	$("#pin_code").val("");
 <% end %>
