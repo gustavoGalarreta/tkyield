@@ -1,8 +1,7 @@
-class TimeStationsController < ApplicationController
+class TimeStationsController < DashboardController
   before_action :set_time_station, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
   load_and_authorize_resource :except => :index
-  add_breadcrumb "Dashboard", :root_path , :only => %w(index show)
+  add_breadcrumb "Dashboard", :dashboard_path , :only => %w(index show)
   add_breadcrumb "Time Station", :time_stations_path , :only => %w(index show)
   # GET /time_stations
   # GET /time_stations.json

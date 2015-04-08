@@ -1,5 +1,13 @@
-<p>Welcome <%= @email %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p>Welcome <%= @resource.full_name %>!</p>
+<% account = @resource.account %>
+<% if @resource.is_administrator? %>
+	<p>Your company <%= account.company_name %> has been registered in TK Yield by the email <%= @email %></p>
+	<p>You can confirm your account through the link below:</p>
+	<p><%= link_to 'Confirm account', confirmation_url(@resource, confirmation_token: @token, subdomain: account.subdomain) %></p>
+	<br>
+	<p>Dashboard link: <%= link_to 'See Dashboard', dashboard_url(subdomain: account.subdomain) %></p>
+<% else %>
+	<p>The company <%= account.company_name %> wants you to join in</p>
+	<p>You can confirm your account email <%= @email %> through the link below:</p>
+	<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token, subdomain: account.subdomain) %></p>
+<% end %>

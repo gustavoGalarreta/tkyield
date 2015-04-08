@@ -1,8 +1,7 @@
-class TimesheetsController < ApplicationController
-  before_action :authenticate_user!
+class TimesheetsController < DashboardController
   load_and_authorize_resource
   before_action :set_timesheet, only: [:toggle_timesheet, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Timesheet", :timesheets_path
 
   def index
