@@ -1,8 +1,7 @@
 module Reports
-  class ReportsController < ApplicationController
-    before_action :authenticate_user!
+  class ReportsController < DashboardController
     before_action :set_time
-    add_breadcrumb "Dashboard", :root_path 
+    add_breadcrumb "Dashboard", :dashboard_path 
     
     def index
       add_breadcrumb "Reports", :reports_list_path

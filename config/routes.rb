@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
 
-  root to: "home#index"
-  get 'logforms', to: 'home#login'
   namespace :api do
     namespace :v1 do
       resources :time_stations, only: :create
       resources :users, only: :index
     end
   end
+
   resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
     get 'show_user_project', to: 'users#projects', on: :member
     patch 'update_user_project', to: 'users#update_projects', on: :member
@@ -24,6 +23,7 @@ Rails.application.routes.draw do
   resources :timesheets, except: [:show, :new, :edit] do
     get 'toggle_timesheet', on: :member
   end
+  resources :time_stations
   namespace :reports do
     get 'dash', to: 'reports#dash'
     get 'list', to: 'reports#index'
@@ -42,15 +42,15 @@ Rails.application.routes.draw do
       get 'client_excel', to: 'clients#client_excel'
     end
   end
-  resources :time_stations
-  # resources :reports
-  devise_for :users, :controllers => { :passwords => 'user_device/passwords', :confirmations => 'user_device/confirmations' }
+
+  devise_for :users, :controllers => { :passwords => 'user_device/passwords', :registrations => 'user_device/registrations', :confirmations => 'user_device/confirmations' }
   devise_scope :user do
     patch "/confirm" => "user_device/confirmations#confirm"
   end
-  devise_for :accounts, :controllers => { :passwords => 'account_devise/passwords', :confirmations => 'account_devise/confirmations'}
-  devise_scope :account do
-    patch "/confirm" => "account_devise/confirmations#confirm"
-  end
+
+  get "dashboard", to: "dashboard#index"
+  get "registration", to: "home#registration"
+  post "registration", to: "home#register"
+  root to: "home#index"
 
 end

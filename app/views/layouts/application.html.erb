@@ -25,7 +25,18 @@
 			</div>
 		<% else %>
 			<div id="not_logged">
-				<%= render "layouts/navbar" %>
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+					<div class="container">
+						<div class="navbar-header">
+							<%= link_to root_path, class: 'navbar-brand' do %>
+							   <p><%= image_tag('favicon.ico', width: '20', height: '20') %> Tekton Yield</p>
+							<% end %>
+						</div>
+						<div class="navbar-form navbar-right">
+							<%= link_to "Sign in", new_user_session_path, class: "btn btn-success" %>
+						</div>
+					</div>
+				</nav>
 				<div>
 					<%= render "layouts/messages" %>
 					<div class="container-fluid">

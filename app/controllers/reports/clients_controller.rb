@@ -1,9 +1,8 @@
 module Reports
-  class ClientsController < ApplicationController
-    before_action :authenticate_user!
+  class ClientsController < DashboardController
     before_action :set_time
     before_action :set_client
-    add_breadcrumb "Dashboard", :root_path 
+    add_breadcrumb "Dashboard", :dashboard_path 
     add_breadcrumb "Reports", :reports_list_path 
     add_breadcrumb "Timesheet Report", :reports_dash_path
     def show
