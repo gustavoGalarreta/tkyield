@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
   
-  has_and_belongs_to_many :accounts
+  belongs_to :account
   belongs_to :role
   belongs_to :team
   has_many :timesheets
@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
   
+  validates_uniqueness_of :email, scope: :account_id
   validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/

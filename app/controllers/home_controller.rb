@@ -1,7 +1,7 @@
 # encoding: utf-8
-require 'socket'
 class HomeController < ApplicationController
-  
+  layout 'home'
+
   def index
   end
 
@@ -11,10 +11,12 @@ class HomeController < ApplicationController
 
   def register
     @account = Account.new(account_params)
-    @user = User.new(user_params)
-    @user.role_id = Role::ADMINISTRATOR_ID
-    if @account.save and @user.save and UserAccount.create(account_id: @account.id, user_id: @user.id)
-      redirect_to root_path, notice: 'The Account was successfully created. You will receive an email to confirm.'
+    if @account.save
+      @user = User.new(user_params)
+      @user.role_id = Role::ADMINISTRATOR_ID
+      @user.account_id = @account.id
+      @user.save
+      redirect_to root_url(subdomain: false), notice: 'The Account was successfully created. You will receive an email to confirm.'
     else
       render :registration
     end

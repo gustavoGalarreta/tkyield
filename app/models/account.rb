@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  has_and_belongs_to_many :users
+  has_many :users
 
   validates :company_name, presence: true
   validates :company_name, format: { with: /\A[a-zA-Z 0-9]+\z/, message: "only allows letters" }
