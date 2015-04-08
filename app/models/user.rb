@@ -1,19 +1,24 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  
+  belongs_to :account
   belongs_to :role
   belongs_to :team
   has_many :timesheets
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
+  
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
+  
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
+  
+  validates_uniqueness_of :email, scope: :account_id
   validates :qr_code, uniqueness: { :allow_blank => true }
-  validates_length_of :pin_code, :within => 1..9999
+  validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
-
 
   def total_time_between_dates beginning, ending
     Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
@@ -61,12 +66,16 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
+  def is_administrator?
+    self.role_id == Role::ADMINISTRATOR_ID
+  end
+
   def is_manager?
-    self.role_name == "Manager"
+    self.role_id == Role::MANAGER_ID
   end
 
   def is_employee?
-    self.role_name == "Employee"
+    self.role_id == Role::COLLABORATOR_ID
   end
 
   def is_confirmed?

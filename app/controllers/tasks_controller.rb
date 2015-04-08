@@ -1,8 +1,7 @@
-class TasksController < ApplicationController
-  before_action :authenticate_user!
+class TasksController < DashboardController
   load_and_authorize_resource
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Tasks", :tasks_path
 
   # GET /tasks

@@ -4,9 +4,9 @@
     <div id="error_explanation">
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button>
-        <h4><%= pluralize(@team.errors.count, "error") %> prohibited this task from being saved:</h4>
+        <h4><%= pluralize(@account.errors.count, "error") %> ocurred:</h4>
         <ul>
-        <% @team..errors.full_messages.each do |message| %>
+        <% @team.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
         </ul>
