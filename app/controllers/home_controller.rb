@@ -25,16 +25,6 @@ class HomeController < ApplicationController
         @account.delete
         render :registration, account: account_tmp, user: @user
       end
-      # @user.role_id = Role::ADMINISTRATOR_ID
-      # @user.account_id = @account.id
-      # if @user.save
-      #   # redirect_to root_url(subdomain: false), notice: 'The Account was successfully created. You will receive an email to confirm.'
-      #   redirect_to root_url, notice: 'The Account was successfully created. You will receive an email to confirm.'
-      # else
-      #   account_tmp = @account
-      #   @account.delete
-      #   render :registration, account: account_tmp, user: @user
-      # end
     else
       render :registration, account: @account, user: @user
     end

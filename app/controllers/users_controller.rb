@@ -23,13 +23,10 @@ class UsersController < DashboardController
   def create
     @user = User.new(user_params)
     @user.account = current_account
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to users_path, notice: 'User was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -77,7 +74,7 @@ class UsersController < DashboardController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:avatar,:first_name, :last_name, :role_id,:team_id, :email,:qr_code, :pin_code)
+    params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :pin_code)
   end
 
   def user_project_params
