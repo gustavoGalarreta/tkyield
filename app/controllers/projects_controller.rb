@@ -13,7 +13,7 @@ class ProjectsController < DashboardController
   # GET /project_tasks.js
   def tasks
     @timesheetId = params["timesheetId"].nil? ? nil : params["timesheetId"]
-    @tasks = @project.tasks.order("name").all
+    @tasks = @project.tasks.order("name")
   end
 
   # GET /projects/1

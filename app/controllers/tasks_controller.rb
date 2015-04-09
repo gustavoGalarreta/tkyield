@@ -7,7 +7,7 @@ class TasksController < DashboardController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = current_account.tasks.order("name ASC").all
+    @tasks = current_account.tasks.order("name ASC")
   end
 
   # GET /tasks/1

@@ -6,7 +6,7 @@ class TeamsController < DashboardController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = current_account.teams.all.order("name ASC").all
+    @teams = current_account.teams.order("name ASC")
   end
 
   def collaborators

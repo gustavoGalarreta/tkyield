@@ -7,14 +7,14 @@ module Reports
     def index
       add_breadcrumb "On Time Report", :reports_on_time_index_path
       
-      @filtered_users = User.all.order("first_name, last_name")
+      @filtered_users = current_account.users.order("first_name, last_name")
       if !params[:team].blank? and params[:collaborator].blank?
         @filtered_users = User.where(team_id: @selected_team)
       elsif !params[:collaborator].blank?
         @filtered_users = User.where(id: @selected_collaborator)
       end
 
-      @teams = Team.all
+      @teams = current_account.teams.order("name ASC")
       @collaborators = User.order("first_name, last_name")
       
       respond_to do |format|

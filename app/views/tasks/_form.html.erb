@@ -3,7 +3,7 @@
 		<div id="error_explanation">
 			<div class="alert alert-danger alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button>
-				<h4><%= pluralize(@account.errors.count, "error") %> ocurred:</h4>
+				<h4><%= pluralize(task.errors.count, "error") %> ocurred:</h4>
 				<ul>
 				<% task.errors.full_messages.each do |message| %>
 					<li><%= message %></li>

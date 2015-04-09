@@ -1,5 +1,5 @@
 module TasksHelper
 	def tasks_helper
-		Task.all.order("name ASC")
+		current_account.tasks.order("name ASC")
 	end
 end

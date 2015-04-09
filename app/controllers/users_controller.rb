@@ -47,7 +47,7 @@ class UsersController < DashboardController
   def projects
     add_breadcrumb "Assign Projects", :show_user_project_user_path
 
-    @projects = Project.all.includes (:client)
+    @projects = current_account.projects.includes(:client)
     @grouped_options = @projects.inject({}) do |options, project|
       (options[project.client_name] ||= []) << [project.name, project.id]
       options
