@@ -3,12 +3,15 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%= form_for @account, url: registration_path, html: {class: "form-horizontal"} do |f| %>
-				<% if @account.errors.any? %>
+				<% if @account.errors.any? or @user.errors.any? %>
 					<div id="error_explanation">
 						<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							<h4><%= pluralize(@account.errors.count, "error") %> ocurred:</h4>
+							<h4><%= pluralize(@account.errors.count + @user.errors.count, "error") %> ocurred:</h4>
 							<ul>
 								<% @account.errors.full_messages.each do |message| %>
+									<li><%= message %></li>
+								<% end %>
+								<% @user.errors.full_messages.each do |message| %>
 									<li><%= message %></li>
 								<% end %>
 							</ul>
@@ -22,9 +25,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<%= f.label :subdomain, class: "col-sm-3 control-label" %>
+					<%= f.label :namespace, class: "col-sm-3 control-label" %>
 					<div class="col-sm-9">
-						<%= f.text_field :subdomain, class: "form-control", placeholder: "Subdomain (max 20 characters)" %>
+						<%= f.text_field :subdomain, autocomplete: "off", class: "form-control", placeholder: "Namespace (max 20 characters)" %>
 						<small id="custom-subdomain"></small>
 					</div>
 				</div>
@@ -43,19 +46,19 @@
 				<div class="form-group">
 					<%= label_tag :user_first_name, "First name",class: "col-sm-3 control-label" %>
 					<div class="col-sm-9">
-						<%= text_field_tag "user[first_name]", "", class: "form-control", placeholder: "First name" %>
+						<%= text_field_tag "user[first_name]", "#{@user.first_name}", class: "form-control", placeholder: "First name" %>
 					</div>
 				</div>
 				<div class="form-group">
 					<%= label_tag :user_last_name, "Last name",class: "col-sm-3 control-label" %>
 					<div class="col-sm-9">
-						<%= text_field_tag "user[last_name]", "", class: "form-control", placeholder: "Last name" %>
+						<%= text_field_tag "user[last_name]", "#{@user.last_name}", class: "form-control", placeholder: "Last name" %>
 					</div>
 				</div>
 				<div class="form-group">
 					<%= label_tag :user_email, "Email",class: "col-sm-3 control-label" %>
 					<div class="col-sm-9">
-						<%= email_field_tag "user[email]", "", class: "form-control", placeholder: "Email address" %>
+						<%= email_field_tag "user[email]", "#{@user.email}", class: "form-control", placeholder: "Email address" %>
 					</div>
 				</div>
 				<div class="form-group">

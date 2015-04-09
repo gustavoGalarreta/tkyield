@@ -7,7 +7,7 @@ class TasksController < DashboardController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.order("name ASC").all
+    @tasks = current_account.tasks.order("name ASC").all
   end
 
   # GET /tasks/1
@@ -30,7 +30,7 @@ class TasksController < DashboardController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
+    @task.account = current_account
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }

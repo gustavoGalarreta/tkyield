@@ -7,7 +7,7 @@ class ProjectsController < DashboardController
   # GET /projects
   # GET /projects.json
   def index
-    @clients = Client.order("name")
+    @clients = current_account.clients.order("name")
   end
 
   # GET /project_tasks.js
@@ -38,6 +38,7 @@ class ProjectsController < DashboardController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    @project.account = current_account
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
