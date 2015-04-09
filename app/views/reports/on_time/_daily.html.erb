@@ -1,22 +1,35 @@
 <table class="table table-striped table-responsive" style="overflow: auto;">
   <thead>
-      <tr>
-        <th> Collaborator </th>
-        <% days = days_between_dates(@beginning, @end) %>
-        <% days.each do |day| %>
-          <th><%= date_format(day) %></th>
-        <% end %>
-      </tr>
+    <tr>
+      <th>Name</th>
+      <th>In/Out</th>
+      <th>Time</th>      
+    </tr>
   </thead>
+
   <tbody>
-    <% @filtered_users.each do |user| %>
+    <% @recent.each do |time_station| %>
       <tr>
-        <% total = TimeStation.totals_per_day_between_dates(@beginning,@end,user.id) %>
-        <td><%= user.full_name %></td>
-        <% total.each do |t| %>
-          <td> <%= get_seconds_in_hours_minutes(t) %> </td>
-        <%end%>
+        <td><%= time_station.user.full_name %>
+        <td> 
+        <% if time_station.parent_id.nil? %>
+          IN
+        <% else %>
+          OUT
+        <% end %>
+        </td>
+        <td>
+        <% if time_station.parent_id.nil? %>
+         <%= datetime_format(time_station.created_at) %>
+        <% else %>
+         <%= datetime_format(time_station.created_at) %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div class="text-center">
+  <%= will_paginate @recent,:previous_label => '<<', :next_label => '>>' %>  
+</div>

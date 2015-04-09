@@ -48,4 +48,8 @@ module ApplicationHelper
 	def datetime_format date
 		date.strftime("%B %d, %I:%M %p")
 	end
+
+	def timestamp_format date
+		date.strftime("%d%m%Y%H%M%S")		
+	end
 end
