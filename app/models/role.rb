@@ -1,6 +1,8 @@
 class Role < ActiveRecord::Base
   has_many :users , dependent: :nullify
 
+  default_scope {order('name')}
+  
   MANAGER_ID = 1
   COLLABORATOR_ID = 2
   ADMINISTRATOR_ID = 3

@@ -7,7 +7,7 @@ class ClientsController < DashboardController
   # GET /clients
   # GET /clients.json
   def index
-    @clients = current_account.clients.order("name ASC").all
+    @clients = current_account.clients.order("name ASC")
   end
 
   # GET /clients/1

@@ -7,4 +7,8 @@ module ProjectsHelper
 		end
 		return grouped_options
 	end
+
+	def projects_count_helper
+		current_account.projects.count
+	end
 end

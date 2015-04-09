@@ -5,6 +5,7 @@ class Task < ActiveRecord::Base
   has_many :timesheets
 
   validates :name, presence: true
+  validates :account, presence: true
   
   default_scope {order('name')}
   acts_as_paranoid
