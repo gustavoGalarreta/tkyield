@@ -1,5 +1,5 @@
 module ClientsHelper
 	def clients_helper
-		Client.all.order("name ASC")
+		current_account.clients.order("name ASC")
 	end
 end

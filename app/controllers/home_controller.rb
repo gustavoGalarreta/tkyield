@@ -7,18 +7,26 @@ class HomeController < ApplicationController
 
   def registration
     @account = Account.new
+    @user = User.new
   end
 
   def register
     @account = Account.new(account_params)
+    @user = User.new(user_params)
     if @account.save
-      @user = User.new(user_params)
-      @user.role_id = Role::ADMINISTRATOR_ID
-      @user.account_id = @account.id
-      @user.save
-      redirect_to root_url(subdomain: false), notice: 'The Account was successfully created. You will receive an email to confirm.'
+      begin
+        @user.role_id = Role::ADMINISTRATOR_ID
+        @user.account_id = @account.id
+        @user.save
+        # redirect_to root_url(subdomain: false), notice: 'The Account was successfully created. You will receive an email to confirm.'
+        redirect_to root_url, notice: 'The Account was successfully created. You will receive an email to confirm.'
+      rescue
+        account_tmp = @account
+        @account.delete
+        render :registration, account: account_tmp, user: @user
+      end
     else
-      render :registration
+      render :registration, account: @account, user: @user
     end
   end
 

@@ -4,63 +4,25 @@
 	<% @teams.each do |team| %>
 		<thead class="thead">
 			<tr>
-				<th><%= team.name %></th>
+				<th colspan="6"><%= team.name %></th>
 			</tr>
 		</thead>
 		<tbody>
 			<% team.users.includes(:role).order("first_name, last_name").each do |user| %>
-				<tr>
-					<td>
-						<div class="col-md-3">
-							<strong><%= user.full_name %></strong>
-						</div>
-						<div class="col-md-3">
-							<%= user.role_name %>
-						</div>
-						<div class="col-md-1">
-							<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_user_path(user),class: "btn btn-default" %>
-						</div>
-						<div class="col-md-2">
-							<%= link_to '<i class="fa fa-folder-open-o"></i> Assign Projects'.html_safe, show_user_project_user_path(user), class: "btn btn-default" %>
-						</div>
-						<div class="col-md-2">
-							<%= link_to '<i class="fa  fa-reply-all"></i> Resend Confirmation'.html_safe, resend_confirmation_user_path(user), class: "btn btn-default" %> 
-						</div>
-					</td>
-				</tr>
+				<%= render "user", user: user %>
 			<% end %>
 		</tbody>
 	<% end %>
-</table>
-<% if !@users.nil? %>
-	<table class="table table-responsive">
+	<% if !@users.nil? %>
 		<thead class="thead">
 			<tr>
-				<th style="background-color: #222222;  color: white;">Unnasigned Users</th>
+				<th colspan="6" style="background-color: #333;  color: white;">Unnasigned Users</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% @users.each do |user| %>
-				<tr>
-					<td>
-						<div class="col-md-3">
-							<strong><%= user.full_name %></strong>
-						</div>
-						<div class="col-md-3">
-							<%= user.role_name %>
-						</div>
-						<div class="col-md-1">
-							<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_user_path(user),class: "btn btn-default" %>
-						</div>
-						<div class="col-md-2">
-							<%= link_to '<i class="fa fa-folder-open-o"></i> Assign Projects'.html_safe, show_user_project_user_path(user), class: "btn btn-default" %>
-						</div>
-						<div class="col-md-2">
-							<%= link_to '<i class="fa  fa-reply-all"></i> Resend Confirmation'.html_safe, resend_confirmation_user_path(user), class: "btn btn-default" %> 
-						</div>
-					</td>
-				</tr>
+				<%= render "user", user: user %>
 			<% end %>
 		</tbody>
-	</table>
-<% end %>
+	<% end %>
+</table>

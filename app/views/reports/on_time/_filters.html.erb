@@ -39,15 +39,20 @@
     <div class="tabbable tabs-left" >
         <ul class="nav nav-pills nav-justified">
             <li class="<%= 'active' if @tab == 'tab1' %>"><a href="#tab1" data-toggle="tab">
-            <i class="fa fa-history"></i> Daily Activity</a></li>
+            <i class="fa fa-toggle-on"></i> Daily </a></li>
             <li class="<%= 'active' if @tab == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
-            <i class="fa fa-pie-chart"></i> Summary Activity</a></li>
+            <i class="fa fa-history"></i> Daily Summary</a></li>
+            <li class="<%= 'active' if @tab == 'tab3' %>"> <a href="#tab3" data-toggle="tab">
+            <i class="fa fa-pie-chart"></i> Summary</a></li>
         </ul>
         <div class="tab-content" id="tabContainer">
             <div class="<%= if @tab == 'tab1' then 'tab-pane active'  else 'tab-pane' end%>" id="tab1" style="overflow: auto;">
                 <%= render "daily" %>
             </div>
             <div class="<%= if @tab == 'tab2' then 'tab-pane active'  else 'tab-pane' end%>" id="tab2" style="overflow: auto;">
+                <%= render "dailysummary" %>
+            </div>
+            <div class="<%= if @tab == 'tab3' then 'tab-pane active'  else 'tab-pane' end%>" id="tab3" style="overflow: auto;">
                 <%= render "summary" %>
             </div>
         </div>

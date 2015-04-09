@@ -18,7 +18,7 @@ class TimeStationsController < DashboardController
   # GET /time_stations/new
   def new
     @time_station = TimeStation.new
-    @recent = TimeStation.includes(:user).order("updated_at DESC").first(10)
+    @recent = TimeStation.includes(:user).order("updated_at DESC").paginate(:page => params[:page], :per_page => 10)
 
   end
 

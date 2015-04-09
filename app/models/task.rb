@@ -1,8 +1,11 @@
 class Task < ActiveRecord::Base
+  belongs_to :account
   has_many :task_projects
   has_many :projects, :through => :task_projects
   has_many :timesheets
+
   validates :name, presence: true
+  validates :account, presence: true
   
   default_scope {order('name')}
   acts_as_paranoid

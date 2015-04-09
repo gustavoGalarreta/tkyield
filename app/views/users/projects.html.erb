@@ -59,7 +59,7 @@
 					cantSelect++;
 				}     
 			});
-			var cantOption = <%= Project.all.count %>;
+			var cantOption = <%= projects_count_helper %>;
 			return cantOption != cantSelect;
 		}
 
