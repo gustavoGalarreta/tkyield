@@ -1,0 +1,18 @@
+<tr>
+	<td>
+		<%= image_tag user.avatar.url(:thumb), class: "img-circle", width: "30", height:"30"%><strong>  <%= user.full_name %></strong>
+	</td>
+	<td>
+		<%= user.role_name %>
+	</td>
+	<td>
+		<a href="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=<%=user.qr_code%>&chld=M|0" target="blank">
+			<img src="https://chart.googleapis.com/chart?cht=qr&chs=50x50&chl=<%=user.qr_code%>&chld=M|0"></img>      
+		</a>
+	</td>
+	<td>
+		<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_user_path(user),class: "btn btn-default" %>
+		<%= link_to '<i class="fa fa-folder-open-o"></i> Assign Projects'.html_safe, show_user_project_user_path(user), class: "btn btn-default" %>
+		<%= link_to '<i class="fa  fa-reply-all"></i> Resend Confirmation'.html_safe, resend_confirmation_user_path(user), class: "btn btn-default" %> 
+	</td>
+</tr>

@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def validate_account_and_current_user
-    if current_user and current_account.id != current_user.account_id
+    if current_user and current_account and current_account.id != current_user.account_id
       sign_out_and_redirect(current_user)
     end
   end

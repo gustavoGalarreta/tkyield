@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
+          :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
   
   belongs_to :account
   belongs_to :role
@@ -16,12 +17,22 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
   
   validates :account, presence: true
-  validates :role, presence: { message: "cannot be empty"}
-  validates :team, presence: { message: "cannot be empty"}
-  validates_uniqueness_of :email, scope: :account_id
+  validates :role, presence: true
+  validates :team, presence: true
+  validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
+  validates_format_of       :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_presence_of     :password, :on=>:create, :if => :password_required?
+  validates_confirmation_of :password, :on=>:create
+  validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
   validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  before_create :validate_and_generate_qr_code
+
+  def validate_and_generate_qr_code
+    self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
+  end
 
   def total_time_between_dates beginning, ending
     Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
