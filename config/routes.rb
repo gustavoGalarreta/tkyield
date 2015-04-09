@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :login_account, only: :create
       resources :time_stations, only: :create
       resources :users, only: :index
     end
