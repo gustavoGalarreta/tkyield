@@ -1,4 +1,5 @@
 class Client < ActiveRecord::Base
+  belongs_to :account
   has_many :projects
 
   validates :name, presence: true

@@ -1,10 +1,14 @@
 class Account < ActiveRecord::Base
   has_many :users
+  has_many :clients
+  has_many :tasks
+  has_many :projects
+  has_many :teams
 
   validates :company_name, presence: true
   validates :company_name, format: { with: /\A[a-zA-Z 0-9]+\z/, message: "only allows letters" }
-  validates :company_name, length: { maximum: 200, message: "200 characters maximum" }
-  validates :subdomain, presence: true, uniqueness: { message: "The subdomain already exists" }
+  validates :company_name, length: { maximum: 200, message: "must be a maximum of 20 characters" }
+  validates :subdomain, presence: true, uniqueness: { message: "already exists" }
   validates :subdomain, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
   validates :subdomain, length: { in: 3..20, message: "must be a minimum of 3 characters and a maximum of 20 characters" }
   validates :subdomain, exclusion: { in: %w(www us ca jp), message: "%{value} is reserved." }

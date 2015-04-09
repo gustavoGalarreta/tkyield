@@ -5,8 +5,8 @@ class UsersController < DashboardController
   before_action :set_user, only: [:resend_confirmation]
 
 	def index
-   	@teams = Team.order("name")
-    @users = User.where(team_id: nil).includes(:role).order("first_name, last_name")
+   	@teams = current_account.teams.order("name")
+    @users = current_account.users.where(team_id: nil).includes(:role).order("first_name, last_name")
   end
 
   def new
@@ -22,6 +22,7 @@ class UsersController < DashboardController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.account = current_account
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: 'User was successfully created.' }

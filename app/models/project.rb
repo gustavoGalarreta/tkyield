@@ -1,10 +1,12 @@
 class Project < ActiveRecord::Base
+  belongs_to :account
   belongs_to :client
   has_many :timesheets
   has_many :task_projects, dependent: :nullify
   has_many :tasks, :through => :task_projects
   has_many :user_projects, dependent: :nullify
   has_many :users, :through => :user_projects
+
   delegate :name, :to => :client, :prefix => true
   validates :client, :name, :description, presence: true
   after_destroy :stop_timesheets
