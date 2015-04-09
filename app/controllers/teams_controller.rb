@@ -6,7 +6,7 @@ class TeamsController < DashboardController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.all.order("name ASC").all
+    @teams = current_account.teams.order("name ASC")
   end
 
   def collaborators
@@ -31,7 +31,7 @@ class TeamsController < DashboardController
   # POST /teams.json
   def create
     @team = Team.new(team_params)
-
+    @team.account = current_account
     respond_to do |format|
       if @team.save
         format.html { redirect_to teams_path, notice: 'Team was successfully created.' }

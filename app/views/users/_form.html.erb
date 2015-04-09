@@ -1,4 +1,18 @@
 <%= nested_form_for user do |f| %>
+	<% if user.errors.any? %>
+		<div id="error_explanation">
+			<div class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button>
+				<h4><%= pluralize(user.errors.count, "error") %> ocurred:</h4>
+				<ul>
+				<% user.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+				</ul>
+			</div>
+		</div>
+	<% end %>
+
 	<div class="field">
 		<div class="input-group">
 		  <span class="input-group-addon">First Name</span>
@@ -31,7 +45,7 @@
 
 	<div class="input-group">
 		<span class="input-group-addon">Team</span>
-		<%= f.select :team_id, Team.all.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a Team -" } , class: "form-control" %>
+		<%= f.select :team_id, teams_helper.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a Team -" } , class: "form-control" %>
 	</div>
 	<br>
 

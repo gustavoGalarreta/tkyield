@@ -7,7 +7,13 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints(Subdomain) do
+  root to: "home#index"
+  get "registration", to: "home#registration"
+  post "registration", to: "home#register"
+
+  # constraints(Subdomain) do
+  scope ':route' do
+    get '/', to: "dashboard#index", as: "dashboard"
     resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
       get 'show_user_project', to: 'users#projects', on: :member
       patch 'update_user_project', to: 'users#update_projects', on: :member
@@ -43,17 +49,10 @@ Rails.application.routes.draw do
         get 'client_excel', to: 'clients#client_excel'
       end
     end
-
     devise_for :users, :controllers => { :sessions => 'user_device/sessions', :passwords => 'user_device/passwords', :registrations => 'user_device/registrations', :confirmations => 'user_device/confirmations' }
     devise_scope :user do
       patch "/confirm" => "user_device/confirmations#confirm"
     end
-    get '/', to: "dashboard#index"
   end
-
-  get "dashboard", to: "dashboard#index"
-  get "registration", to: "home#registration"
-  post "registration", to: "home#register"
-  root to: "home#index"
 
 end

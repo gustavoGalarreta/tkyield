@@ -14,7 +14,7 @@
         <% @clients.each do |client| %>
           <tr>
             <td><%= client.name %></td>
-            <td><%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe,  edit_client_path(client) , class: "btn btn-default"%></td>
+            <td><%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_client_path(client) , class: "btn btn-default"%></td>
           </tr>
         <% end %>
       </tbody>

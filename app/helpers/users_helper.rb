@@ -1,5 +1,9 @@
 module UsersHelper
 	def users_helper
-		User.all.order("first_name, last_name ASC")
+		current_account.users.order("first_name, last_name ASC")
+	end
+
+	def teams_helper
+		current_account.teams.order("name ASC")
 	end
 end

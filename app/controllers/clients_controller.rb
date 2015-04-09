@@ -7,7 +7,7 @@ class ClientsController < DashboardController
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.order("name ASC").all
+    @clients = current_account.clients.order("name ASC")
   end
 
   # GET /clients/1
@@ -29,15 +29,11 @@ class ClientsController < DashboardController
   # POST /clients.json
   def create
     @client = Client.new(client_params)
-
-    respond_to do |format|
-      if @client.save
-        format.html { redirect_to clients_path, notice: 'Client was successfully created.' }
-        format.json { render :show, status: :created, location: @client }
-      else
-        format.html { render :new }
-        format.json { render json: clients_path.errors, status: :unprocessable_entity }
-      end
+    @client.account = current_account
+    if @client.save
+      redirect_to clients_path, notice: 'Client was successfully created.'
+    else
+      render :new
     end
   end
 
