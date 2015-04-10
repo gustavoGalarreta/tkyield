@@ -28,10 +28,13 @@ class User < ActiveRecord::Base
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-  before_create :validate_and_generate_qr_code
+  before_create :generate_qr_code_and_access_token
 
-  def validate_and_generate_qr_code
+  def generate_qr_code_and_access_token
     self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
+    if self.role_id == Role::ADMINISTRATOR_ID
+      self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
+    end
   end
 
   def total_time_between_dates beginning, ending
