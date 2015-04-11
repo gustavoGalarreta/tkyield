@@ -1,8 +1,7 @@
 module Reports
-  class ReportsController < ApplicationController
-    before_action :authenticate_user!
+  class ReportsController < DashboardController
     before_action :set_time
-    add_breadcrumb "Dashboard", :root_path 
+    add_breadcrumb "Dashboard", :dashboard_path 
     
     def index
       add_breadcrumb "Reports", :reports_list_path
@@ -11,27 +10,23 @@ module Reports
     def dash
       add_breadcrumb "Reports", :reports_list_path
       add_breadcrumb "Timesheet Report", :reports_dash_path
-      @clients = Client.order("name")
-      if !params[:teamId].blank?
-        @users= User.where(team_id: @selected_team).order("first_name, last_name")
-      else 
-        @users = User.order("first_name, last_name")
-      end
-      @projects = Project.includes(:client).order("name")
+      @clients = Client.between_dates(@beginning, @end).order("name")
+      @projects = Project.between_dates(@beginning, @end).includes(:client).order("name")
+      @users = User.between_dates_and_team(@beginning, @end, @selected_team).order("first_name, last_name")
       @teams = Team.order("name")
     end
 
     def clients_excel
       @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day").order("clients.name")
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename=' Clients Report.xlsx'"}
       end
     end
 
     def projects_excel
       @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC").order("projects.name")
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Projects Report.xlsx'"}
       end
     end
 
@@ -44,7 +39,7 @@ module Reports
       end
 
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Collaborators Report.xlsx'"}
       end
     end
 

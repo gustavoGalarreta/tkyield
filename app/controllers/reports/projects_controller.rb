@@ -1,25 +1,33 @@
 module Reports
-  class ProjectsController < ApplicationController
-    before_action :authenticate_user!
+  class ProjectsController < DashboardController
     before_action :set_time
-    add_breadcrumb "Dashboard", :root_path 
+    before_action :set_project
+    add_breadcrumb "Dashboard", :dashboard_path 
     add_breadcrumb "Reports", :reports_list_path 
     add_breadcrumb "Timesheet Report", :reports_dash_path
     
     def show
-      @project = Project.find params[:id]
       add_breadcrumb "Projects", :reports_project_path
-      @time = Timesheet.where(belongs_to_day: @beginning..@end,project: @project).includes(:user).order("belongs_to_day ASC")
-      @task_times = @time.includes(:task).group(:task_id).order("belongs_to_day ASC")
+      @users = User.between_dates_and_project(@beginning, @end, @project).order("first_name, last_name")
+      @tasks = Task.between_dates_and_project(@beginning, @end, @project).order("name")
       respond_to do |format|
         format.html
         format.js
-        format.xlsx
+      end
+    end
+
+    def project_excel
+      @timesheets = Timesheet.find_by_dates_and_project(@beginning,@end,@project)
+      respond_to do |format|
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Project #{@project.name} Report.xlsx'"}
       end
     end
 
     private 
 
+    def set_project
+      @project = Project.find (params[:id] || params[:project_id])
+    end
     def set_time
       @today = Time.zone.now.to_date
       @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today

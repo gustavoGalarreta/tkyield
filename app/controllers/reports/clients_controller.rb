@@ -1,23 +1,32 @@
 module Reports
-  class ClientsController < ApplicationController
-    before_action :authenticate_user!
+  class ClientsController < DashboardController
     before_action :set_time
-    add_breadcrumb "Dashboard", :root_path 
+    before_action :set_client
+    add_breadcrumb "Dashboard", :dashboard_path 
     add_breadcrumb "Reports", :reports_list_path 
     add_breadcrumb "Timesheet Report", :reports_dash_path
     def show
-      @client = Client.find params[:id]
       add_breadcrumb "Clients", :reports_client_path
-      @projects = @client.projects
-      @time = Timesheet.where(belongs_to_day: @beginning..@end, project: @projects).includes(:user, :project).order("belongs_to_day ASC")
+      @projects = Project.between_dates_and_client(@beginning, @end, @client).order("name")
+      @users = User.between_dates_and_projects(@beginning, @end, @projects).order("first_name, last_name")
       respond_to do |format|
         format.html
         format.js
-        format.xlsx
+      end
+    end
+
+    def client_excel
+      @timesheets = Timesheet.find_by_dates_and_client(@beginning,@end,@client)
+      respond_to do |format|
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Client #{@client.name} Report.xlsx'"}
       end
     end
 
     private 
+
+    def set_client
+      @client = Client.find(params[:id] || params[:client_id])
+    end
 
     def set_time
       @today = Time.zone.now.to_date
