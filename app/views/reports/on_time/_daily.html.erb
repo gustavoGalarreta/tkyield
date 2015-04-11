@@ -1,21 +1,36 @@
+<br>
+<div class="align-right">
+<%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, daily_excel_reports_on_time_index_path(format: "xlsx",:team => @selected_team, :collaborator => @selected_collaborator ,:beginning => date_format(@beginning), :end => date_format(@end)), class: "btn btn-success"%>
+</div>
 <table class="table table-striped table-responsive" style="overflow: auto;">
   <thead>
-      <tr>
-        <th> Collaborator </th>
-        <% days = days_between_dates(@beginning, @end) %>
-        <% days.each do |day| %>
-          <th><%= date_format(day) %></th>
-        <% end %>
-      </tr>
+    <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th>In/Out</th>
+      <th>Time</th>      
+    </tr>
   </thead>
+
   <tbody>
-    <% @filtered_users.each do |user| %>
+    <% @recent.each do |time_station| %>
       <tr>
-        <% total = TimeStation.totals_per_day_between_dates(@beginning,@end,user.id) %>
-        <td><%= user.full_name %></td>
-        <% total.each do |t| %>
-          <td> <%= get_seconds_in_hours_minutes(t) %> </td>
-        <%end%>
+        <td><%= date_format(time_station.created_at) %>
+        <td><%= time_station.user.full_name %>
+        <td> 
+        <% if time_station.parent_id.nil? %>
+          IN
+        <% else %>
+          OUT
+        <% end %>
+        </td>
+        <td>
+        <% if time_station.parent_id.nil? %>
+         <%= time_format(time_station.created_at) %>
+        <% else %>
+         <%= time_format(time_station.created_at) %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

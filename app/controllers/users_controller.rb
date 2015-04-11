@@ -1,14 +1,12 @@
-class UsersController < ApplicationController
-  before_action :authenticate_user!
+class UsersController < DashboardController
   load_and_authorize_resource
-	add_breadcrumb "Dashboard", :root_path
+	add_breadcrumb "Dashboard", :dashboard_path
 	add_breadcrumb "Collaborators", :users_path
   before_action :set_user, only: [:resend_confirmation]
-  
 
 	def index
-   	@teams = Team.order("name")
-    @users = User.where(team_id: nil).includes(:role).order("first_name, last_name")
+   	@teams = current_account.teams.order("name")
+    @users = current_account.users.where(team_id: nil).includes(:role).order("first_name, last_name")
   end
 
   def new
@@ -24,13 +22,11 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    @user.account = current_account
+    if @user.save
+      redirect_to users_path, notice: 'User was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -48,7 +44,7 @@ class UsersController < ApplicationController
   def projects
     add_breadcrumb "Assign Projects", :show_user_project_user_path
 
-    @projects = Project.all.includes (:client)
+    @projects = current_account.projects.includes(:client)
     @grouped_options = @projects.inject({}) do |options, project|
       (options[project.client_name] ||= []) << [project.name, project.id]
       options
@@ -78,10 +74,11 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role_id,:team_id, :email,:qr_code, :pin_code)
+    params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :pin_code)
   end
 
   def user_project_params
     params.require(:user).permit(user_projects_attributes: [:id, :project_id, :_destroy])
   end
+
 end

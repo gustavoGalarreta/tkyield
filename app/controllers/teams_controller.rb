@@ -1,12 +1,12 @@
-class TeamsController < ApplicationController
+class TeamsController < DashboardController
   before_action :set_team, only: [:show, :edit, :update, :destroy, :collaborators]
-  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Tasks", :teams_path
   
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.all.order("name ASC").all
+    @teams = current_account.teams.order("name ASC")
   end
 
   def collaborators
@@ -31,7 +31,7 @@ class TeamsController < ApplicationController
   # POST /teams.json
   def create
     @team = Team.new(team_params)
-
+    @team.account = current_account
     respond_to do |format|
       if @team.save
         format.html { redirect_to teams_path, notice: 'Team was successfully created.' }

@@ -12,7 +12,7 @@
           <% @task_times.each do |time| %>
   	        <tr>
   	          <td><%= time.task.name %> </td>
-  	          <td><%= get_seconds_in_hours_minutes(time.project.total_time_per_task(time.task,@beginning,@end)) %></td>
+  	          <td><%= get_seconds_in_hours_minutes(time.task.total_time_per_user_and_project(@beginning,@end,@user)) %></td>
   	        </tr>
   	      <% end %>
         </tbody>

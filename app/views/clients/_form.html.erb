@@ -5,7 +5,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
       &times;
       </button>
-        <h4><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h4>
+        <h4><%= pluralize(client.errors.count, "error") %> ocurred:</h4>
         <ul>
         <% client.errors.full_messages.each do |message| %>
           <li><%= message %></li>

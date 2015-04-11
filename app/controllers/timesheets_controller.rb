@@ -1,8 +1,7 @@
-class TimesheetsController < ApplicationController
-  before_action :authenticate_user!
+class TimesheetsController < DashboardController
   load_and_authorize_resource
   before_action :set_timesheet, only: [:toggle_timesheet, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Timesheet", :timesheets_path
 
   def index
@@ -52,8 +51,12 @@ class TimesheetsController < ApplicationController
     if action == "index"
       @timesheets_per_date, @days_of_week = current_user.timesheets_of_week_by_date @day_selected
       if current_user.projects.any?
-        @default_project = current_user.projects.first
+        @default_project = current_user.projects.order("name ASC").first
         @tasks = @default_project.tasks.order("name ASC")
+        @tasks_hash = {}
+        current_user.projects.includes(:tasks).each do |pro| 
+          @tasks_hash[pro.id] = pro.tasks  
+        end
       else
         @default_project = nil
         @tasks = []

@@ -18,7 +18,7 @@ module ApplicationHelper
 	end
 
 	def day_name_format date
-		date.strftime("%A")
+		date.strftime("%a %d")
 	end
 
 	def month_format date
@@ -32,8 +32,13 @@ module ApplicationHelper
 	def day_and_date_format date
 		date.strftime("%A, %m/%d")
 	end
+
 	def date_format date
 		date.strftime("%m/%d/%Y")
+	end
+
+	def date_format_with_hyphen date
+		date.strftime("%Y-%m-%d")
 	end
 	
 	def time_format date
@@ -43,4 +48,5 @@ module ApplicationHelper
 	def datetime_format date
 		date.strftime("%B %d, %I:%M %p")
 	end
+
 end

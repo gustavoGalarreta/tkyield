@@ -1,5 +1,18 @@
-<h1 class="page-header"> <%= resource_name.to_s.humanize %> <small> Editing</small> </h1>
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<h1 class="page-header row">
+  <div class="col-lg-7 col-xs-5">
+    <%= resource_name.to_s.humanize %> <small> Editing</small>
+  </div>
+  <div class="col-lg-2  col-xs-3 text-right codes">
+    <a href="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=<%=@user.qr_code%>&chld=M|0" target="blank">
+      <img src="https://chart.googleapis.com/chart?cht=qr&chs=50x50&chl=<%=@user.qr_code%>&chld=M|0"></img>      
+    </a>
+  </div>
+  <div class="col-lg-3 col-xs-4 text-right codes">
+    <h2><small>Pin Code</small> <%= @user.pin_code %></h2>
+  </div>
+</h1>
+
+<%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put }) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-danger alert-dismissable">
@@ -13,20 +26,35 @@
       </div>
     </div>
     <% end %>
-
-  <div class="input-group">
-    <span class="input-group-addon">E-mail</span>
-    <%= f.email_field :email, autofocus: true ,class: "form-control" %>
-  </div>
-
-  </br><div class="input-group">
-    <span class="input-group-addon">First name</span>
-    <%= f.text_field :first_name, autofocus: true ,class: "form-control" %>
-  </div>
-
-  </br><div class="input-group">
-    <span class="input-group-addon">Last name</span>
-    <%= f.text_field :last_name, autofocus: true ,class: "form-control" %>
+  
+  <div class="row">
+    <% if !current_user.avatar.nil? %>
+      <div class="col-lg-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= image_tag current_user.avatar.url(:medium), class: "img-rounded", width: "200", height:"200"%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="col-lg-9">
+      <div class="input-group">
+        <span class="input-group-addon">Avatar</span>
+        <%= f.file_field :avatar,class: "form-control" %>
+      </div><br>
+      <div class="input-group">
+        <span class="input-group-addon">E-mail</span>
+        <%= f.email_field :email, autofocus: true ,class: "form-control" %>
+      </div>
+      </br><div class="input-group">
+        <span class="input-group-addon">First name</span>
+        <%= f.text_field :first_name, autofocus: true ,class: "form-control" %>
+      </div>
+      </br><div class="input-group">
+        <span class="input-group-addon">Last name</span>
+        <%= f.text_field :last_name, autofocus: true ,class: "form-control" %>
+      </div>
+    </div>
   </div>
   <hr></hr>
   <div class="input-group">

@@ -7,12 +7,12 @@
 			<div id="new-timer-form" class="modal-body">
 				<%= form_for(new_timesheet, remote: true) do |f| %>
 					<div class="input-group input-padding">
-						<span class="input-group-addon">Project</span>
-						<%= f.select :project_id, grouped_options_for_select(projects_helper, f.object.project_id), {:prompt => " - Select a project -"} , class: "form-control" %>
+						<span class="input-group-addon">Project</span>	
+						<%= f.select :project_id, grouped_options_for_select(projects_helper, f.object.project_id),{} , class: "form-control" %>
 					</div>
 					<div class="input-group input-padding">
 						<span class="input-group-addon">Task</span>
-						<%= f.select :task_id, tasks.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a task -" } , class: "form-control", :id => "timesheet_edit_task"%>
+						<%= f.select :task_id, tasks.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a task -" } , class: "form-control ", :id => "timesheet_edit_task"%>
 					</div>
 					<%= f.hidden_field :belongs_to_day, value: date_format_on_view(day_selected) %>
 					<div class="row">
@@ -30,7 +30,8 @@
 					<br>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit" %>
+						<%= f.submit 'Start Timer', :class => 'btn btn-primary', id: "new_timesheet_submit", data: { "loading-text" => "Loading..." } %>
+			
 					</div>
 				<% end %>
 			</div>
@@ -47,4 +48,11 @@
 		else
 			newTimesheetSubmit.val("Save Timer");
 	});
+	$('#new_timesheet').on('ajax:beforeSend', function (e, xhr, settings){
+	   $(this).find('input[type=submit]').button('loading');
+	}).on ('ajax:complete', function (e, xhr, status){
+	   $(this).find('input[type=submit]').button('reset');
+	});
 </script>
+
+

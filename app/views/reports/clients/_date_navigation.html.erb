@@ -1,6 +1,6 @@
 <h2 class="page-header"> <%= @client.name %> <small> Client</small> 
     <div class="row align-right">
-        <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_client_path(format: "xlsx",date: @day_selected,type: @type), class: "btn btn-success"%>
+        <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_client_client_excel_path(format: "xlsx",date: @day_selected,type: @type, client_id: @client.id), class: "btn btn-success"%>
     </div>
 </h2>
 <div class="row">
@@ -40,7 +40,7 @@
      </div>
 </div>
 <br>
-<p>Hours Tracked: <%= get_seconds_in_hours_minutes(@client.client_total_time_between_dates(@beginning,@end)) %></p>
+<p>Hours Tracked: <%= get_seconds_in_hours_minutes(@client.total_time_between_dates(@beginning,@end)) %></p>
 <div class="tabbable tabs-left">
 <ul class="nav nav-pills nav-justified">
     <li class="<%= 'active' if @tab == 'tab1' %>"><a href="#tab1" data-toggle="tab">

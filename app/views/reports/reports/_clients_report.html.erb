@@ -12,16 +12,14 @@
     </thead>
     <tbody>
       <% @clients.each do |client| %>
-        <% if client.client_total_time_between_dates(@beginning,@end) > 0 %>
           <tr>
             <td>
               <%= link_to client.name, reports_client_path(client, date: @day_selected, type: @type)%>
             </td>
             <td>
-              <%= get_seconds_in_hours_minutes(client.client_total_time_between_dates(@beginning,@end))%>
+              <%= get_seconds_in_hours_minutes(client.total)%>
             </td>
           </tr>
-        <% end %>
       <% end %>
     </tbody>
   </table>

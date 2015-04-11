@@ -1,20 +1,19 @@
-class ProjectsController < ApplicationController
-  before_action :authenticate_user!
+class ProjectsController < DashboardController
   load_and_authorize_resource :except => :tasks
   before_action :set_project, only: [:tasks, :show, :edit, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Projects", :projects_path
 
   # GET /projects
   # GET /projects.json
   def index
-    @clients = Client.order("name")
+    @clients = current_account.clients.order("name")
   end
 
   # GET /project_tasks.js
   def tasks
     @timesheetId = params["timesheetId"].nil? ? nil : params["timesheetId"]
-    @tasks = @project.tasks.order("name").all
+    @tasks = @project.tasks.order("name")
   end
 
   # GET /projects/1
@@ -39,6 +38,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    @project.account = current_account
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }

@@ -1,14 +1,13 @@
-class TasksController < ApplicationController
-  before_action :authenticate_user!
+class TasksController < DashboardController
   load_and_authorize_resource
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Tasks", :tasks_path
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.order("name ASC").all
+    @tasks = current_account.tasks.order("name ASC")
   end
 
   # GET /tasks/1
@@ -31,7 +30,7 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
+    @task.account = current_account
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }

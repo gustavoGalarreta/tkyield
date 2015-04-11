@@ -16,6 +16,7 @@
 
 .keypad  button.delete,
 .keypad  button.submit {
+    text-align: center;
     background: black;
     color: white;
     background-color: #337AB7;

@@ -1,6 +1,11 @@
-json.in_time			@last_time_station.in_time
-json.out_time			@last_time_station.out_time
-json.user 				@user.full_name
-json.is_in				@is_in
-
+json.success 			@success
+if @user
+	json.user 				@user.full_name
+	json.team				@user.team.name
+	json.total_time			@total_time
+	json.in_time			@in_time
+	json.out_time			@out_time
+else
+	json.message			"User not found"
+end
 

@@ -1,21 +1,71 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
+          :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
+  
+  belongs_to :account
   belongs_to :role
   belongs_to :team
   has_many :timesheets
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
-  delegate :name, :to => :role, :prefix => true
+  
+  delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
+  
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
+  
+  validates :account, presence: true
+  validates :role, presence: true
+  validates :team, presence: true
+  validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
+  validates_format_of       :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_presence_of     :password, :on=>:create, :if => :password_required?
+  validates_confirmation_of :password, :on=>:create
+  validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
+  validates :qr_code, uniqueness: { :allow_blank => true }
+  validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-  def only_if_unconfirmed
-    pending_any_confirmation {yield}
+  before_create :generate_qr_code_and_access_token
+
+  def generate_qr_code_and_access_token
+    self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
+    if self.role_id == Role::ADMINISTRATOR_ID
+      self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
+    end
   end
 
   def total_time_between_dates beginning, ending
     Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
+  end
+
+  def self.between_dates_and_team_and_projects beginning, ending, team, projects
+    users = self.select("users.*, SUM( timesheets.total_time ) AS total").joins(:timesheets).where("timesheets.belongs_to_day BETWEEN ? AND ?", beginning, ending).group("users.id")
+    users = users.where("users.team_id = ?", team.id) unless team.nil?
+    users = users.where("timesheets.project_id IN (?)", projects.map{|x| x.id}) unless projects.nil?
+    return users
+  end
+
+  def self.between_dates_and_projects beginning, ending, projects
+    self.between_dates_and_team_and_projects(beginning, ending, nil, projects)
+  end
+
+  def self.between_dates_and_project beginning, ending, project
+    self.between_dates_and_team_and_projects(beginning, ending, nil, [project])
+  end
+
+  def self.between_dates_and_team beginning, ending, team
+    self.between_dates_and_team_and_projects(beginning, ending, team, nil)
+  end
+
+  def self.between_dates beginning, ending
+    self.between_dates_and_team_and_projects(beginning, ending, nil)
+  end
+
+  def only_if_unconfirmed
+    pending_any_confirmation {yield}
   end
 
   def total_time
@@ -33,12 +83,16 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
+  def is_administrator?
+    self.role_id == Role::ADMINISTRATOR_ID
+  end
+
   def is_manager?
-    self.role_name == "Manager"
+    self.role_id == Role::MANAGER_ID
   end
 
   def is_employee?
-    self.role_name == "Employee"
+    self.role_id == Role::COLLABORATOR_ID
   end
 
   def is_confirmed?
@@ -95,15 +149,17 @@ class User < ActiveRecord::Base
   end
 
   def get_timesheet_active
-    Timesheet.where(running: true, user_id: self.id).first
+    Timesheet.where(running: true, user_id: self.id)
   end
 
   def has_a_timer_running?
-    get_timesheet_active != nil
+    !get_timesheet_active.first.nil? 
   end
 
   def cancel_active_timesheet
-     get_timesheet_active
+    get_timesheet_active.each do |t|
+      t.stop_timer
+    end
   end
 
   def total_time_in_projects

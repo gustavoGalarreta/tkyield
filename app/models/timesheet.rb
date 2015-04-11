@@ -1,13 +1,25 @@
 class Timesheet < ActiveRecord::Base
   acts_as_paranoid
-  belongs_to :project
-  belongs_to :task
+  belongs_to :project , -> { with_deleted }
+  belongs_to :task, -> { with_deleted }
   belongs_to :user
 
   delegate :name, :to => :project, :prefix => true
   delegate :name, :to => :task, :prefix => true
 
   validates :project, :task, :user, presence: true
+
+  def self.find_by_dates_and_client(beginning,ending,client)
+    Timesheet.where(belongs_to_day: beginning..ending, project: client.projects).includes(:user, project: [:client]).order("belongs_to_day ASC")
+  end
+  
+  def self.find_by_dates_and_project(beginning,ending,project)
+    Timesheet.where(belongs_to_day: beginning..ending, project: project).includes(:user, project: [:client]).order("belongs_to_day ASC")
+  end
+
+  def self.find_by_dates_and_user(beginning,ending,user)
+    Timesheet.where(belongs_to_day: beginning..ending, user: user).includes(:user, project: [:client]).order("belongs_to_day ASC")
+  end
 
   def toggle_timer
     is_running? ? stop_timer : start_timer
@@ -76,6 +88,10 @@ class Timesheet < ActiveRecord::Base
 
   def self.total_time_in_projects_by_user(user)
     user.timesheets.select("timesheets.project_id, timesheets.user_id, SUM( timesheets.total_time ) AS total").joins(:user).group("timesheets.project_id")
+  end
+
+  def self.total_time_in_projects_by_user_dates(user, beginning, ending)
+    user.timesheets.where(belongs_to_day: beginning..ending).select("timesheets.project_id, timesheets.user_id, SUM( timesheets.total_time ) AS total").joins(:user).group("timesheets.project_id")
   end
 
   def self.total_time_in_users_by_project(project)
