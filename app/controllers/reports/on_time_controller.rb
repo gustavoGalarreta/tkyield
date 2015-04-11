@@ -19,7 +19,7 @@ module Reports
       @collaborators = User.order("first_name, last_name")
       respond_to do |format|
         format.html
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily Summary Report.xlsx'"}
       end
     end
 
@@ -34,7 +34,7 @@ module Reports
         @recent = @recent.where(user: @selected_collaborator)
       end     
       respond_to do |format|
-        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily summary from #{@beginning.strftime('%Y-%m-%d')} to #{@end.strftime('%Y-%m-%d')}.xlsx'"}
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily Report.xlsx'"}
       end
     end
 
