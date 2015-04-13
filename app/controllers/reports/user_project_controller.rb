@@ -15,7 +15,7 @@ module Reports
       respond_to do |format|
         format.html
         format.js
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='User #{@user.full_name} on Project #{@project.name} Report.xlsx'"}
       end
     end
 

@@ -18,7 +18,7 @@ module Reports
     def client_excel
       @timesheets = Timesheet.find_by_dates_and_client(@beginning,@end,@client)
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Client #{@client.name} Report.xlsx'"}
       end
     end
 
