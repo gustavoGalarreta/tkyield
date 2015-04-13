@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   
   validates :account, presence: true
   validates :role, presence: true
-  validates :team, presence: true
   validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
   validates_format_of       :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
   validates_presence_of     :password, :on=>:create, :if => :password_required?
