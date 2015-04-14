@@ -39,11 +39,19 @@
 </style>
 
 <script type="text/javascript">
-	 $( document ).on("click",".submit", function(){
-        $.ajax({
-            type:'GET',
-            url: "<%= new_time_station_path %>",
-            dataType: "script"
-        });
-    })
+	$( document ).on("click",".submit", function(){
+    $.ajax({
+      type:'GET',
+      url: "<%= new_time_station_path %>",
+      dataType: "script"
+    });
+  })
+
+	$(document).ready(function() {
+		$('#new_time_station').on('ajax:beforeSend', function (e, xhr, settings){
+		  $(this).find('input[type=submit]').attr('disabled','disabled');
+		}).on ('ajax:complete', function (e, xhr, status){
+		  $(this).find('input[type=submit]').removeAttr('disabled');
+		});
+	 });
 </script>

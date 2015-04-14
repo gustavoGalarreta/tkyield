@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
-
+  validate :freeze_role, :on => :update
   before_create :generate_qr_code_and_access_token
 
   def generate_qr_code_and_access_token
@@ -87,6 +87,10 @@ class User < ActiveRecord::Base
     self.role_id == Role::ADMINISTRATOR_ID
   end
 
+  def administrator?
+    self.role_id_was == Role::ADMINISTRATOR_ID
+  end
+
   def is_manager?
     self.role_id == Role::MANAGER_ID
   end
@@ -97,6 +101,12 @@ class User < ActiveRecord::Base
 
   def is_confirmed?
     self.confirmed_at != nil
+  end
+
+  def freeze_role
+    if self.administrator?
+      errors.add(:role, "cannot be changed")
+    end
   end
 
   def full_name
