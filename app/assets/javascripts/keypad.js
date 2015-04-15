@@ -33,6 +33,7 @@
           $input.val($input.val().slice(0, -1));
           $input.trigger('change');
         });
+        $elem.find('.' + options.submitButtonClass).attr('id', 'submitButton');;
         $elem.find('.' + options.submitButtonClass).click(function(e) {
           $form.submit();
         });
