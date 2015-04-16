@@ -12,7 +12,7 @@ class Api::ApiV1Controller < ActionController::Base
     if access_token
       @current_user ||= User.find_by_access_token(access_token)
       if @current_user.nil?
-        render json: { error: "You are unauthorized to perform this action" }, status: 401
+        render json: { success: false, error: "You are unauthorized to perform this action" }, status: 401
       end
     end
     return
