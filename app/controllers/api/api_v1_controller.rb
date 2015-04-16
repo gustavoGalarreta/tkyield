@@ -19,8 +19,9 @@ class Api::ApiV1Controller < ActionController::Base
   end
 
   private
-  
-  def current_user
-    @current_user
-  end
+
+    def current_user
+      @current_user
+    end
+
 end
