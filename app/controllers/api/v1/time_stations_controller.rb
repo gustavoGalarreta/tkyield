@@ -1,13 +1,14 @@
 class Api::V1::TimeStationsController < Api::ApiV1Controller
+
   def create
-    account = User.find_by(params[:access_token]).account
+    account = current_user.account
     @user = account.user.find_by(user_params)
-    @last_time_station = TimeStation.where(user: @user).last
-    @in_time = nil
-    @out_time = nil
-    @total_time = nil
-    @success = true
     if @user
+      @last_time_station = TimeStation.where(user: @user).last
+      @in_time = nil
+      @out_time = nil
+      @total_time = nil
+      @success = true
       if @last_time_station.nil? or !@last_time_station.parent_id.nil?
         on_time = TimeStation.create(user_id: @user.id)
         @in_time = on_time.created_at
