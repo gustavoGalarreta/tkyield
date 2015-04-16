@@ -27,11 +27,14 @@ class User < ActiveRecord::Base
   validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  validate :freeze_role, :on => :update
+  before_create :generate_qr_code_and_access_token
 
-  before_create :validate_and_generate_qr_code
-
-  def validate_and_generate_qr_code
+  def generate_qr_code_and_access_token
     self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
+    if self.role_id == Role::ADMINISTRATOR_ID
+      self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
+    end
   end
 
   def total_time_between_dates beginning, ending
@@ -84,6 +87,10 @@ class User < ActiveRecord::Base
     self.role_id == Role::ADMINISTRATOR_ID
   end
 
+  def administrator?
+    self.role_id_was == Role::ADMINISTRATOR_ID
+  end
+
   def is_manager?
     self.role_id == Role::MANAGER_ID
   end
@@ -94,6 +101,12 @@ class User < ActiveRecord::Base
 
   def is_confirmed?
     self.confirmed_at != nil
+  end
+
+  def freeze_role
+    if self.administrator?
+      errors.add(:role, "cannot be changed")
+    end
   end
 
   def full_name

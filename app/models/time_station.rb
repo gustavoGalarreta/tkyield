@@ -14,4 +14,12 @@ class TimeStation < ActiveRecord::Base
   	def self.total_between_dates (beginning, ending, user)
   		TimeStation.where(user: user,created_at: beginning.beginning_of_day .. ending.end_of_day).sum(:total_time)
   	end	
+
+  	def self.recent_between_dates (beginning, ending)
+		TimeStation.where(created_at:  beginning.beginning_of_day .. ending.end_of_day).includes(:user).order("created_at DESC")
+  	end
+
+  	def self.recent_between_dates_and_user (beginning, ending, user)
+		TimeStation.where(created_at:  beginning.beginning_of_day .. ending.end_of_day, user: user).includes(:user).order("created_at DESC")
+  	end
 end

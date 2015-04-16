@@ -7,19 +7,34 @@ module Reports
     def index
       add_breadcrumb "On Time Report", :reports_on_time_index_path
       @filtered_users = current_account.users.order("first_name, last_name")
-      @recent = TimeStation.where(created_at: @beginning..@end).includes(:user).order("updated_at DESC").paginate(:page => params[:page], :per_page => 10)
+      @recent = TimeStation.recent_between_dates(@beginning, @end)
       if !params[:team].blank? and params[:collaborator].blank?
         @filtered_users = User.where(team_id: @selected_team)
-        @recent = @recent.where(user: @filtered_users)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning, @end, @filtered_users)
       elsif !params[:collaborator].blank?
         @filtered_users = User.where(id: @selected_collaborator)
-        @recent = @recent.where(user: @selected_collaborator)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning, @end, @selected_collaborator) 
       end
       @teams = current_account.teams.order("name ASC")
       @collaborators = User.order("first_name, last_name")
       respond_to do |format|
         format.html
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily Summary Report.xlsx'"}
+      end
+    end
+
+    def daily_excel
+      @filtered_users = current_account.users.order("first_name, last_name")
+      @recent = TimeStation.recent_between_dates(@beginning ,@end)
+      if !params[:team].blank? and params[:collaborator].blank?
+        @filtered_users = User.where(team_id: @selected_team)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning , @end ,@filtered_users)
+      elsif !params[:collaborator].blank?
+        @filtered_users = User.where(id: @selected_collaborator)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning, @end, @selected_collaborator)
+      end     
+      respond_to do |format|
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily Report.xlsx'"}
       end
     end
 
