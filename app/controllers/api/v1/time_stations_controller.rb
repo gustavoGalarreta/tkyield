@@ -1,6 +1,7 @@
 class Api::V1::TimeStationsController < Api::ApiV1Controller
   def create
-    @user = User.find_by(user_params)
+    account = User.find_by(params[:access_token]).account
+    @user = account.user.find_by(user_params)
     @last_time_station = TimeStation.where(user: @user).last
     @in_time = nil
     @out_time = nil
