@@ -3,7 +3,7 @@ class Api::V1::TimeStationsController < Api::ApiV1Controller
   def create
     if current_user
       account = current_user.account
-      @user = account.user.find_by(user_params)
+      @user = account.users.find_by(user_params)
       if @user
         @last_time_station = TimeStation.where(user: @user).last
         @in_time = nil
