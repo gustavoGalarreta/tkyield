@@ -19,7 +19,7 @@ class Api::V1::TimeStationsController < Api::ApiV1Controller
           @total_time =  on_time.total_time
         end
       else
-        render json: { success: false, error: "Email or password is invalid" }, status: 401
+        render json: { success: false, error: "Pin/QR code is invalid" }, status: 401
       end
     else
       render json: { success: false, error: "The use account is invalid" }, status: 404
