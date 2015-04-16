@@ -1,5 +1,4 @@
 class Api::V1::LoginAccountController < Api::ApiV1Controller
-  skip_before_action :validate_account_and_current_user
   
   def create
     @user = User.find_by_email(params[:email])
