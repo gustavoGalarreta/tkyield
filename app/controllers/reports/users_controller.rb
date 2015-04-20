@@ -19,7 +19,7 @@ module Reports
     def user_excel
       @timesheets = Timesheet.find_by_dates_and_user(@beginning,@end,@user)
       respond_to do |format|
-        format.xlsx
+        format.xlsx  {response.headers['Content-Disposition'] = "attachment; filename='User #{@user.full_name} Report.xlsx'"}
       end
     end
     private 

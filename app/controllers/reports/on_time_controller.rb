@@ -7,52 +7,34 @@ module Reports
     def index
       add_breadcrumb "On Time Report", :reports_on_time_index_path
       @filtered_users = current_account.users.order("first_name, last_name")
-      @recent = TimeStation.where(created_at: @beginning.at_beginning_of_day..@end.at_end_of_day).includes(:user).order("created_at DESC")
+      @recent = TimeStation.recent_between_dates(@beginning, @end)
       if !params[:team].blank? and params[:collaborator].blank?
         @filtered_users = User.where(team_id: @selected_team)
-        @recent = @recent.where(user: @filtered_users)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning, @end, @filtered_users)
       elsif !params[:collaborator].blank?
         @filtered_users = User.where(id: @selected_collaborator)
-        @recent = @recent.where(user: @selected_collaborator)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning, @end, @selected_collaborator) 
       end
       @teams = current_account.teams.order("name ASC")
       @collaborators = User.order("first_name, last_name")
       respond_to do |format|
         format.html
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily Summary Report.xlsx'"}
       end
     end
 
     def daily_excel
       @filtered_users = current_account.users.order("first_name, last_name")
-      @recent = TimeStation.where(created_at: @beginning.at_beginning_of_day..@end.at_end_of_day).includes(:user).order("created_at DESC")
+      @recent = TimeStation.recent_between_dates(@beginning ,@end)
       if !params[:team].blank? and params[:collaborator].blank?
         @filtered_users = User.where(team_id: @selected_team)
-        @recent = @recent.where(user: @filtered_users)
+        @recent = TimeStation.recent_between_dates_and_user(@beginning , @end ,@filtered_users)
       elsif !params[:collaborator].blank?
         @filtered_users = User.where(id: @selected_collaborator)
-        @recent = @recent.where(user: @selected_collaborator)
-      end      
-      # @filtered_users = current_account.users.order("first_name, last_name")
-      # @recent = TimeStation.select(:created_at,:parent_id).where(created_at: @beginning.at_beginning_of_day..@end.at_end_of_day).order("created_at DESC")
-
-      # if !params[:team].blank? and params[:collaborator].blank?
-      #   @filtered_users = User.where(team_id: @selected_team)
-      #   @recent = @recent.where(user: @filtered_users)
-      # elsif !params[:collaborator].blank?
-      #   @filtered_users = User.where(id: @selected_collaborator)
-      #   @recent = @recent.where(user: @selected_collaborator)
-      # end
-      # @in_times = []
-      # @recent.where(parent_id: nil).each do |rec|
-      #   @in_times << rec.created_at
-      # end 
-      # @out_times = [] 
-      # @recent.where.not(parent_id: nil).each do |rec|
-      #   @out_times << rec.created_at
-      # end     
+        @recent = TimeStation.recent_between_dates_and_user(@beginning, @end, @selected_collaborator)
+      end     
       respond_to do |format|
-        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily summary #{@beginning}.xlsx'"}
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Daily Report.xlsx'"}
       end
     end
 

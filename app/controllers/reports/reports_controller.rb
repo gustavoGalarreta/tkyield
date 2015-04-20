@@ -19,14 +19,14 @@ module Reports
     def clients_excel
       @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day").order("clients.name")
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename=' Clients Report.xlsx'"}
       end
     end
 
     def projects_excel
       @timesheet = Timesheet.where(belongs_to_day: @beginning..@end).includes(:task,:user,project: [:client]).order("belongs_to_day ASC").order("projects.name")
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Projects Report.xlsx'"}
       end
     end
 
@@ -39,7 +39,7 @@ module Reports
       end
 
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Collaborators Report.xlsx'"}
       end
     end
 
