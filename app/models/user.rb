@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   def generate_qr_code_and_access_token
     self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
     if self.role_id == Role::ADMINISTRATOR_ID
+      self.pin_code = 1
       self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
     end
   end
