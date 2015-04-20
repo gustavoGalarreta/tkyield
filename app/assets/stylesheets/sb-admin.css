@@ -29,7 +29,7 @@ body.modal-open{
 #page-wrapper {
     width: 100%;
     padding: 0;
-    background-color: #fff;
+    background-color: #F2F4F8;
 }
 
 .huge {
@@ -59,8 +59,6 @@ body.modal-open{
 }
 
 .top-nav>li>a {
-    padding-top: 15px;
-    padding-bottom: 15px;
     line-height: 20px;
     color: #999;
 }
@@ -70,8 +68,7 @@ body.modal-open{
 .top-nav>.open>a,
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
-    color: #fff;
-    background-color: #000;
+    color: black;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -230,4 +227,8 @@ ul.alert-dropdown {
 
 .panel-yellow a:hover {
     color: #df8a13;
+}
+
+.breadcrumb{
+    background-color: white;
 }

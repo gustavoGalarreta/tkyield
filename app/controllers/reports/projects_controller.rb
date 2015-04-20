@@ -19,7 +19,7 @@ module Reports
     def project_excel
       @timesheets = Timesheet.find_by_dates_and_project(@beginning,@end,@project)
       respond_to do |format|
-        format.xlsx
+        format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Project #{@project.name} Report.xlsx'"}
       end
     end
 
