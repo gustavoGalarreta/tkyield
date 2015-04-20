@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
   validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
+  validates :pin_code, uniqueness: { scope: :account_id }, unless: Proc.new { |u| u.pin_code.blank? }
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   validate :freeze_role, :on => :update
   before_create :generate_qr_code_and_access_token
@@ -103,7 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def freeze_role
-    if self.administrator?
+    if administrator? and role_id_changed?
       errors.add(:role, "cannot be changed")
     end
   end
