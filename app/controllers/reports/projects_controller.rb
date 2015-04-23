@@ -8,8 +8,8 @@ module Reports
     
     def show
       add_breadcrumb "Projects", :reports_project_path
-      @users = User.between_dates_and_project(@beginning, @end, @project).order("first_name, last_name")
-      @tasks = Task.between_dates_and_project(@beginning, @end, @project).order("name")
+      @users = current_account.users.between_dates_and_project(@beginning, @end, @project).order("first_name, last_name")
+      @tasks = current_account.tasks.between_dates_and_project(@beginning, @end, @project).order("name")
       respond_to do |format|
         format.html
         format.js
@@ -17,7 +17,7 @@ module Reports
     end
 
     def project_excel
-      @timesheets = Timesheet.find_by_dates_and_project(@beginning,@end,@project)
+      @timesheets = Timesheet.find_by_dates_and_project(@beginning, @end, @project)
       respond_to do |format|
         format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Project #{@project.name} Report.xlsx'"}
       end
@@ -26,8 +26,9 @@ module Reports
     private 
 
     def set_project
-      @project = Project.find (params[:id] || params[:project_id])
+      @project = current_account.projects.find(params[:id] || params[:project_id])
     end
+
     def set_time
       @today = Time.zone.now.to_date
       @day_selected = ( params[:date] ) ? DateTime.parse(params[:date]) : @today

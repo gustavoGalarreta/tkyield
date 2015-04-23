@@ -70,7 +70,7 @@ class TeamsController < DashboardController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = Team.find(params[:id]) unless params[:id].blank?
+      @team = current_account.teams.find(params[:id]) unless params[:id].blank?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -67,6 +67,7 @@ class TimeStationsController < DashboardController
   # end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_time_station
       @time_station = TimeStation.find(params[:id])

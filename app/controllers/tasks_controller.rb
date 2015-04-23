@@ -69,7 +69,7 @@ class TasksController < DashboardController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_account.tasks.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
