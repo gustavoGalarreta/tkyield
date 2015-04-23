@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   
   validates :account, presence: true
   validates :role, presence: true
-  validates :team, presence: true
   validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
   validates_format_of       :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
   validates_presence_of     :password, :on=>:create, :if => :password_required?
@@ -26,6 +25,7 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
   validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
+  validates :pin_code, uniqueness: { scope: :account_id }, unless: Proc.new { |u| u.pin_code.blank? }
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   validate :freeze_role, :on => :update
   before_create :generate_qr_code_and_access_token
@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   def generate_qr_code_and_access_token
     self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
     if self.role_id == Role::ADMINISTRATOR_ID
+      self.pin_code = 1
       self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
     end
   end
@@ -62,6 +63,16 @@ class User < ActiveRecord::Base
 
   def self.between_dates beginning, ending
     self.between_dates_and_team_and_projects(beginning, ending, nil)
+  end
+
+  def self.filter(team, collaborator)
+    if !collaborator.nil?
+      self.where(id: collaborator)
+    elsif !team.nil?
+      self.where(team_id: team)
+    else
+      self.all
+    end
   end
 
   def only_if_unconfirmed
@@ -104,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def freeze_role
-    if self.administrator?
+    if administrator? and role_id_changed?
       errors.add(:role, "cannot be changed")
     end
   end

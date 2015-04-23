@@ -1,21 +1,40 @@
 <br>
 <div class="align-right">
-<%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, reports_on_time_index_path(format: "xlsx",:team => @selected_team, :collaborator => @selected_collaborator ,:beginning => date_format(@beginning), :end => date_format(@end)), class: "btn btn-success"%>
-</div>
-<table class="table table-striped table-responsive">
-  <thead>
-      <tr>
-        <th>Collaborator</th>
-        <th>Total Time</th>
-      </tr>
-  </thead>
-  <tbody>
-    <% @filtered_users.each do |user| %>
-      <tr>
-        <% t = TimeStation.total_between_dates(@beginning,@end,user.id) %>
-        <td><%= user.full_name %></td>
-        <td> <%= get_seconds_in_hours_minutes(t) %> </td>
-      </tr>
-    <% end %>
-  </tbody>
+<%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, summary_excel_reports_on_time_index_path(format: "xlsx",:team => @selected_team, :collaborator => @selected_collaborator, :beginning => date_format(@beginning), :end => date_format(@end)), class: "btn btn-success"%>
+</div><br><br>
+<% between_days = days_between_dates(@beginning, @end) %>
+<table id="ontime-summary" class="table table-bordered table-responsive"
+	<thead>
+			<tr>
+				<th>Collaborator</th>
+				<% between_days.each do |date| %>
+					<th><%= date_format(date) %></th>
+				<% end %>
+				<th>Total Time</th>
+			</tr>
+	</thead>
+	<tbody>
+		<% @time_stations_summary.each_pair do |user_full_name, time_stations_in_date| %>
+			<% different_day = time_stations_in_date[:different_day] %>
+			<tr>
+				<td rowspan="<%= different_day.size + 1 %>"><%= user_full_name %></td>
+				<% between_days.each do |date| %>
+					<% time_stations = time_stations_in_date[date_format(date)] %>
+					<td><%= time_stations ? total_time_excel_format(time_stations[:total_same_day]) : "" %></td>
+				<% end %>
+				<td rowspan="<%= different_day.size + 1 %>"><%= total_time_excel_format(time_stations_in_date[:total]) %></td>
+			</tr>
+			<% if different_day.size > 0 %>
+				<% different_day.each do |dd| %>
+					<tr>
+						<% between_days.each_with_index do |date, dd_index| %>
+							<% if dd[:in_time_format] == date_format(date) %>
+								<td colspan="<%= dd[:days] + 1 %>"><%= total_time_excel_format(dd[:total_time]) %></td>
+							<% elsif (dd_index + dd[:days].to_i < between_days.size) %><td> </td><% end %>
+						<% end %>
+					</tr>
+				<% end %>
+			<% end %>
+		<% end %>
+	</tbody>
 </table>
