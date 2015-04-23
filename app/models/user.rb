@@ -65,6 +65,16 @@ class User < ActiveRecord::Base
     self.between_dates_and_team_and_projects(beginning, ending, nil)
   end
 
+  def self.filter(team, collaborator)
+    if !collaborator.nil?
+      self.where(id: collaborator)
+    elsif !team.nil?
+      self.where(team_id: team)
+    else
+      self.all
+    end
+  end
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end

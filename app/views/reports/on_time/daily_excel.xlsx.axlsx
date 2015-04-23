@@ -15,7 +15,7 @@ wb.add_worksheet(name: "StaffReport") do |sheet|
   
   sheet.add_row ["Date","Name","In/Out","Time","Total(hrs)"] ## Header values of Excel
 
-  @recent.each do |time_station|
+  @time_stations.each do |time_station|
     row = [date_format(time_station.created_at),time_station.user.full_name]
     if time_station.parent_id.nil?
       row.concat(["IN", time_format(time_station.created_at)])
