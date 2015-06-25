@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: time_stations
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  total_time :float(24)        default(0.0)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  parent_id  :integer
+#
+
 class TimeStation < ActiveRecord::Base
   belongs_to :user
   belongs_to :parent, :class_name => 'TimeStation'

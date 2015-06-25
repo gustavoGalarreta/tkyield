@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: task_projects
+#
+#  id         :integer          not null, primary key
+#  task_id    :integer
+#  project_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class TaskProject < ActiveRecord::Base
   belongs_to :project
   belongs_to :task

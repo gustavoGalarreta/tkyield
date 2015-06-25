@@ -1,3 +1,37 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  first_name             :string(255)      default(""), not null
+#  last_name              :string(255)      default(""), not null
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  confirmation_token     :string(255)
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  created_at             :datetime
+#  updated_at             :datetime
+#  role_id                :integer
+#  qr_code                :string(255)
+#  pin_code               :integer
+#  team_id                :integer
+#  avatar_file_name       :string(255)
+#  avatar_content_type    :string(255)
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  account_id             :integer
+#  access_token           :string(255)
+#
+
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
           :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
@@ -94,7 +128,11 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
-  def is_administrator?
+  def is_in?
+    self.time_stations.last.parent_id.nil?
+  end
+
+  def is_manageradministrator?
     self.role_id == Role::ADMINISTRATOR_ID
   end
 

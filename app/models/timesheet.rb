@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: timesheets
+#
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  task_id        :integer
+#  project_id     :integer
+#  start_time     :datetime
+#  stop_time      :datetime
+#  total_time     :float(24)        default(0.0)
+#  running        :boolean          default(FALSE)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  notes          :string(255)
+#  belongs_to_day :date
+#  deleted_at     :datetime
+#
+
 class Timesheet < ActiveRecord::Base
   acts_as_paranoid
   belongs_to :project , -> { with_deleted }
