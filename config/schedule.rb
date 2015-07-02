@@ -19,9 +19,9 @@
 
 # Learn more: http://github.com/javan/whenever
 every :day, :at => '11:59 pm' do
-	User.all.each do |user|	
-		if user.is_in?
-			TkYieldMailer.forgot_email(user,)
-		end
-	end
+	rake 'send_forgot_checkout_email'
+end
+
+every :day, :at => '11:59 pm' do
+	rake 'send_forgot_timer_email'
 end

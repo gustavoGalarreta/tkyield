@@ -128,11 +128,15 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
-  def is_in?
-    self.time_stations.last.parent_id.nil?
+  def self.all_inside
+    joins(:time_stations).where("time_stations.parent_id is ?", nil)
   end
 
-  def is_manageradministrator?
+  def self.all_with_tasks_running
+    joins(:timesheets).where("timesheets.running = ?", true)
+  end
+
+  def is_administrator?
     self.role_id == Role::ADMINISTRATOR_ID
   end
 

@@ -40,7 +40,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # config.action_mailer.default_url_options = { host: 'lvh.me', port: 3000 }
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.after_initialize do
     Bullet.enable = true
@@ -48,4 +47,17 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
   
+  #Mail configuration
+   config.action_mailer.raise_delivery_errors = true
+   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+   ActionMailer::Base.smtp_settings = {
+   :address => "smtp.gmail.com",
+   :port => 587,
+   :domain => "gmail.com",
+   :user_name => "tektonyield@gmail.com",
+   :password => "rbpassword2015",
+   :authentication => :login,
+   :enable_starttls_auto => true
+   }
+
 end
