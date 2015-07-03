@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
+  has_one :last_time_station, -> { order 'created_at desc' }, class_name: "TimeStation"
   
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
@@ -109,6 +110,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def check_out
+    time_stations = TimeStation.where(user_id: self.id).to_a
+    last_time_station = time_stations.pop
+    on_time = TimeStation.create(user_id: self.id, parent_id: last_time_station.id, total_time: Time.zone.now - last_time_station.created_at )
+    on_time.save
+  end
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
@@ -129,7 +137,7 @@ class User < ActiveRecord::Base
   end
 
   def self.all_inside
-    joins(:time_stations).where("time_stations.parent_id is ?", nil)
+    joins(:time_stations).where('time_stations.created_at = (SELECT MAX(time_stations.created_at) FROM time_stations WHERE time_stations.user_id = users.id)').where('time_stations.parent_id IS NULL').group('users.id')
   end
 
   def self.all_with_tasks_running
