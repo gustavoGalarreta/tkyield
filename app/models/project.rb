@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id          :integer          not null, primary key
+#  client_id   :integer          not null
+#  name        :string(255)
+#  description :string(255)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  deleted_at  :datetime
+#  account_id  :integer
+#
+
 class Project < ActiveRecord::Base
   belongs_to :account
   belongs_to :client

@@ -86,7 +86,7 @@ Rails.application.configure do
    :port => 587,
    :domain => "gmail.com",
    :user_name => "tektonyield@gmail.com",
-   :password => "rbpasswordosito",
+   :password => "rbpassword2015",
    :authentication => :login,
    :enable_starttls_auto => true
    }

@@ -1,3 +1,37 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  first_name             :string(255)      default(""), not null
+#  last_name              :string(255)      default(""), not null
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  confirmation_token     :string(255)
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  created_at             :datetime
+#  updated_at             :datetime
+#  role_id                :integer
+#  qr_code                :string(255)
+#  pin_code               :integer
+#  team_id                :integer
+#  avatar_file_name       :string(255)
+#  avatar_content_type    :string(255)
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  account_id             :integer
+#  access_token           :string(255)
+#
+
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
           :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
@@ -9,6 +43,7 @@ class User < ActiveRecord::Base
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
+  has_one :last_time_station, -> { order 'created_at desc' }, class_name: "TimeStation"
   
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
@@ -75,6 +110,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def check_out
+    time_stations = TimeStation.where(user_id: self.id).to_a
+    last_time_station = time_stations.pop
+    on_time = TimeStation.create(user_id: self.id, parent_id: last_time_station.id, total_time: Time.zone.now - last_time_station.created_at )
+    on_time.save
+  end
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
@@ -92,6 +134,14 @@ class User < ActiveRecord::Base
     self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
     self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
     password == password_confirmation && !password.blank?
+  end
+
+  def self.all_inside
+    joins(:time_stations).where('time_stations.created_at = (SELECT MAX(time_stations.created_at) FROM time_stations WHERE time_stations.user_id = users.id)').where('time_stations.parent_id IS NULL').group('users.id')
+  end
+
+  def self.all_with_tasks_running
+    joins(:timesheets).where("timesheets.running = ?", true)
   end
 
   def is_administrator?
