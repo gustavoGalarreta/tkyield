@@ -1,14 +1,16 @@
 class TkYieldMailer < ApplicationMailer
-	default from: "mobile@tektonlabs.com"
+	default from: "info@tektonlabs.com"
   
-  def forgot_checkout(user)
+  def forgot_checkout(user, time_station)
     @user = user
-    mail(to: @user.email, subject: "Did you forgot to check-out from TektonLabs?")
+  	@time_station = time_station
+    mail(to: @user.email, subject: "You forgot to check out from #{@user.account_company_name}!")
   end
 
   def forgot_timer(user)
   	@user = user
-  	mail(to: [@user.email,"eduardo.arenas@tektonlabs.com"], subject: "Did you forget your timer?")
+  	@timesheet = user.get_timesheet_active
+  	mail(to: @user.email, subject: "Did you forget your timer?")
   end
 
 end

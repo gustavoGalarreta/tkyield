@@ -1,8 +1,8 @@
 desc 'send forgot checkout email'
 task send_forgot_checkout_email: :environment do
   	User.all_inside.each do |user|	
-  	  user.check_out
-	  TkYieldMailer.forgot_checkout(user).deliver
+  	  time_station = user.check_out
+	  TkYieldMailer.forgot_checkout(user, time_station).deliver
 	end
 end
 

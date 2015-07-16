@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
   
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
+  delegate :company_name, :to => :account, :prefix => true, allow_nil: true
   
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
@@ -110,11 +111,35 @@ class User < ActiveRecord::Base
     end
   end
 
-  def check_out
-    time_stations = TimeStation.where(user_id: self.id).to_a
-    last_time_station = time_stations.pop
-    on_time = TimeStation.create(user_id: self.id, parent_id: last_time_station.id, total_time: Time.zone.now - last_time_station.created_at )
-    on_time.save
+  def last_check_in_or_out_activity
+    TimeStation.where(user: self).last
+  end
+
+  def check_in_or_out
+    begin
+      last_time_station = last_check_in_or_out_activity
+      time_station = nil
+      if last_time_station.nil? or last_time_station.is_checkout?
+        time_station = check_in
+        return time_station.created_at, nil, nil
+      else
+        time_station = check_out(last_time_station)
+        return last_time_station.created_at, time_station.created_at, time_station.total_time
+      end
+    rescue
+      return nil, nil, nil
+    end
+  end
+
+  def check_in
+    self.time_stations.create
+  end
+
+  def check_out(check_in_obj=nil)
+    time_station = check_in_obj.nil? ? last_check_in_or_out_activity : check_in_obj
+    if time_station.is_checkin?
+      self.time_stations.create(parent_id: time_station.id, total_time: Time.zone.now - time_station.created_at)
+    end
   end
 
   def only_if_unconfirmed

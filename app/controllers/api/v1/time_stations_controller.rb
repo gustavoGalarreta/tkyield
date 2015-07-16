@@ -5,19 +5,7 @@ class Api::V1::TimeStationsController < Api::ApiV1Controller
       account = current_user.account
       @user = account.users.find_by(user_params)
       if @user
-        @last_time_station = TimeStation.where(user: @user).last
-        @in_time = nil
-        @out_time = nil
-        @total_time = nil
-        if @last_time_station.nil? or !@last_time_station.parent_id.nil?
-          on_time = TimeStation.create(user_id: @user.id)
-          @in_time = on_time.created_at
-        elsif @last_time_station.parent_id.nil? 
-          on_time = TimeStation.create(user_id: @user.id, parent_id: @last_time_station.id, total_time: Time.zone.now - @last_time_station.created_at )
-          @in_time = @last_time_station.created_at
-          @out_time = on_time.created_at
-          @total_time =  on_time.total_time
-        end
+        @in_time, @out_time, @total_time = @user.check_in_or_out
       else
         render json: { success: false, error: "Pin/QR code is invalid" }, status: 401
       end

@@ -17,6 +17,14 @@ class TimeStation < ActiveRecord::Base
   
   acts_as_xlsx
 
+  def is_checkin?
+    parent_id.nil?
+  end
+
+  def is_checkout?
+    !parent_id.nil?
+  end
+
   def self.between_dates_and_users(beginning, ending, users)
     where(user: users, created_at: beginning.beginning_of_day..ending.end_of_day).order("created_at DESC")
   end
