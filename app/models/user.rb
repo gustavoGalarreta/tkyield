@@ -71,6 +71,8 @@ class User < ActiveRecord::Base
     if self.role_id == Role::ADMINISTRATOR_ID
       self.pin_code = 1
       self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
+    else
+      self.pin_code = self.account.users.order("pin_code ASC").last.pin_code.to_i + 1
     end
   end
 

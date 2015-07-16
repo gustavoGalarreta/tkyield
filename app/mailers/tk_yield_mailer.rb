@@ -9,7 +9,7 @@ class TkYieldMailer < ApplicationMailer
 
   def forgot_timer(user)
   	@user = user
-  	@timesheet = user.get_timesheet_active
+  	@timesheet = user.get_timesheet_active.first
   	mail(to: @user.email, subject: "Did you forget your timer?")
   end
 
