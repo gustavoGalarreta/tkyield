@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       get '/user_project/:user_id/:project_id', to: 'user_project#show', as: "user_project"
       resources :on_time, only: :index do 
         get 'daily_excel', to: 'on_time#daily_excel', on: :collection
+        get 'summary_excel', to: 'on_time#summary_excel', on: :collection
       end
       resources :projects, only: :show do
         get 'project_excel', to: 'projects#project_excel'

@@ -75,7 +75,9 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
-   config.active_record.dump_schema_after_migration = false
+  config.active_record.dump_schema_after_migration = false
+
+  config.action_controller.relative_url_root = '/tkyield_development'
 
   #Mail configuration
    config.action_mailer.default_url_options = { :host => 'development.tektonlabs.com/tkyield_development' }
@@ -84,8 +86,9 @@ Rails.application.configure do
    :port => 587,
    :domain => "gmail.com",
    :user_name => "tektonyield@gmail.com",
-   :password => "rbpassword",
+   :password => "rbpassword2015",
    :authentication => :login,
    :enable_starttls_auto => true
    }
+
 end

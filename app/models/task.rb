@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  deleted_at :datetime
+#  account_id :integer
+#
+
 class Task < ActiveRecord::Base
   belongs_to :account
   has_many :task_projects

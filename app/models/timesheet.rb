@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: timesheets
+#
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  task_id        :integer
+#  project_id     :integer
+#  start_time     :datetime
+#  stop_time      :datetime
+#  total_time     :float(24)        default(0.0)
+#  running        :boolean          default(FALSE)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  notes          :string(255)
+#  belongs_to_day :date
+#  deleted_at     :datetime
+#
+
 class Timesheet < ActiveRecord::Base
   acts_as_paranoid
   belongs_to :project , -> { with_deleted }
@@ -9,15 +28,15 @@ class Timesheet < ActiveRecord::Base
 
   validates :project, :task, :user, presence: true
 
-  def self.find_by_dates_and_client(beginning,ending,client)
+  def self.find_by_dates_and_client(beginning, ending, client)
     Timesheet.where(belongs_to_day: beginning..ending, project: client.projects).includes(:user, project: [:client]).order("belongs_to_day ASC")
   end
   
-  def self.find_by_dates_and_project(beginning,ending,project)
+  def self.find_by_dates_and_project(beginning, ending, project)
     Timesheet.where(belongs_to_day: beginning..ending, project: project).includes(:user, project: [:client]).order("belongs_to_day ASC")
   end
 
-  def self.find_by_dates_and_user(beginning,ending,user)
+  def self.find_by_dates_and_user(beginning, ending, user)
     Timesheet.where(belongs_to_day: beginning..ending, user: user).includes(:user, project: [:client]).order("belongs_to_day ASC")
   end
 

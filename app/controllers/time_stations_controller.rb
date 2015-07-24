@@ -18,8 +18,7 @@ class TimeStationsController < DashboardController
   # GET /time_stations/new
   def new
     @time_station = TimeStation.new
-    @recent = TimeStation.includes(:user).order("updated_at DESC").paginate(:page => params[:page], :per_page => 10)
-
+    @recent = TimeStation.recent(current_account).paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /time_stations/1/edit
@@ -30,7 +29,7 @@ class TimeStationsController < DashboardController
   # POST /time_stations.json
   
   def create
-    @user = User.find_by_pin_code(params[:pin_code])
+    @user = current_account.users.find_by_pin_code(params[:pin_code])
     @last_time_station = TimeStation.where(user: @user).last
     @is_in = true
     if @user
@@ -68,6 +67,7 @@ class TimeStationsController < DashboardController
   # end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_time_station
       @time_station = TimeStation.find(params[:id])

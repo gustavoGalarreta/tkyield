@@ -66,6 +66,12 @@ gem 'will_paginate', '~> 3.0.6'
 # Use BootstrapDatepicker for having a format of selecting dates.
 gem 'bootstrap-datepicker-rails', '~> 1.1.1.1'
 
+#Clean ruby syntax for writing and deploying cron jobs.
+gem 'whenever', '~> 0.9.4'
+
+#Add a comment summarizing the current schema to the top or bottom
+gem 'annotate', '~> 2.6.6'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

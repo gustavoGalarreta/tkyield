@@ -69,12 +69,12 @@ class UsersController < DashboardController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find(params[:id])
+    @user = current_account.users.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :pin_code)
+    params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email)
   end
 
   def user_project_params

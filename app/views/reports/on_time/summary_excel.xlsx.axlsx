@@ -1,0 +1,71 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  header_style =  s.add_style  :alignment => { horizontal: :center, vertical: :center }, b: true, format_code: "mm/dd/yyyy"
+  header_date_style =  s.add_style  :alignment => { horizontal: :center, vertical: :center }, format_code: "mm/dd/yyyy"
+  username_style =  s.add_style  :alignment => { horizontal: :left, vertical: :center }
+  item_style =  s.add_style  :alignment => { horizontal: :center, vertical: :top }
+  total_style =  s.add_style  :alignment => { horizontal: :right, vertical: :center }
+
+  initial_row = 0
+  wb.add_worksheet(name: "StaffReport") do |sheet|
+    
+    sheet.add_row ["Report:", "On time Report"], style: [nil, header_style]
+    initial_row += 1
+
+    if @selected_collaborator
+      sheet.add_row ["Team:", @selected_collaborator.team_name], style: [nil, total_style]
+      initial_row += 1
+      sheet.add_row ["Collaborator:", @selected_collaborator.full_name], style: [nil, total_style]
+      initial_row += 1
+    elsif @selected_team
+      sheet.add_row ["Team:", @selected_team.name], style: [nil, total_style]
+      initial_row += 1
+    end
+
+    sheet.add_row ["From:", @beginning, "to", @end], style: [nil, header_date_style, nil, header_date_style]
+    initial_row += 1
+    sheet.add_row [""] 
+    initial_row += 1
+    
+    days = days_between_dates(@beginning, @end)
+    row = ["Collaborators"]
+    row.concat(days)
+    row << "Total"
+    sheet.add_row row, style: header_style ## Header values of Excel
+    initial_row += 1
+    index_hash = Hash.new {|hash,key| hash[key] = hash[key - 1].next }.merge({0 => "A"})
+    initial_column = 2
+    @time_stations_summary.each_pair do |user_full_name, time_stations_in_date|
+      different_day = time_stations_in_date[:different_day]
+      sd_rows = [user_full_name]
+      days.each do |date|
+        time_stations = time_stations_in_date[date_format(date)]
+        (time_stations.nil?) ? sd_rows << "" : sd_rows << total_time_excel_format(time_stations[:total_same_day])
+      end
+      sd_rows << total_time_excel_format(time_stations_in_date[:total])
+      sheet.add_row sd_rows, style: [username_style] + [item_style] * days.size + [total_style] # ADDING ROWS
+      initial_row += 1
+      sheet.merge_cells("#{index_hash[0]}#{initial_row}:#{index_hash[0]}#{initial_row + different_day.size}")
+      sheet.merge_cells("#{index_hash[sd_rows.size - 1]}#{initial_row}:#{index_hash[sd_rows.size - 1]}#{initial_row + different_day.size}")
+      if different_day.size > 0
+        different_day.each do |dd|
+          dd_rows = [""]
+          column_to_merge = initial_column - 1
+          days.each_with_index do |date, dd_index|
+            if dd[:in_time_format] == date_format(date)
+              dd_rows << total_time_excel_format(dd[:total_time])
+              column_to_merge += dd_index
+            elsif (dd_index + dd[:days].to_i < days.size)
+              dd_rows << ""
+            end
+          end
+          sheet.add_row dd_rows, style: item_style # ADDING ROWS
+          initial_row += 1
+          sheet.merge_cells("#{index_hash[column_to_merge]}#{initial_row}:#{index_hash[column_to_merge + dd[:days].to_i]}#{initial_row}")
+        end
+      end
+    end
+
+  end
+
+end

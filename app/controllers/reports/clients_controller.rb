@@ -5,6 +5,7 @@ module Reports
     add_breadcrumb "Dashboard", :dashboard_path 
     add_breadcrumb "Reports", :reports_list_path 
     add_breadcrumb "Timesheet Report", :reports_dash_path
+
     def show
       add_breadcrumb "Clients", :reports_client_path
       @projects = Project.between_dates_and_client(@beginning, @end, @client).order("name")
@@ -16,7 +17,7 @@ module Reports
     end
 
     def client_excel
-      @timesheets = Timesheet.find_by_dates_and_client(@beginning,@end,@client)
+      @timesheets = Timesheet.find_by_dates_and_client(@beginning, @end, @client)
       respond_to do |format|
         format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='Client #{@client.name} Report.xlsx'"}
       end
@@ -25,7 +26,7 @@ module Reports
     private 
 
     def set_client
-      @client = Client.find(params[:id] || params[:client_id])
+      @client = current_account.clients.find(params[:id] || params[:client_id])
     end
 
     def set_time
