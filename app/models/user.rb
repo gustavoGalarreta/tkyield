@@ -1,3 +1,37 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  first_name             :string(255)      default(""), not null
+#  last_name              :string(255)      default(""), not null
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  confirmation_token     :string(255)
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  created_at             :datetime
+#  updated_at             :datetime
+#  role_id                :integer
+#  qr_code                :string(255)
+#  pin_code               :integer
+#  team_id                :integer
+#  avatar_file_name       :string(255)
+#  avatar_content_type    :string(255)
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  account_id             :integer
+#  access_token           :string(255)
+#
+
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
           :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
@@ -9,9 +43,11 @@ class User < ActiveRecord::Base
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
+  has_one :last_time_station, -> { order 'created_at desc' }, class_name: "TimeStation"
   
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
+  delegate :company_name, :to => :account, :prefix => true, allow_nil: true
   
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
@@ -35,6 +71,8 @@ class User < ActiveRecord::Base
     if self.role_id == Role::ADMINISTRATOR_ID
       self.pin_code = 1
       self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
+    else
+      self.pin_code = self.account.users.order("pin_code ASC").last.pin_code.to_i + 1
     end
   end
 
@@ -65,6 +103,51 @@ class User < ActiveRecord::Base
     self.between_dates_and_team_and_projects(beginning, ending, nil)
   end
 
+  def self.filter(team, collaborator)
+    if !collaborator.nil?
+      self.where(id: collaborator)
+    elsif !team.nil?
+      self.where(team_id: team)
+    else
+      self.all
+    end
+  end
+
+  def pin
+    sprintf '%04d', pin_code
+  end
+
+  def last_check_in_or_out_activity
+    TimeStation.where(user: self).last
+  end
+
+  def check_in_or_out
+    begin
+      last_time_station = last_check_in_or_out_activity
+      time_station = nil
+      if last_time_station.nil? or last_time_station.is_checkout?
+        time_station = check_in
+        return time_station.created_at, nil, nil
+      else
+        time_station = check_out(last_time_station)
+        return last_time_station.created_at, time_station.created_at, time_station.total_time
+      end
+    rescue
+      return nil, nil, nil
+    end
+  end
+
+  def check_in
+    self.time_stations.create
+  end
+
+  def check_out(check_in_obj=nil)
+    time_station = check_in_obj.nil? ? last_check_in_or_out_activity : check_in_obj
+    if time_station.is_checkin?
+      self.time_stations.create(parent_id: time_station.id, total_time: Time.zone.now - time_station.created_at)
+    end
+  end
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
@@ -82,6 +165,14 @@ class User < ActiveRecord::Base
     self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
     self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
     password == password_confirmation && !password.blank?
+  end
+
+  def self.all_inside
+    joins(:time_stations).where('time_stations.created_at = (SELECT MAX(time_stations.created_at) FROM time_stations WHERE time_stations.user_id = users.id)').where('time_stations.parent_id IS NULL').group('users.id')
+  end
+
+  def self.all_with_tasks_running
+    joins(:timesheets).where("timesheets.running = ?", true)
   end
 
   def is_administrator?
