@@ -38,7 +38,7 @@
 		</div>
 		<hr style="border: 0; background-color: rgb(210,218,220); height: 1px; margin: 4px 15px;">
 		<div class="content" style="padding: 10px 14px;">
-			<center><a href="#" style="height:50px; width:244px; background: rgb(0,150,243); display:block; color: white; border-radius: 8px;text-decoration: none; line-height: 50px;">FIX TIMER</a></center>
+			<center><%= link_to 'FIX TIMER', timesheets_url(@user.account.subdomain, date: @timesheet.start_time.strftime("%Y-%m-%d")), style: "height:50px; width:244px; background: rgb(0,150,243); display:block; color: white; border-radius: 8px;text-decoration: none; line-height: 50px;" %></center>
 		</div>
 	</div>
 </div>
