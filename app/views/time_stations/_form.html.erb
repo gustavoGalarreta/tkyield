@@ -1,0 +1,47 @@
+<%= form_for(@time_station ,:remote => true)  do |f| %>
+  <% if @time_station.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@time_station.errors.count, "error") %> prohibited this time_station from being saved:</h2>
+      <ul>
+      <% @time_station.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <div class="input-group">
+      <span class="input-group-addon"><h2>Pin Code</h2></span>
+      <%= text_field_tag :pin_code, nil , class: 'keypad form-control pin', :autofocus=>true%>
+    </div>
+  <br>
+  </div>
+<% end %>
+
+<div id="keypad">
+</div>
+
+<div class="modal fade" id="ontime-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-title-text"></h4>
+      </div>
+      <div class="modal-body text-center" id="modal-msg">
+      
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary"> OK </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#keypad').keypad();
+  });
+</script>

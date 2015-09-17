@@ -1,0 +1,44 @@
+<div id="container" style="font-family: Arial; background: rgb(30, 50, 56); border: 1px solid rgb(206, 216, 220); border-radius: 5px; margin: auto; width: 500px;">
+	<div id="header" style="color: white; display: table; width: 100%;">
+		<h1 class="header-title" style="margin: 0; padding: 0; font-size: 18px; display: table-cell; padding: 20px 25px; width: 50%; text-align:left">
+			TK Yield
+		</h1>
+		<h1 class="header-title" style="margin: 0; padding: 0; font-size: 18px; display: table-cell; padding: 20px 25px; width: 50%; text-align:right; font-weight: normal;">
+			<%= @user.account_company_name %>
+		</h1>
+	</div>
+	<div id="content" style="background: rgb(222,222,222); width: 100%;">
+		<div class="content" style="padding: 10px 14px;">
+			<h2 style="margin: 0; padding: 0; color: rgb(255, 110, 64); font-size: 22px; padding: 8px 0;"><%= @user.first_name %>, you have a timer running!</h2>
+			<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 14px;">Either your're working too hard or you forgot to stop your timer.</p>
+			<br>
+		</div>
+		<hr style="border: 0; background-color: rgb(210,218,220); height: 1px; margin: 4px 15px;">
+		<div id="time-container" style="margin: auto; width: 90%;">
+			<table style="display: inline-block; height: 130px; vertical-align: middle; width: 90%;">
+				<tbody>
+					<tr>
+						<td style="color: rgb(91, 126, 138); font-size: 14px; font-weight:bold; width: 80px;">Client</td>
+						<td style="color: rgb(91, 126, 138); font-size: 14px;"><%= @timesheet.project.client_name %></td>
+					</tr>
+					<tr>
+						<td style="color: rgb(91, 126, 138); font-size: 14px; font-weight:bold; width: 80px;">Project</td>
+						<td style="color: rgb(91, 126, 138); font-size: 14px;"><%= @timesheet.project_name %></td>
+					</tr>
+					<tr>
+						<td style="color: rgb(91, 126, 138); font-size: 14px; font-weight:bold; width: 80px;">Task</td>
+						<td style="color: rgb(91, 126, 138); font-size: 14px;"><%= @timesheet.task_name %></td>
+					</tr>
+					<tr>
+						<td style="color: rgb(91, 126, 138); font-size: 14px; font-weight:bold; width: 80px;">Start Time</td>
+						<td style="color: rgb(91, 126, 138); font-size: 14px;"><%= @timesheet.start_time.strftime("%I:%M%P - %B %d") %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr style="border: 0; background-color: rgb(210,218,220); height: 1px; margin: 4px 15px;">
+		<div class="content" style="padding: 10px 14px;">
+			<center><%= link_to 'FIX TIMER', timesheets_url(@user.account.subdomain, date: @timesheet.start_time.strftime("%Y-%m-%d")), style: "height:50px; width:244px; background: rgb(0,150,243); display:block; color: white; border-radius: 8px;text-decoration: none; line-height: 50px;" %></center>
+		</div>
+	</div>
+</div>

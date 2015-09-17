@@ -1,0 +1,20 @@
+<div id="date_navigation">
+    <%= render "date_navigation" %>
+</div>
+
+<script type="text/javascript">
+
+  $( document ).on("click",".change-report", function(){
+      var dateForParam = $(this).data('date');
+      var typeForParam = $(this).data('type');
+      var user = $(this).data('user');
+      var project = $(this).data('project');
+      $.ajax({
+          type:'GET',
+          url: "<%= reports_user_project_path('user_id','project_id') %>".replace("user_id",user).replace("project_id", project),
+          data: { type : typeForParam, date : dateForParam },
+          dataType: "script"
+      });
+  })
+
+</script>

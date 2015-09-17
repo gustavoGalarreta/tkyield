@@ -1,0 +1,42 @@
+<div id="container" style="font-family: Arial; background: rgb(30, 50, 56); border: 1px solid rgb(206, 216, 220); border-radius: 5px; margin: auto; width: 423px;">
+	<div id="header" style="color: white; display: table; width: 100%;">
+		<h1 class="header-title" style="margin: 0; padding: 0; font-size: 18px; display: table-cell; padding: 20px 25px; width: 50%; text-align:left">
+			TK Yield
+		</h1>
+		<h1 class="header-title" style="margin: 0; padding: 0; font-size: 18px; display: table-cell; padding: 20px 25px; width: 50%; text-align:right; font-weight: normal;">
+			<%= @user.account_company_name %>
+		</h1>
+	</div>
+	<div id="content" style="background: rgb(222,222,222); width: 100%;">
+		<div class="content" style="padding: 10px 14px;">
+			<h2 style="margin: 0; padding: 0; color: rgb(255, 110, 64); font-size: 22px; padding: 8px 0;"><%= @user.first_name %>, are you still at the office?</h2>
+			<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 14px;">Either your're working too hard or you forgot to check out.</p>
+			<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 14px;">So we did it for you.</p>
+			<br>
+			<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 14px;">See you later!</p>
+		</div>
+		<hr style="border: 0; background-color: rgb(210,218,220); height: 1px; margin: 4px 15px;">
+		<div id="time-container" style="height: 130px; margin: auto; width: 90%;">
+			<div class="time-content" style="display: inline-block; height: 100%; vertical-align: middle; width: 32.5%;">
+				<p class="checkin" style="margin: 0; padding: 0; color: rgb(0,199,184); font-size: 16px; font-weight: bold">Check In</p>
+				<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 18px;"><%= @time_station.parent.created_at.strftime("%H:%M") %></p>
+			</div>
+			<div class="time-content" style="display: inline-block; height: 100%; vertical-align: middle; width: 32.5%;">
+				<p class="checkout" style="margin: 0; padding: 0; color: rgb(255,49,61); font-size: 16px; font-weight: bold">Check Out</p>
+				<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 18px;"><%= @time_station.created_at.strftime("%H:%M") %></p>
+			</div>
+			<div class="time-content" style="display: inline-block; height: 100%; vertical-align: middle; width: 32.5%;">
+				<div id="hours" style="background: white; border-radius: 8px; margin: 10px auto; height: 110px; width: 110px;">
+					<div id="values" style="display: inline-block; height: 70px; margin: 20px 0px; width: 100%;">
+						<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 32px; height: 35px; line-height: 35px; text-align: center;"><%= format("%02d:%02d", @time_station.total_time / (60 * 60), (@time_station.total_time / 60) % 60) %></p>
+						<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 32px; height: 35px; line-height: 35px; text-align: center; font-size: 16px;">HOURS</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr style="border: 0; background-color: rgb(210,218,220); height: 1px; margin: 4px 15px;">
+		<div class="content" style="padding: 10px 14px;">
+			<p style="margin: 0; padding: 0; color: rgb(91, 126, 138); font-size: 14px;">If you're still at the office, please check in again.</p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+<p class="pull-right">
+	<span class="">Pin code:</span>
+	<%= @user.pin %>
+</p>
+<h1 class="page-header"> User <small> Editing</small> </h1>
+<%= render 'form', user: @user %>
+<%= link_to 'Back', users_path , class: "btn btn-primary" %>

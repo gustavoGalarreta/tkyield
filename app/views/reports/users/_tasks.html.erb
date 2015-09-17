@@ -1,0 +1,22 @@
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="projects">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name </th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @task_times.each do |time| %>
+  	        <tr>
+  	          <td><%= time.task.name %> </td>
+  	          <td><%= get_seconds_in_hours_minutes(time.task.total_time_per_user_and_project(@beginning,@end,@user)) %></td>
+  	        </tr>
+  	      <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

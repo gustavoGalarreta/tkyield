@@ -1,0 +1,25 @@
+<%= link_to 'New Task', new_task_path, class: "btn btn-lg btn-warning align-right" %>
+
+<h1 class="page-header"> Tasks <small> Listing</small> </h1>
+
+<div class="col-md-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Task Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @tasks.each do |task| %>
+          <tr>
+            <td><%= task.name %></td>
+            <td> <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_task_path(task),class: "btn btn-default", id:"edit-button" %></td>
+
+            <td> <%= link_to '<i class="fa fa-times"></i> Delete'.html_safe, task, method: :delete, data: { confirm: 'Are you sure?' } ,class: "btn btn-default"%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
