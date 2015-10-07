@@ -80,20 +80,18 @@ class UsersController < DashboardController
     redirect_to users_path, notice: "Email sent successfully"
   end
 
-
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = current_account.users.find(params[:id])
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = current_account.users.find(params[:id])
+    end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def user_params
-    params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :archived_at)
-  end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def user_params
+      params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :archived_at)
+    end
 
-  def user_project_params
-    params.require(:user).permit(user_projects_attributes: [:id, :project_id, :_destroy])
-  end
-
+    def user_project_params
+      params.require(:user).permit(user_projects_attributes: [:id, :project_id, :_destroy])
+    end
 end

@@ -35,9 +35,11 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
           :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
+
   scope :active, -> {where(archived_at: nil)}
   scope :archived, -> {where.not(archived_at: nil)}
   scope :without_team, -> {where(team_id: nil)}
+
   belongs_to :account
   belongs_to :role
   belongs_to :team

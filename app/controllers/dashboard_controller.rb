@@ -13,8 +13,6 @@ class DashboardController < ApplicationController
         #redirect_to destroy_user_session_path
         redirect_to :back
         sign_out current_user
-
-
       end
       return
     end
