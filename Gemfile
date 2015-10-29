@@ -31,7 +31,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.0.3'
+gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '~> 2.5.3'
@@ -80,6 +80,8 @@ gem 'annotate', '~> 2.6.6'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+#gem for jQuery Custom Scrollbar
+gem 'scrollbar-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -92,9 +94,21 @@ group :development, :test do
   gem 'spring', '~> 1.3.3'
 end
 
+
+gem 'momentjs-rails', '>= 2.8.1',  :github => 'derekprior/momentjs-rails'
+
+#Gem for datetimepicker
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
+gem 'fullcalendar-rails', '2.0.2.0'
+
 group :development do
-  gem 'better_errors', '2.1.1'
+  #gem 'better_errors', '2.1.1'
   gem 'binding_of_caller', '0.7.2'
   gem 'bullet', '4.14.4'
   gem 'rails_best_practices', '1.15.6'
+
+  gem 'rabl', '~> 0.9.3'
+  gem 'simple_form', '3.1.0.rc1'
+  gem 'bootstrap-sass', '~> 3.1.1'
+
 end
