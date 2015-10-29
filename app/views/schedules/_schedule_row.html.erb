@@ -1,0 +1,11 @@
+<td><%= schedule.id%></td>
+<td><%= schedule.name%></td>
+<td><%= schedule.id%></td>
+<td>
+  <% if schedule.current %>
+   	<%= link_to "Unset current schedule", unset_schedule_path(schedule) , method: :put,  class:"btn btn-primary btn-sm", remote: true %>
+  <% else %>
+   	<%= link_to "Set current schedule", set_schedule_path(schedule) , method: :put ,class:"btn btn-primary btn-sm" , remote: true %>
+  <%end%>
+    <%= link_to "Show schedule", schedule_path(schedule) , class:"btn btn-primary btn-sm" %>
+</td>

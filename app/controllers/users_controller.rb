@@ -15,6 +15,10 @@ class UsersController < DashboardController
     @users_without_team = current_account.users.archived.without_team.includes(:role).order("first_name, last_name")
   end
 
+  def schedule
+    @schedule=@user.schedules.is_current.first
+  end
+
   def archive
     @success = @user.archive! ? true : false
   end
@@ -79,6 +83,7 @@ class UsersController < DashboardController
     @user.send_confirmation_instructions
     redirect_to users_path, notice: "Email sent successfully"
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

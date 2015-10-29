@@ -16,8 +16,14 @@
 //= require jquery_nested_form
 //= require jquery.plugin.js
 //= require jquery.countdown.js 
-//= require_tree .
 //= require bootstrap-datepicker
+//= require jquery.mCustomScrollbar
+//= require moment
+//= require fullcalendar
+
+
+//= require event
+//= require_tree .
 
  jQuery(document).ready(function () {
     $('select[data-option-dependent=true]').each(function (i) {

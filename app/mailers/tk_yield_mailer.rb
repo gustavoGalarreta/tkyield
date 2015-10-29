@@ -13,4 +13,5 @@ class TkYieldMailer < ApplicationMailer
   	mail(to: @user.email, subject: "Did you forget your timer?")
   end
 
+  
 end

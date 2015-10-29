@@ -1,0 +1,29 @@
+<div class="modal popup " id="new-schedule" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4> New Schedule</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for(Schedule.new, class: "form-inline ", remote: true) do |f|%>
+           <table>
+            <tr>
+              <td><%= f.label :name, "Name Schedule" %></td>
+              <td id="form-fields"><%= f.text_field :name, class: "form-control", placeholder: "UniversitySchedule" %></td>
+            </tr>
+              <td>
+                <%= f.submit "Submit" ,class: "btn btn-default" %>
+              </td>
+              <td>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></td>
+          </table>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#new-schedule').appendTo("body")
+</script>

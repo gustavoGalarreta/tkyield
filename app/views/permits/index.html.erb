@@ -1,0 +1,36 @@
+<%= form_for Permit.new do |f|%>
+  <table>
+    <tr>
+      <td><%= f.label :name, "Name of the Permission" %></td>
+      <td><%= f.text_field :name, placeholder: "Vacation" %></td>
+    </tr>
+     <tr>
+      <td><%= f.label :description, "Description" %></td>
+      <td><%= f.text_area :description%></td>
+    </tr>
+    <tr>
+      <td>Type of the permission</td>
+      <tr>
+        <td><%= f.label :type, "vacation" %></td>
+        <td><%= f.check_box :type, as: :string%></td>
+        <td><%= f.label :type, "disease" %></td>
+        <td><%= f.check_box :type, as: :string%></td>
+        <td><%= f.label :type, "others" %></td>
+        <td><%= f.check_box :type, as: :string%></td>
+      </tr>
+    </tr>
+     <tr>
+      <td><%= f.label :start, "Start" %></td>
+      <td><%= f.date_field :start%></td>
+    </tr>
+    <tr>
+      <td><%= f.label :end, "Finish" %></td>
+      <td><%= f.date_field :end %></td>
+    </tr>
+      <td>
+        <%= f.submit "Submit" ,class: "btn btn-default" %>
+      </td>
+      <td>
+      <button type="button" class="btn btn-default">Close</button></td>
+    </table>
+<% end %>
