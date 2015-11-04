@@ -1,4 +1,4 @@
-function resize(event, dayDelta, minuteDelta){
+function resize(event, dayDelta, minuteDelta){{}
   $.ajax({
     type: 'PUT',
     dataType: 'script',
@@ -25,6 +25,8 @@ function drop(event, dayDelta, minuteDelta){
   });
 }
 
+
+
 $(document).on('page:change', function() {
   $('#calendar').fullCalendar({
     header: {
@@ -38,6 +40,9 @@ $(document).on('page:change', function() {
     events: $('#calendar').data('schedule-path') ,
     eventRender: function(event, element) {
       $('a.fc-event-draggable').attr('data-remote', true);
+      element.find('.fc-event-time').empty();
+      element.find('.fc-event-title').append("<br/>" + event.start.format("H:M")); 
+      element.find('.fc-event-title').append(" " + event.end.format("H:M")); 
     },
     eventResize: function(event, dayDelta, minuteDelta) {
       resize(event, dayDelta, minuteDelta);

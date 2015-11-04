@@ -12,17 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
+//= require moment
+//= require fullcalendar
 //= require jquery_nested_form
 //= require jquery.plugin.js
 //= require jquery.countdown.js 
 //= require bootstrap-datepicker
-//= require jquery.mCustomScrollbar
-//= require moment
-//= require fullcalendar
-
-
-//= require event
+//= require datetimepicker
 //= require_tree .
 
  jQuery(document).ready(function () {

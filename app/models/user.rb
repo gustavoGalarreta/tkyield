@@ -304,6 +304,9 @@ class User < ActiveRecord::Base
     Timesheet.where(belongs_to_day: beginning..ending,user: self, task: task).sum(:total_time)
   end
 
+  def get_team_leader
+    User.find_by(team_id: self.team_id, team_leader: true)
+  end
 
 
 end

@@ -49,6 +49,18 @@
 		<%= f.select :team_id, teams_helper.collect{ |t| [t.name, t.id]}, {:prompt => "- Select a Team -" } , class: "form-control" %>
 	</div>
 	<br>
+	<div class="field">
+    <div class="input-group">
+      <span class="input-group-addon">Leader</span>
+      <% if @user.team_leader%>
+      	<%= f.select :team_leader, ['Yes', 'No'], {},  class: "form-control"%>
+      <%else%>
+      		<%= f.select :team_leader, ['No', 'Yes'], {},  class: "form-control"%>
+      <%end%>		
+    </div>
+    <br>
+  </div>
+
 
 	<div class="actions">
 		<%= f.submit class: "btn btn-lg btn-warning" %>

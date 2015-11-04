@@ -12,10 +12,10 @@
  *
  *= require_tree .
  *= require_self
- *= jquery.countdown.css
- *= require bootstrap-datepicker
- *= require jquery.mCustomScrollbar
+ *= require jquery.countdown.css
  *= require fullcalendar
+ *= require bootstrap-datepicker
+ *= require datetimepicker
  */
  
 form{

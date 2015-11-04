@@ -1,6 +1,5 @@
 class SchedulesController<DashboardController
 	add_breadcrumb "Dashboard", :dashboard_path 
-  #before_action :set_event, only: [:edit, :update, :delete, :destroy]
   before_action :set_schedule, only: [:set,:unset, :show]
   before_action :schedule_params, only: [:create]
   respond_to :html, :js, :json
@@ -8,19 +7,13 @@ class SchedulesController<DashboardController
 
 	def index
 		add_breadcrumb "Schedules", :schedules_path
-		@current_schedule = current_user.schedules.is_current
-    @events = current_user.events
-    @user=current_user
-  end
-
-  def list
-    @schedules=current_user.schedules
+    @schedules = current_user.schedules
   end
 
   def current_schedule
-    #Este hardcode hay qe cambiar luego
+    add_breadcrumb "My Schedule", :current_schedule_schedules_path
     @current = current_user.schedules.is_current.first
-    @events = @current.events
+    @events = @current.nil? ? [] : @current.events
   end
 
   def set
@@ -40,7 +33,7 @@ class SchedulesController<DashboardController
     end
   end
 
-  def show    
+  def show 
   end
 
   def new
@@ -54,11 +47,9 @@ class SchedulesController<DashboardController
   end
 
   def edit
-
   end
 
-  def update
-    
+  def update   
   end
 
   def destroy

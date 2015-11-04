@@ -1,27 +1,23 @@
 <h1 class="page-header">
-	<%=  current_user.first_name %>'s not current schedule
-</h1>	
-<h2>
 	<%= @schedule.name%>
-</h2>
-<div class="modal-show">
-	<div class="align-right" id="create-event">
+</h1>
+<div class="row">
+	<%= link_to 'Schedules', schedules_path, class: "btn btn-primary align-right" %>
+</div>
+<br>
+<div class="row">
+	<div class="col-lg-1" id="create-event">
 		<%= link_to new_schedule_event_path(@schedule), remote: true do %>
-			<button type="button" class="btn btn-primary btn-lg">Create Event</button>
+			<button type="button" class="btn btn-lg btn-warning"> + </button>
+			<h6>New Entry</h6>
 		<% end %>
 	</div>
-
-		
-
-	<div class="row" id="event-caledar">
-		<div class="col-md-10 col-md-offset-1" id="calendar" data-schedule-path="<%=schedule_events_path(@schedule.id)%>"></div>
+	<div id="event-caledar" class="col-lg-11">
+		<div id="calendar" data-schedule-path="<%=schedule_events_path(@schedule.id)%>"></div>
 	</div>
-	
-	<div class="row">
+	<div class="modal-show">
 		<div class="modal fade" id="event-modal" tabindex="1" aria-labelledby="myModalLabel" aria-hidden="true">
 		</div>
 	</div>
 
 </div>
-
-<%= link_to 'Schedules', list_schedules_path, class: "btn btn-primary " %>
