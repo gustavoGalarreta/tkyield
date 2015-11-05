@@ -54,10 +54,10 @@ gem "paperclip", "~> 4.2"
 # Use Flipclock for Javascript buttons and timer
 gem 'flipclockjs-rails', '~> 0.5.5b.1'
 
-#Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
+# Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
 gem 'acts_as_xlsx', '~> 1.0.6'
 
-#Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates. 
+# Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates. 
 gem 'axlsx_rails', '~> 0.3.0'
 
 ## Gemfile for Rails 3+, Sinatra, and Merb
@@ -66,10 +66,10 @@ gem 'will_paginate', '~> 3.0.6'
 # Use BootstrapDatepicker for having a format of selecting dates.
 gem 'bootstrap-datepicker-rails', '~> 1.1.1.1'
 
-#Clean ruby syntax for writing and deploying cron jobs.
+# Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.9.4'
 
-#Add a comment summarizing the current schema to the top or bottom
+# Add a comment summarizing the current schema to the top or bottom
 gem 'annotate', '~> 2.6.6'
 
 # Use ActiveModel has_secure_password
@@ -81,6 +81,15 @@ gem 'annotate', '~> 2.6.6'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#  
+gem 'momentjs-rails', '2.10.6'
+
+# 
+gem 'fullcalendar-rails', '2.0.2.0'
+
+#
+gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug','~>  3.5.1'
@@ -90,6 +99,11 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.3.3'
+end
+
+#datetime picker -rails
+source 'https://rails-assets.org' do
+  gem 'rails-assets-datetimepicker'
 end
 
 group :development do

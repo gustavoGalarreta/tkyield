@@ -1,4 +1,4 @@
-<table class="table table-striped table-responsive">
+<table class="table table-striped table-responsive" >
   <thead>
     <tr>
       <th>Name</th>
@@ -7,7 +7,7 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="table-scrollBar">
     <% @recent.each do |time_station| %>
       <tr>
         <td><%= time_station.user.full_name %>
@@ -30,6 +30,7 @@
   </tbody>
 </table>
 
-<div class="text-center">
-  <%= will_paginate @recent,:previous_label => '<<', :next_label => '>>' %>  
-</div>
+
+<script>
+ $("#table-scrollBar").mCustomScrollbar();
+</script>

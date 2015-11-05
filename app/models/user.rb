@@ -44,6 +44,8 @@ class User < ActiveRecord::Base
   belongs_to :role
   belongs_to :team
   has_many :timesheets
+  has_many :schedules
+  has_many :events, through: :schedules
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
@@ -301,5 +303,10 @@ class User < ActiveRecord::Base
   def total_time_per_task (task,beginning, ending)
     Timesheet.where(belongs_to_day: beginning..ending,user: self, task: task).sum(:total_time)
   end
+
+  def get_team_leader
+    User.find_by(team_id: self.team_id, team_leader: true)
+  end
+
 
 end
