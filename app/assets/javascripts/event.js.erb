@@ -1,0 +1,56 @@
+function resize(event, dayDelta, minuteDelta){{}
+  $.ajax({
+    type: 'PUT',
+    dataType: 'script',
+    url: event.update,
+    contentType: 'application/json',
+    data: JSON.stringify({
+      event: { id: event.id,start: event.start, finish: event.end },
+      _method:'put'
+    })
+  });
+}
+
+function drop(event, dayDelta, minuteDelta){
+  console.log(event);
+  $.ajax({
+    type: 'PUT',
+    dataType: 'script',
+    url: event.update,
+    contentType: 'application/json',
+    data: JSON.stringify({
+      event: { id: event.id, start: event.start, finish: event.end },
+      _method:'put'
+    })
+  });
+}
+
+
+
+$(document).on('page:change', function() {
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek'
+    },
+    height: 600,
+    editable: true,
+    resizable: true,
+    events: $('#calendar').data('schedule-path') ,
+    eventRender: function(event, element) {
+      $('a.fc-event-draggable').attr('data-remote', true);
+      element.find('.fc-event-time').empty();
+      element.find('.fc-event-title').append("<br/>" + event.start.format("H:M")); 
+      element.find('.fc-event-title').append(" " + event.end.format("H:M")); 
+    },
+    eventResize: function(event, dayDelta, minuteDelta) {
+      resize(event, dayDelta, minuteDelta);
+    },
+    eventDrop: function(event, dayDelta, minuteDelta, allDay){
+      drop(event, dayDelta, minuteDelta);
+    }
+  });
+});
+
+

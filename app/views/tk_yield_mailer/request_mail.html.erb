@@ -1,0 +1,15 @@
+<p>Hello <%= @user.email %>!</p>
+
+<p><%=@current_user.name %>  desea enviarte una solicitud de permiso, cuyo motivo es el siguiente:</p>
+ 
+<p><%= @resources[:description]%></p>
+
+<p>Durante el periodo:</p>
+
+<p>Start: </p>
+
+<p><%= @resources.start%></p>
+
+<p>Finish: </p>
+
+<p><%= @resources.end%></p>

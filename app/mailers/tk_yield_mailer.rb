@@ -13,4 +13,11 @@ class TkYieldMailer < ApplicationMailer
   	mail(to: @user.email, subject: "Did you forget your timer?")
   end
 
+  def request_mail(user,resources,current_user)
+    @user=user
+    @resources=resources
+    @current_user=current_user
+    mail( :to => @user.email,:subject => 'Resquest for permission' )
+  end
+  
 end

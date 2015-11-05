@@ -1,0 +1,33 @@
+<%= form_for permits_path ,url: send_email_permits_path, method: 'get' do |f|%>
+  <div class="field">
+    <div class="input-group">
+      <span class="input-group-addon">Reason</span>
+      <%= f.text_field :name, class: "form-control",placeholder: "Vacation" %>
+    </div>
+    <br>
+  </div>
+  <div class="field">
+    <div class="input-group">
+      <span class="input-group-addon">From:</span>
+      <%= f.date_field :start, class: "form-control" %>
+    </div>
+    <br>
+  </div>
+  <div class="field">
+    <div class="input-group">
+      <span class="input-group-addon">To:</span>
+      <%= f.date_field :end, class: "form-control" %>
+    </div>
+    <br>
+  </div>
+  <div class="field">
+    <div class="input-group">
+      <span class="input-group-addon">Description</span>
+      <%= f.text_area :description, class: "form-control",placeholder: "Vacation" %>
+    </div>
+    <br>
+  </div>
+  <%= f.submit "Ask for Permission" ,class: "btn btn-default" %>
+<% end %>
+
+

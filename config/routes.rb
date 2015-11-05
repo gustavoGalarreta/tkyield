@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   scope ':route' do
     get '/', to: "dashboard#index", as: "dashboard"
     resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
+      get 'schedule', to: 'users#schedule' , on: :member
       get 'archives', to: 'users#archives', on: :collection
       get 'show_user_project', to: 'users#projects', on: :member
       patch 'update_user_project', to: 'users#update_projects', on: :member
@@ -52,13 +53,25 @@ Rails.application.routes.draw do
       end
       resources :users, only: :show do
         get 'user_excel', to: 'users#user_excel'
+
       end
       resources :clients, only: :show do
-        get 'client_excel', to: 'clients#client_excel'
+        get 'client_excel', to: 'clients#client_excel', on: :collection
       end
+    end
+    resources :schedules do
+      put "set", on: :member
+      put "unset", on: :member
+      get :current_schedule, on: :collection
+      resources :events
+    end
+
+    resources :permits do
+      get 'send_email',on: :collection
     end
     devise_for :users, :controllers => { :sessions => 'user_device/sessions', :passwords => 'user_device/passwords', :registrations => 'user_device/registrations', :confirmations => 'user_device/confirmations' }
     devise_scope :user do
+
       patch "/confirm" => "user_device/confirmations#confirm"
     end
   end
