@@ -22,5 +22,5 @@
 		<div class="modal fade" id="event-modal" tabindex="1" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 	</div>
 <% else %>
-	<p>No Schedule yet</p>
+	<p>You do not have an Active schedule. Go to <%= link_to 'this link', schedules_path, class: "btn btn-primary align-right" %> to manage your schedules.</p>
 <% end %>
