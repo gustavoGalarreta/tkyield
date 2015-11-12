@@ -59,10 +59,12 @@ Rails.application.routes.draw do
         get 'client_excel', to: 'clients#client_excel', on: :collection
       end
     end
-    resources :schedules do
+
+    resources :schedules , except: :update do      
       put "set", on: :member
       put "unset", on: :member
       get :current_schedule, on: :collection
+      patch :create_schedule, on: :collection
       resources :events
     end
 

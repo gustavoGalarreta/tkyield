@@ -1,0 +1,37 @@
+<table>
+  <thead>
+    <tr>
+      <th>Sunday</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= f.fields_for :events do |day|%>
+      <td>
+        <div class="field bootstrap-timepicker timepicker">
+            <div class="input-group">
+              <span class="input-group-addon">In</span>
+              <%= day.text_field :inTime,class: "form-control timepicker"  %>
+            </div>
+            <br>
+        </div>
+         <div class="field bootstrap-timepicker timepicker">
+          <div class="input-group">
+            <span class="input-group-addon">Out</span>
+            <%= day.text_field :outTime,class: "form-control timepicker"  %>
+          </div>
+          <br>
+        </div>
+      </td>
+    <%end%>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+    $('.timepicker').timepicker();
+</script>

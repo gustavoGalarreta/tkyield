@@ -71,6 +71,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   validate :freeze_role, :on => :update
   before_create :generate_qr_code_and_access_token
+#  after_create :set_first_schedule
 
   def generate_qr_code_and_access_token
     self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
@@ -306,6 +307,13 @@ class User < ActiveRecord::Base
 
   def get_team_leader
     User.find_by(team_id: self.team_id, team_leader: true)
+  end
+
+  def set_first_schedule
+    s=self.schedules.new
+    s.name="My Schedule"
+    s.current= true
+    s.save
   end
 
 

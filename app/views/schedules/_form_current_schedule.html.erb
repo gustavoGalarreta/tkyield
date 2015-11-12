@@ -1,9 +1,4 @@
-<h1 class="page-header">
-	<%= @schedule.name%>
-</h1>
-<div class="table-current-schedule">
   <%= nested_form_for  @schedule, url:create_schedule_schedules_path , remote: true do |f|%>
     <%= render 'table_current_schedule' , f: f %>
     <%= f.submit "Finish" ,class: "btn btn-default" %>
 	<% end %>
-</div>
