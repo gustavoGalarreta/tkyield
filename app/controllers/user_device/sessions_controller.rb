@@ -23,7 +23,6 @@ class UserDevice::SessionsController < Devise::SessionsController
   def set
 
     if current_user.schedules.empty?
-      p "Entro :D"
       current_user.set_first_schedule
     end
   end

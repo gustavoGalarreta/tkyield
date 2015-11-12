@@ -1,1 +1,7 @@
-alert('<%= @schedule.errors.any? %>')
+if ("<%=@schedule.errors.any?%>"){
+	alert('saved successful')
+	
+}
+else{
+	alert('saved invalid: check your entries')
+}

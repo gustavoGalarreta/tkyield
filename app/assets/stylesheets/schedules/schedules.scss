@@ -1,5 +1,14 @@
-
 table, tr, td ,th{
     padding-bottom: 10px;
     padding-right: 10px;
 }
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+} 

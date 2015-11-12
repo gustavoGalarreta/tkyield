@@ -172,7 +172,7 @@ class User < ActiveRecord::Base
 
   def check_out(check_in_obj=nil)
     time_station = check_in_obj.nil? ? last_check_in_or_out_activity : check_in_obj
-    if time_station.is_checkin?
+    if time_station and time_station.is_checkin?
       self.time_stations.create(parent_id: time_station.id, total_time: Time.zone.now - time_station.created_at)
     end
   end
@@ -310,11 +310,10 @@ class User < ActiveRecord::Base
   end
 
   def set_first_schedule
-    s=self.schedules.new
-    s.name="My Schedule"
-    s.current= true
+    s = self.schedules.new
+    s.name = "My Schedule"
+    s.current = true
     s.save
   end
-
 
 end

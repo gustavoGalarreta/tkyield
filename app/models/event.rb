@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :schedule
+
   validate :finish_cannot_be_earlier_than_start
-  
   validates :inTime,       presence: true
   validates :outTime,      presence: true
 
