@@ -1,4 +1,5 @@
 class Schedule < ActiveRecord::Base
+	before_save :default_day
 	belongs_to :user
 	has_many :events, dependent: :destroy
 	scope :is_current, -> {where(current: true)}
@@ -10,5 +11,10 @@ class Schedule < ActiveRecord::Base
 
 	def unset!
 		update(current: false)
+	end
+
+	def default_day
+		self.start = Date.today.to_s
+		self.end = (Date.today + 7 ).to_s
 	end
 end

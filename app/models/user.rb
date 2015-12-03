@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   validate :freeze_role, :on => :update
   before_create :generate_qr_code_and_access_token
-#  after_create :set_first_schedule
+  after_create :set_first_schedule
 
   def generate_qr_code_and_access_token
     self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
@@ -312,8 +312,14 @@ class User < ActiveRecord::Base
   def set_first_schedule
     s = self.schedules.new
     s.name = "My Schedule"
+    e = Event.count == 0 ? 1 : Event.last.id+1
+    7.times do |index|
+      i=e+index
+      s.events.build(id:i, inTime:"10:00 AM", outTime: "11:00 AM" ,day_of_week: index)
+    end
     s.current = true
     s.save
   end
 
 end
+

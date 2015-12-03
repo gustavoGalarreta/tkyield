@@ -1,7 +1,7 @@
 class SchedulesController<DashboardController
 	add_breadcrumb "Dashboard", :dashboard_path 
-	before_action :set_schedule, only: [:show,:set,:unset, :destroy]
-	before_action :get_current_schedule, only: [:create_schedule,:current_schedule,:edit]
+	before_action :set_schedule, only: [:show,:set,:unset, :destroy,:edit]
+	before_action :get_current_schedule, only: [:create_schedule,:current_schedule]
 
 
 	def index
@@ -9,31 +9,22 @@ class SchedulesController<DashboardController
 		@schedules = current_user.schedules
 	end
 
-	def show
+	def current_schedule
+		add_breadcrumb "Schedules", :current_schedule_schedules_path
 	end
 
-	def new		
+	def create_schedule
+		@schedule = Schedule.find(params[:id])
+		@schedule.update_attributes(schedule_params_without_name)
 	end
 
 	def set
 		@current_schedule = current_user.schedules.is_current.first
     @current_schedule.unset! if @current_schedule
-    unless @schedule.set!
-      render js: "alert('An error has ocurred')"
-    end
 	end
 
 	def unset
 		@current_schedule = current_user.schedules.is_current.first
-    unless @schedule.unset!
-      render js: "alert('An error has ocurred')"
-    else
-      render :set
-    end
-	end
-
-	def edit
-		@schedule = Schedule.find(params[:id])
 	end
 
 	def destroy
@@ -42,25 +33,34 @@ class SchedulesController<DashboardController
 	end
 
 	def create
-		p'Entra create'
 		s=Schedule.new(schedule_params)
 	  s.user_id = current_user.id
-
+	  e = Event.count == 0 ? 1 : Event.last.id+1
+	  7.times do |index|
+	  	i=e+index
+	  	s.events.build(id:i, inTime:"10:00 AM", outTime: "11:00 AM"	,day_of_week: index)
+	  end
 		s.save
 		@schedules = current_user.schedules
 	end
 
-	def current_schedule
-		add_breadcrumb "Schedules", :current_schedule_schedules_path
-		7.times do |index|
-			@schedule.events.build(day_of_week: index)
-		end  
-	end
-
-	def create_schedule
-		@schedule = Schedule.find(params[:id])
+	def edit_schedule
+		p=params[:schedule][:id_schedule]
+		@schedule=Schedule.find(p)
 		@schedule.update_attributes(schedule_params_without_name)
 	end
+
+
+
+	def show
+	end
+
+	def new		
+	end
+	
+	def edit
+	end
+
 	private
 		def schedule_params_without_name
       params.require(:schedule).permit(events_attributes:[:id, :inTime,:outTime,:day_of_week])

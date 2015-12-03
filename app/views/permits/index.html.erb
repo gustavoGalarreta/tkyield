@@ -1,33 +1,35 @@
-<%= form_for permits_path ,url: send_email_permits_path, method: 'get' do |f|%>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">Reason</span>
-      <%= f.text_field :name, class: "form-control",placeholder: "Vacation" %>
+<%= link_to 'Ask Permission', permission_permits_path, class: "btn btn-lg btn-primary align-right" %>
+<h1 class="page-header"> Permission Report <small> </small> </h1>
+<%= form_tag @permission,url: permission_permits_path do %>
+    <div class="row">
+        <div class="col-lg-6 text-center">
+            <strong>Team</strong>
+            <%= select_tag "team",options_from_collection_for_select(@teams, :name)%>
+              <%#= label_tag :search_relationship, "Relationship" %>
+              <%#= select_tag :search_relationship, options_for_select(@user.relationships.map {|r| [r.name, r.id]}), prompt: "- Select a Team-", class: "form-control" %> 
+        </div>
+        <div class="col-lg-6 text-center">
+            <strong>Collaborators</strong>
+            <%#= select_tag "collaborator",options_from_collection_for_select(@collaborators, "id", "full_name", @selected_collaborator.try(:id)), prompt: "- Select a Collaborator -" ,class:"form-control", :id => "select_task_#{@team}"%>
+        </div>
     </div>
     <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">From:</span>
-      <%= f.date_field :start, class: "form-control" %>
+    <div class="row-lg-5">
+        <div class="col-lg-1 text-center">
+            From: 
+        </div>
+        <div class="col-lg-5 text-center">
+            <%#= text_field_tag "beginning", date_format(@beginning), class:"form-control datepicker" %>
+        </div>
+        <div class="col-lg-1 text-center">
+            to:
+        </div>
+        <div class="col-lg-5 text-center">
+            <%#= text_field_tag "end", date_format(@end), class:"form-control datepicker" %>
+        </div>
     </div>
     <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">To:</span>
-      <%= f.date_field :end, class: "form-control" %>
+    <div class="align-right">
+        <div><%#= submit_tag 'Go', :data => {:team => @team, :collaborator => @collaborator , :beginning => @beginning, :end => @end}, class:"btn btn-warning" %></div>
     </div>
-    <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">Description</span>
-      <%= f.text_area :description, class: "form-control",placeholder: "Vacation" %>
-    </div>
-    <br>
-  </div>
-  <%= f.submit "Ask for Permission" ,class: "btn btn-default" %>
 <% end %>
-
-
