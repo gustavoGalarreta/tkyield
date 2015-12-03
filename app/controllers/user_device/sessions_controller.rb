@@ -1,5 +1,5 @@
 class UserDevice::SessionsController < Devise::SessionsController
-
+  after_filter :set, :only => :create
   # POST /resource/sign_in
   def create
     self.resource = warden.authenticate!(auth_options)
@@ -18,6 +18,13 @@ class UserDevice::SessionsController < Devise::SessionsController
     set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
     yield if block_given?
     respond_to_on_destroy
+  end
+
+  def set
+
+    if current_user.schedules.empty?
+      current_user.set_first_schedule
+    end
   end
 
   private

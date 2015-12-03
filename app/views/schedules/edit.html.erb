@@ -1,0 +1,9 @@
+<h1 class="page-header"> Schedule <small><%= @schedule.name %></small></h1>
+<hr>
+<div class="table-current-schedule">
+	<%= nested_form_for @schedule, url: edit_schedule_schedules_path , remote: true do |f|%>
+	  <%= render 'table_current_schedule' , f: f %>
+	  <%= f.hidden_field :id_schedule , :value => @schedule.id%>
+	  <%= f.submit "Edit" ,class: "btn btn-default" %>
+	<% end %>
+</div>

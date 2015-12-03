@@ -1,67 +1,80 @@
 class SchedulesController<DashboardController
 	add_breadcrumb "Dashboard", :dashboard_path 
-  before_action :set_schedule, only: [:set,:unset, :show]
-  before_action :schedule_params, only: [:create]
-  respond_to :html, :js, :json
+	before_action :set_schedule, only: [:show,:set,:unset, :destroy,:edit]
+	before_action :get_current_schedule, only: [:create_schedule,:current_schedule]
 
 
 	def index
 		add_breadcrumb "Schedules", :schedules_path
-    @schedules = current_user.schedules
-  end
+		@schedules = current_user.schedules
+	end
 
-  def current_schedule
-    add_breadcrumb "My Schedule", :current_schedule_schedules_path
-    @current = current_user.schedules.is_current.first
-    @events = @current.nil? ? [] : @current.events
-  end
+	def current_schedule
+		add_breadcrumb "Schedules", :current_schedule_schedules_path
+	end
 
-  def set
-    @current_schedule = current_user.schedules.is_current.first
+	def create_schedule
+		@schedule = Schedule.find(params[:id])
+		@schedule.update_attributes(schedule_params_without_name)
+	end
+
+	def set
+		@current_schedule = current_user.schedules.is_current.first
     @current_schedule.unset! if @current_schedule
-    unless @schedule.set!
-      render js: "alert('An error has ocurred')"
+	end
+
+	def unset
+		@current_schedule = current_user.schedules.is_current.first
+	end
+
+	def destroy
+		@schedule.destroy
+		@schedules = current_user.schedules
+	end
+
+	def create
+		s=Schedule.new(schedule_params)
+	  s.user_id = current_user.id
+	  e = Event.count == 0 ? 1 : Event.last.id+1
+	  7.times do |index|
+	  	i=e+index
+	  	s.events.build(id:i, inTime:"10:00 AM", outTime: "11:00 AM"	,day_of_week: index)
+	  end
+		s.save
+		@schedules = current_user.schedules
+	end
+
+	def edit_schedule
+		p=params[:schedule][:id_schedule]
+		@schedule=Schedule.find(p)
+		@schedule.update_attributes(schedule_params_without_name)
+	end
+
+
+
+	def show
+	end
+
+	def new		
+	end
+	
+	def edit
+	end
+
+	private
+		def schedule_params_without_name
+      params.require(:schedule).permit(events_attributes:[:id, :inTime,:outTime,:day_of_week])
     end
-  end
 
-  def unset
-    @current_schedule = current_user.schedules.is_current.first
-    unless @schedule.unset!
-      render js: "alert('An error has ocurred')"
-    else
-      render :set
-    end
-  end
-
-  def show 
-  end
-
-  def new
-  end
-
-  def create
-    s = Schedule.new(schedule_params)
-    s.user_id = current_user.id
-    s.save
-    @schedules=current_user.schedules
-  end
-
-  def edit
-  end
-
-  def update   
-  end
-
-  def destroy
-    @event.destroy 
-  end
-
-  private
     def schedule_params
-       params.require(:schedule).permit(:name)   
+      params.require(:schedule).permit(:name, events_attributes:[:id, :inTime,:outTime,:day_of_week])
     end
 
     def set_schedule
-      @schedule=Schedule.find(params[:id])
+    	@schedule = Schedule.find(params[:id])
+    end
+    
+    def get_current_schedule
+    	@schedule=current_user.schedules.find_by(current: true )
     end
 end

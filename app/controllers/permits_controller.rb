@@ -4,6 +4,7 @@ class PermitsController < DashboardController
    before_action :email_params, only: [:send_email]
 	def index
 		 add_breadcrumb "Request", :permits_path
+		 @teams = Team.all.order("name ASC").map{|t| [t.name]}
 	end
 
 	def create		
@@ -15,6 +16,11 @@ class PermitsController < DashboardController
 		 TkYieldMailer.request_mail(@user,email_params,current_user).deliver_later
 	end
 
+	def permission
+		
+
+	end
+	
 	private
 	def email_params
 		params.permit(:description,:start,:end)
