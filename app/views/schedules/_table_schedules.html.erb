@@ -9,11 +9,10 @@
     </thead>
     <tbody>  
         <% @schedules.each do |schedule| %>
-
-        <tr id="schedule-row-<%= schedule.id %>">
-        	<%= render 'schedule_row',schedule: schedule%>
-        </tr>
-        <% end%>
+          <tr id="schedule-row-<%= schedule.id %>">
+          	<%= render 'schedule_row',schedule: schedule%>
+          </tr>
+        <% end %>
     </tbody>
   </table>
 </div>

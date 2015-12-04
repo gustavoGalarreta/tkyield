@@ -170,6 +170,10 @@ class User < ActiveRecord::Base
     self.time_stations.create
   end
 
+  def current_schedule
+    self.schedules.where(current: true)
+  end
+
   def check_out(check_in_obj=nil)
     time_station = check_in_obj.nil? ? last_check_in_or_out_activity : check_in_obj
     if time_station and time_station.is_checkin?

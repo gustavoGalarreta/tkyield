@@ -1,4 +1,1 @@
-if ("<%= !@current_schedule.nil? %>" == "true") {
-	$("#schedule-row-<%= @current_schedule.id if @current_schedule %>").html('<%=escape_javascript render partial: "schedule_row", locals: { schedule: @current_schedule } if @current_schedule %>')
-}
-$("#schedule-row-<%= @schedule.id %>").html('<%=escape_javascript render partial: "schedule_row", locals: { schedule: @schedule } %>')
+$("#panel-schedules").html('<%= escape_javascript render partial: "table_schedules", locals: { schedules: @schedules } %>')
