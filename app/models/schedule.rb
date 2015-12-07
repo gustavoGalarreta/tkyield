@@ -5,6 +5,7 @@ class Schedule < ActiveRecord::Base
 	scope :is_current, -> {where(current: true)}
 	scope :not_set, -> {where(current: false)}
 	accepts_nested_attributes_for :events
+	
 	def set!
 		update(current: true)
 	end
@@ -17,4 +18,5 @@ class Schedule < ActiveRecord::Base
 		self.start = Date.today.to_s
 		self.end = (Date.today + 7 ).to_s
 	end
+
 end

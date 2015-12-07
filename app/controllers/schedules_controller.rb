@@ -1,12 +1,12 @@
 class SchedulesController<DashboardController
 	add_breadcrumb "Dashboard", :dashboard_path 
-	before_action :set_schedule, only: [:show,:set,:unset, :destroy,:edit]
-	before_action :get_current_schedule, only: [:create_schedule,:current_schedule]
+	before_action :set_schedule, only: [:show, :set, :unset, :destroy, :edit]
+  before_action :get_current_schedule, only: [:create_schedule,:current_schedule]
+	before_action :get_schedules, only: [:index, :set, :create, :destroy]
 
 
 	def index
 		add_breadcrumb "Schedules", :schedules_path
-		@schedules = current_user.schedules
 	end
 
 	def current_schedule
@@ -19,17 +19,12 @@ class SchedulesController<DashboardController
 	end
 
 	def set
-		@current_schedule = current_user.schedules.is_current.first
-    @current_schedule.unset! if @current_schedule
-	end
-
-	def unset
-		@current_schedule = current_user.schedules.is_current.first
+    current_user.current_schedule.first.unset! unless current_user.current_schedule.blank?
+    @schedule.set!
 	end
 
 	def destroy
 		@schedule.destroy
-		@schedules = current_user.schedules
 	end
 
 	def create
@@ -41,7 +36,6 @@ class SchedulesController<DashboardController
 	  	s.events.build(id:i, inTime:"10:00 AM", outTime: "11:00 AM"	,day_of_week: index)
 	  end
 		s.save
-		@schedules = current_user.schedules
 	end
 
 	def edit_schedule
@@ -49,8 +43,6 @@ class SchedulesController<DashboardController
 		@schedule=Schedule.find(p)
 		@schedule.update_attributes(schedule_params_without_name)
 	end
-
-
 
 	def show
 	end
@@ -76,5 +68,8 @@ class SchedulesController<DashboardController
     
     def get_current_schedule
     	@schedule=current_user.schedules.find_by(current: true )
+    end
+    def get_schedules
+      @schedules = current_user.schedules
     end
 end

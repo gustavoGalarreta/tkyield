@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029154816) do
+
+ActiveRecord::Schema.define(version: 20151103191120) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "subdomain",     limit: 255, default: "", null: false
@@ -50,14 +51,14 @@ ActiveRecord::Schema.define(version: 20151029154816) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",             limit: 255, default: "", null: false
-    t.string   "last_name",              limit: 255, default: "", null: false
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "first_name",             limit: 255, default: "",    null: false
+    t.string   "last_name",              limit: 255, default: "",    null: false
+    t.string   "email",                  limit: 255, default: "",    null: false
+    t.string   "encrypted_password",     limit: 255, default: "",    null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 20151029154816) do
     t.integer  "account_id",             limit: 4
     t.string   "access_token",           limit: 255
     t.datetime "archived_at"
+    t.boolean  "team_leader",            limit: 1,   default: false
     t.index ["account_id"], :name => "fk__users_account_id"
     t.index ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

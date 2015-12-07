@@ -1,8 +1,6 @@
-<%= link_to 'New Schedule', '#', :data => {:toggle => "modal"}, onClick: "javascript:openNewScheduleModal(this)", class: "btn btn-lg btn-warning align-right" %>
+<%= link_to 'New Schedule', '#', data: {toggle: "modal", target: "#new-schedule"}, class: "btn btn-lg btn-warning align-right" %>
 <h1 class="page-header"> Schedules <small> Listing</small> </h1>
-<div class="col-md-12">
-	<table id="table-schedules" class="table table-responsive">
-		<%=render 'table_schedules', schedules: @schedules %>
-	</table>
+<div id="panel-schedules" class="col-md-12">
+	<%= render 'table_schedules', schedules: @schedules %>
 </div>
 <%= render 'new_schedule_modal' %>
