@@ -11,7 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20151103191120) do
 
   create_table "accounts", force: :cascade do |t|
@@ -96,20 +95,19 @@ ActiveRecord::Schema.define(version: 20151103191120) do
     t.string   "name",       limit: 255,                 null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.string   "start",      limit: 255
+    t.string   "end",        limit: 255
     t.index ["user_id"], :name => "fk__schedules_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_schedules_user_id"
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer  "schedule_id", limit: 4,                     null: false
-    t.string   "name",        limit: 255,                   null: false
-    t.datetime "start"
-    t.datetime "finish"
-    t.text     "description", limit: 65535,                 null: false
-    t.boolean  "all_day",     limit: 1,     default: false, null: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.index ["name"], :name => "index_events_on_name"
+    t.integer  "schedule_id", limit: 4,   null: false
+    t.string   "inTime",      limit: 255
+    t.string   "outTime",     limit: 255
+    t.integer  "day_of_week", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["schedule_id"], :name => "fk__events_schedule_id"
     t.foreign_key ["schedule_id"], "schedules", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_events_schedule_id"
   end
