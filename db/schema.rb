@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 20151103191120) do
     t.string   "name",       limit: 255,                 null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.string   "start",      limit: 255
-    t.string   "end",        limit: 255
+    t.date     "start"
+    t.date     "end"
     t.index ["user_id"], :name => "fk__schedules_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_schedules_user_id"
   end
