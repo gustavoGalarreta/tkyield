@@ -28,20 +28,20 @@ class SchedulesController<DashboardController
 	end
 
 	def create
-		s=Schedule.new(schedule_params)
+		s = Schedule.new(schedule_params)
 	  s.user_id = current_user.id
-	  e = Event.count == 0 ? 1 : Event.last.id+1
+	  e = Event.count == 0 ? 1 : Event.last.id + 1
 	  7.times do |index|
-	  	i=e+index
+      i = e + index
 	  	s.events.build(id:i, inTime:"10:00 AM", outTime: "11:00 AM"	,day_of_week: index)
 	  end
 		s.save
 	end
 
 	def edit_schedule
-		p=params[:schedule][:id_schedule]
-		@schedule=Schedule.find(p)
-		@schedule.update_attributes(schedule_params_without_name)
+		@schedule = Schedule.find(params[:schedule][:id_schedule])
+		@schedule.update_attributes(schedule_params)
+    redirect_to controller: 'schedules', action: 'index', id: @schedule.id
 	end
 
 	def show
@@ -67,7 +67,7 @@ class SchedulesController<DashboardController
     end
     
     def get_current_schedule
-    	@schedule=current_user.schedules.find_by(current: true )
+      @schedule = current_user.schedules.find_by(current: true )
     end
     def get_schedules
       @schedules = current_user.schedules

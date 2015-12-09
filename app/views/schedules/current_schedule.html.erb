@@ -16,5 +16,7 @@
         <%#= text_field_tag "end" , @schedule.end , class:"form-control datepicker" %>
     </div>
 	</div>
-	 <%= render 'form_current_schedule', schedule: @schedule %> 
+    <%= nested_form_for  @schedule, url:create_schedule_schedules_path , remote: true do |f|%>
+      <%= render 'index_table_current_schedule' , f: f %>
+    <% end %>
 </div>
