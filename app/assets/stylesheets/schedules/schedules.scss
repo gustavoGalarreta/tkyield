@@ -2,7 +2,6 @@ table, tr, td ,th{
     padding-bottom: 10px;
     padding-right: 10px;
 }
-
 hr { 
     display: block;
     margin-top: 0.5em;
@@ -12,3 +11,6 @@ hr {
     border-style: inset;
     border-width: 1px;
 } 
+.hasDatepicker{
+	z-index: 5000;
+}

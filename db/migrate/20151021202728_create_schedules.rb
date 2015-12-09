@@ -5,8 +5,8 @@ class CreateSchedules < ActiveRecord::Migration
     	t.boolean :current, default: false
     	t.string :name, null: false
       t.timestamps null: false
-      t.string :start
-      t.string :end
+      t.date :start
+      t.date :end
     end
   end
 end

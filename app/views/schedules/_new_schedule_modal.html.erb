@@ -1,4 +1,4 @@
-<div class="modal popup " id="new-schedule" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="new-schedule" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,16 +11,26 @@
               <td><%= f.label :name, "Name Schedule" %></td>
               <td id="form-fields"><%= f.text_field :name, class: "form-control", placeholder: "UniversitySchedule" %></td>
             </tr>
-              <td>
-                <br>
-                <%= f.submit "Submit" ,class: "btn btn-default" %>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </td>
-              
+            <tr>
+              <td><%= f.label :start, "From" %></td>
+              <td id="form-fields"><%= f.text_field :start, class:"form-control"%></td>
+              <td><%= f.label :end, "To" %></td>
+              <td id="form-fields"><%= f.text_field :end, class:"form-control"%></td>
+            </tr>
+              <td><br><%= f.submit "Submit" ,class: "btn btn-default" %><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></td>              
           </table>
         <% end %>
       </div>
-
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $('#schedule_start').datepicker()
+  .on('show', function() {
+    $('.datepicker').css("z-index", "3000");
+  });
+  $('#schedule_end').datepicker()
+  .on('show', function() {
+    $('.datepicker').css("z-index", "3000");
+  });
+</script>
