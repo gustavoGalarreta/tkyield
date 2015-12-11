@@ -5,16 +5,10 @@
 </td>
 <td>
 	<%= image_tag user.avatar.url(:thumb), class: "img-circle", width: "30", height:"30"%>
-	<strong>  <%= user.full_name %></strong>
+	<strong>  <%= user.full_name %></strong> <%= '<span class="label label-success">TL</span>'.html_safe if user.team_leader %>
 </td>
 <td>
 	<%= user.role_name %>
-</td>
-<td>
-	<a href="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=<%=user.qr_code%>&chld=M|0" target="blank">
-		<img src="https://chart.googleapis.com/chart?cht=qr&chs=50x50&chl=<%=user.qr_code%>&chld=M|0"></img>
-	</a>
-</td>
 <td>
 	<% if active %>
 		<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_user_path(user),class: "btn btn-default" %>
