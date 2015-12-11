@@ -120,7 +120,6 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.99)
     mimemagic (0.3.0)
-    mini_portile (0.6.2)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
     momentjs-rails (2.10.6)
@@ -271,3 +270,6 @@ DEPENDENCIES
   web-console (~> 2.0)
   whenever (~> 0.9.4)
   will_paginate (~> 3.0.6)
+
+BUNDLED WITH
+   1.10.6

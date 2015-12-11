@@ -1,6 +1,6 @@
-<td><%= schedule.id%></td>
-<td><%= schedule.name%></td>
-<td><%= schedule.id%></td>
+<td><%= schedule.id %></td>
+<td><%= schedule.name %></td>
+<td><%= schedule.id %></td>
 <td>
   <% if schedule.current %>
 		<div class="col-md-2">
@@ -15,7 +15,7 @@
 		<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_schedule_path(schedule),class: "btn btn-default" %>
 	</div>
 	<div class="col-md-2">
-		<%= link_to '<i class="fa fa-times"></i> Delete'.html_safe, schedule_path(schedule), method: :delete, remote: true, data: { confirm: 'Are you sure?' },class: "btn btn-default" %>
+		<%= link_to '<i class="fa fa-times"></i> Delete'.html_safe, schedule_path(schedule), method: :delete, remote: true, data: { confirm: 'This schedule will be removed. Are you sure?' },class: "btn btn-default" %>
 	</div>
 </td>
 

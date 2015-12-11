@@ -6,10 +6,12 @@
       </div>
       <div class="modal-body">
         <%= form_for(Schedule.new, class: "form-inline ", remote: true) do |f|%>
-           <table>
+          <table>
             <tr>
               <td><%= f.label :name, "Name Schedule" %></td>
               <td id="form-fields"><%= f.text_field :name, class: "form-control", placeholder: "UniversitySchedule" %></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><%= f.label :start, "From" %></td>
@@ -17,8 +19,9 @@
               <td><%= f.label :end, "To" %></td>
               <td id="form-fields"><%= f.text_field :end, class:"form-control"%></td>
             </tr>
-              <td><br><%= f.submit "Submit" ,class: "btn btn-default" %><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></td>              
           </table>
+          <%= f.submit "Submit" ,class: "btn btn-default" %>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <% end %>
       </div>
     </div>
