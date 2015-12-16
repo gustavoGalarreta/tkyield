@@ -14,9 +14,27 @@ class Schedule < ActiveRecord::Base
 		update(current: false)
 	end
 
-	def default_day
-		self.start = Date.today.to_s
-		self.end = (Date.today + 7 ).to_s
+	def set_finish
+		p '***************************'
+		p 'si finalliza'
+		p self.finish
+		update(finish: Date.today)
+		#self.finish = Date.today
+		#self.save
+		
+		p self.finish
 	end
 
+	def set_start
+		p '***************************'
+		p 'si inicia'
+		#update(start: Time.now)
+		self.start = Date.today
+		self.save
+	end
+
+	def default_day
+		self.start = Date.today.to_s
+		self.finish = (Date.today + 7 ).to_s
+	end
 end

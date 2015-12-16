@@ -1,35 +1,28 @@
 <%= link_to 'Ask Permission', permission_permits_path, class: "btn btn-lg btn-primary align-right" %>
-<h1 class="page-header"> Permission Report <small> </small> </h1>
-<%= form_tag @permission,url: permission_permits_path do %>
-    <div class="row">
-        <div class="col-lg-6 text-center">
-            <strong>Team</strong>
-            <%= select_tag "team",options_from_collection_for_select(@teams, :name)%>
-              <%#= label_tag :search_relationship, "Relationship" %>
-              <%#= select_tag :search_relationship, options_for_select(@user.relationships.map {|r| [r.name, r.id]}), prompt: "- Select a Team-", class: "form-control" %> 
-        </div>
-        <div class="col-lg-6 text-center">
-            <strong>Collaborators</strong>
-            <%#= select_tag "collaborator",options_from_collection_for_select(@collaborators, "id", "full_name", @selected_collaborator.try(:id)), prompt: "- Select a Collaborator -" ,class:"form-control", :id => "select_task_#{@team}"%>
-        </div>
+<h1 class="page-header"> Permissions List <small> </small> </h1>
+<% if @permits.empty? %>
+    You don't have permits 
+<% else %>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>From</th>
+            <th>To</th>        
+          </tr>
+        </thead>
+        <tbody>
+            <% @permits.each do |permit| %>
+                <tr>
+                    <td><%= permit.id%></td>
+                    <td><%= permit.name%></td>
+                    <td><%= permit.start%></td>
+                    <td><%= permit.end%></td>                
+                </tr>
+            <%end%>
+        </tbody>
+      </table>
     </div>
-    <br>
-    <div class="row-lg-5">
-        <div class="col-lg-1 text-center">
-            From: 
-        </div>
-        <div class="col-lg-5 text-center">
-            <%#= text_field_tag "beginning", date_format(@beginning), class:"form-control datepicker" %>
-        </div>
-        <div class="col-lg-1 text-center">
-            to:
-        </div>
-        <div class="col-lg-5 text-center">
-            <%#= text_field_tag "end", date_format(@end), class:"form-control datepicker" %>
-        </div>
-    </div>
-    <br>
-    <div class="align-right">
-        <div><%#= submit_tag 'Go', :data => {:team => @team, :collaborator => @collaborator , :beginning => @beginning, :end => @end}, class:"btn btn-warning" %></div>
-    </div>
-<% end %>
+<%end%>

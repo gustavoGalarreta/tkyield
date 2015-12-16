@@ -19,8 +19,10 @@ class SchedulesController<DashboardController
 	end
 
 	def set
+    current_user.current_schedule.first.set_finish
     current_user.current_schedule.first.unset! unless current_user.current_schedule.blank?
     @schedule.set!
+    @schedule.set_start
 	end
 
 	def destroy
