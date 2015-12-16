@@ -95,8 +95,9 @@ ActiveRecord::Schema.define(version: 20151103191120) do
     t.string   "name",       limit: 255,                 null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.boolean  "exist",      limit: 1,   default: false
     t.date     "start"
-    t.date     "end"
+    t.date     "finish"
     t.index ["user_id"], :name => "fk__schedules_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_schedules_user_id"
   end
@@ -113,6 +114,7 @@ ActiveRecord::Schema.define(version: 20151103191120) do
   end
 
   create_table "permits", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4,     null: false
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.string   "type",        limit: 255
@@ -121,6 +123,8 @@ ActiveRecord::Schema.define(version: 20151103191120) do
     t.date     "end"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["user_id"], :name => "fk__permits_user_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_permits_user_id"
   end
 
   create_table "projects", force: :cascade do |t|

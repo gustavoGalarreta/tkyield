@@ -1,22 +1,5 @@
 <%= link_to 'Schedules', schedules_path, class: "btn btn-lg btn-primary align-right" %>
 <h1 class="page-header"> Schedule <small><%= @schedule.name %></small></h1>
-<hr>
-<div class="table-current-schedule">
-	<div class="row-lg-5">
-    <div class="col-lg-1 text-center">
-        From: 
-    </div>
-    <div class="col-lg-5 text-center">
-        <%#= text_field_tag "beginning" , @schedule.start , class:"form-control datepicker" %>
-    </div>
-    <div class="col-lg-1 text-center">
-        to:
-    </div>
-    <div class="col-lg-5 text-center">
-        <%#= text_field_tag "end" , @schedule.end , class:"form-control datepicker" %>
-    </div>
-	</div>
-    <%= nested_form_for  @schedule, url:create_schedule_schedules_path , remote: true do |f|%>
-      <%= render 'index_table_current_schedule' , f: f %>
-    <% end %>
-</div>
+<%= nested_form_for  @schedule, url:create_schedule_schedules_path , remote: true do |f|%>
+  <%= render 'index_table_current_schedule' , f: f %>
+<% end %>

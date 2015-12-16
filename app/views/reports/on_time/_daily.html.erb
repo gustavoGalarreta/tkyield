@@ -5,14 +5,13 @@
 <table class="table table-bordered table-responsive" style="overflow: auto;">
 	<thead>
 		<tr>
-			<th>Date</th>
+			<th>Date</t	h>
 			<th>Name</th>
 			<th>In/Out</th>
 			<th>Time</th>  
 			<th>Estimated In/Out</th>    
 		</tr>
 	</thead>
-
 	<tbody>
 		<% @time_stations.each do |time_station| %>
 			<tr>
@@ -22,11 +21,12 @@
 				<td><%= time_format(time_station.created_at) %></td>
 				<% value= time_station.created_at.to_time.strftime("%w")%>
 				<% if time_station.parent_id.nil?%>
-					<td><%= time_station.user.schedules.is_current.first.events.find_by(day_of_week: value).outTime%></td>
+					<td><%= time_station.find_schedule(time_station.user,@beginning).events.find_by(day_of_week: value).outTime%></td>
 				<%else%>
-					<td><%= time_station.user.schedules.is_current.first.events.find_by(day_of_week: value).inTime%></td>
+					<td><%= time_station.find_schedule(time_station.user,@beginning).events.find_by(day_of_week: value).inTime%></td>
 				<%end%>
 			</tr>
+
 		<% end %>
 	</tbody>
 </table>
