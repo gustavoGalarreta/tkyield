@@ -1,24 +1,24 @@
-<div class="modal fade" id="new-event" tabindex='-1' style="position: absolute;"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="new-event" tabindex='-1' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4> New Schedule</h4>
+        <h4>New Schedule</h4>
       </div>
       <div class="modal-body">
     		<%= form_for new_schedule_event_path(params[:id]) do |f| %>
 					<table>
 			      <tr>
-			        <td><%= f.label :name %></td>
-			        <td><%= f.text_field :name, class:"form-control" %></td>
-			      </tr>
-			      <tr>
 			        <td><%= f.label :start %></td>
 			        <td><%= f.text_field :start, id: 'event_start', class:'clockpicker form-control'%></td>
 			      </tr>
-			      <tr>  
+			      <tr>
 			        <td><%= f.label :finish %></td>
 			        <td> <%= f.text_field :finish, id: 'event_end', class:'clockpicker form-control' %></td>
 			      </tr>
+            <tr>
+              <td><%= f.label :day_of_week %></td>
+              <td><%= select_tag :day_of_week, "<option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>".html_safe, prompt: "-- Select Day --", id: 'event_end', class:"form-control" %></td>
+            </tr>
 					</table>
         	<%= f.submit "Submit" ,class: "btn btn-default" %>
         	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -35,7 +35,7 @@
 			$('.popover').css("z-index", "3000");
     }
 	})
-		$('#event_end').clockpicker({
+	$('#event_end').clockpicker({
 		autoclose: true,
 		afterShow: function() {
 			$('.popover').css("z-index", "3000");
