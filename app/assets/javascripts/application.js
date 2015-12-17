@@ -21,6 +21,7 @@
 //= require jquery.countdown.js 
 //= require bootstrap-datepicker
 //= require bootstrap-timepicker
+//= require jquery/clockpicker
 //= require datetimepicker
 //= require_tree .
 

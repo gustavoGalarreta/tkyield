@@ -2,6 +2,10 @@
   <%= f.label :name %>
   <%= f.text_field :name, class:"form-control" %>
 </div>
+<div class=" asd">
+  <%= link_to "Add events", '#', class: "btn btn-primary", data:{toggle: "modal", target: "#new-event"} %>
+  <%= render 'event_modal', f: f %>
+</div>
 <table>
   <thead>
     <tr>

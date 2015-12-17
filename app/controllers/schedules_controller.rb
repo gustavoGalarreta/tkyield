@@ -53,6 +53,7 @@ class SchedulesController<DashboardController
 	end
 	
 	def edit
+		@days = {"Monday" => 0, "Tuesday" => 1, "Wednesday" => 2}
 	end
 
 	private
