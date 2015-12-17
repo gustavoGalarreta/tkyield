@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103191120) do
+ActiveRecord::Schema.define(version: 20151217204953) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "subdomain",     limit: 255, default: "", null: false
@@ -140,6 +140,28 @@ ActiveRecord::Schema.define(version: 20151103191120) do
     t.index ["deleted_at"], :name => "index_projects_on_deleted_at"
     t.foreign_key ["account_id"], "accounts", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_projects_account_id"
     t.foreign_key ["client_id"], "clients", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_projects_client_id"
+  end
+
+  create_table "schedule_bases", force: :cascade do |t|
+    t.integer  "schedule_id", limit: 4,   null: false
+    t.string   "name",        limit: 255, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.date     "start"
+    t.date     "finish"
+    t.index ["schedule_id"], :name => "fk__schedule_bases_schedule_id"
+    t.foreign_key ["schedule_id"], "schedules", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_schedule_bases_schedule_id"
+  end
+
+  create_table "schedule_logs", force: :cascade do |t|
+    t.integer  "schedule_id", limit: 4,   null: false
+    t.string   "inTime",      limit: 255
+    t.string   "outTime",     limit: 255
+    t.integer  "day_of_week", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["schedule_id"], :name => "fk__schedule_logs_schedule_id"
+    t.foreign_key ["schedule_id"], "schedules", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_schedule_logs_schedule_id"
   end
 
   create_table "tasks", force: :cascade do |t|
