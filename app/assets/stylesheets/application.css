@@ -15,6 +15,7 @@
  *= require jquery.countdown.css
  *= require fullcalendar
  *= require bootstrap-datepicker
+ *= require jquery/clockpicker
  *= require datetimepicker
  *= require bootstrap-timepicker
  */
