@@ -1,5 +1,5 @@
 class EventsController < DashboardController
-  before_action :get_events, only: :create
+  #before_action :get_events, only: [:create, :index]
 
 	def index
 	end
@@ -15,6 +15,7 @@ class EventsController < DashboardController
 		if new_event.errors.blank?
 			new_event.save
 		end
+		@events=Event.all
 	end
 
 	def edit
