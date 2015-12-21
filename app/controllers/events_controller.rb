@@ -1,47 +1,36 @@
-class EventsController<DashboardController
-	before_action :set_schedule
-	before_action :set_event, only: [:edit, :update]
-	
+class EventsController < DashboardController
+  before_action :get_events, only: :create
+
+	def index
+	end
+
 	def new
-		@event = Event.new
-		@url = schedule_events_path
-		@method = 'POST'
-	end
-
-	def edit
-		@url = schedule_event_path
-		@method = 'PUT'
-	end
-
-	def update
-		@event.update_attributes(event_params)
 	end
 
 	def create
-		@event = Event.new(event_params)
-		@event.schedule = @current
-		unless @event.save
-			@event.errors.full_messages
+		@schedule = Schedule.find(params[:schedule_id])
+		new_event = Event.new(event_params)
+		new_event.schedule_id = params[:schedule_id]
+		new_event.day_of_week = params[:event][:day_of_week].to_i
+		if new_event.errors.blank?
+			new_event.save
 		end
 	end
 
-	def index
-		@events = @current.events
+	def edit
+	end
+
+	def update
 	end
 
 	private
 
-		def event_params
-			params.require(:event).permit(:name, :description, :start, :finish, :all_day)			
-		end
+	def event_params
+		params.require(:event).permit(:name, :inTime, :outTime)
+	end
 
-		def set_schedule
-			# @schedule = Schedule.find(params[:id])
+	def get_events
+		@events = Event.all
+	end
 
-			@current = params[:schedule_id] ? current_user.schedules.find(params[:schedule_id]) : current_user.schedules.is_current.first
-		end
-
-		def set_event
-			@event = Event.find(params[:id])
-		end
 end

@@ -60,13 +60,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :schedules , except: :update do      
-      put "set", on: :member
-      put "unset", on: :member
-      get :current_schedule, on: :collection
-      patch :create_schedule, on: :collection
-      patch :edit_schedule, on: :collection
+    resources :schedules do
       resources :events
+      put :set, on: :member
     end
 
     resources :permits do

@@ -2,10 +2,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4> New Schedule</h4>
+        <h4>New Schedule</h4>
       </div>
       <div class="modal-body">
-        <%= form_for(Schedule.new, class: "form-inline ", remote: true) do |f|%>
+        <%= form_for(Schedule.new, class:"form-inline", remote: true) do |f|%>
           <table>
             <tr>
               <td><%= f.label :name, "Name Schedule" %></td>
@@ -21,4 +21,3 @@
     </div>
   </div>
 </div>
-

@@ -1,9 +1,14 @@
 class Event < ActiveRecord::Base
   belongs_to :schedule
-
   validate :finish_cannot_be_earlier_than_start
-  validates :inTime,       presence: true
-  validates :outTime,      presence: true
+  validates :inTime, presence: true
+  validates :outTime, presence: true
+
+  enum day_of_week: [:Sun, :Mon, :Tue, :Wed, :Thu, :Fri, :Sat]
+
+  def day(day)
+    where(day_of_week: day)    
+  end
 
   private
 

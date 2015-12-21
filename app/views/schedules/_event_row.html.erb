@@ -1,0 +1,11 @@
+<% Event.day_of_weeks.each_with_index do |(key, value), index| %>
+  <td>
+    <% @schedule.events.each do |e| %>
+      <% if e.day_of_week.to_i == value %>
+        <li>
+          <%= e.name %>
+        </li>
+      <% end %>
+    <% end %>
+  </td>
+<% end %>
