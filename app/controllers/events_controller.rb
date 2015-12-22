@@ -19,9 +19,11 @@ class EventsController < DashboardController
 	end
 
 	def edit
+		p '******* edit'
 	end
 
 	def update
+		p '******* update'
 	end
 
 	private

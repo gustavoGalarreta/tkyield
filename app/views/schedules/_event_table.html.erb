@@ -12,17 +12,33 @@
   </thead>
   <tbody>
     <div id="event-row">
-      <% for i in 0..6%>
-        <td>
+      <% for i in 0..6 %>
+        <td width="15%">
           <% @schedule.events.each do |e| %>
             <% if e.day_of_week.to_date.wday == i %>
-              <li>
-                <%= e.name %>
+              <li class="list-group-item">
+                <%= link_to e.name, "#", class:"prueba", data: {toggle:"modal", id:"#{e.id}", name:"#{e.name}", start:"#{e.inTime}", finish:"#{e.outTime}", day:"#{e.day_of_week}"  } %>
               </li>
             <% end %>
           <% end %>
         </td>
-      <%end%>
+      <% end %>
     </div>
   </tbody>
 </table>
+
+<%= render 'schedules/detail_event' %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".prueba").click(function(e){
+      e.preventDefault();
+      $("#id-event").val($(this).data("id"));
+      $("#name-event").val($(this).data("name"));
+      $("#start-event").val($(this).data("start"));
+      $("#finish-event").val($(this).data("finish"));
+      $("#day-event").val($(this).data("day"));      
+      $("#detail-event").modal("show");
+    })
+  })  
+</script>

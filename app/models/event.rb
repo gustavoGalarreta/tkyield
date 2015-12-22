@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   validates :inTime, presence: true
   validates :outTime, presence: true
 
-  enum day_of_week: [:Sun, :Mon, :Tue, :Wed, :Thu, :Fri, :Sat]
+  enum day_of_week: [:Mon, :Tue, :Wed, :Thu, :Fri, :Sat, :Sun]
 
   def day(day)
     where(day_of_week: day)    
