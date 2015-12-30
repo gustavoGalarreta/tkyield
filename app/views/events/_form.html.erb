@@ -15,7 +15,7 @@
       <td><%= f.select :day_of_week, options_for_select([['Moday', 0], ['Tuesday', 1], ['Wednesday', 2], ['Thursday', 3], ['Friday', 4], ['Saturday', 5], ['Sunday', 6]]), {prompt:"-- Select day --"},{id:"event_day", class:"form-control"} %></td>
     </tr>
   </table>
-  <%= f.submit "Submit" ,class: "btn btn-default" %>
+  <%= f.submit "Submit", class: "btn btn-default" %>
   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 <% end %>
 

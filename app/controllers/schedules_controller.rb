@@ -23,6 +23,9 @@ class SchedulesController<DashboardController
   def edit
   end
 
+  def update
+  end
+
   def destroy
     @schedule.destroy
   end

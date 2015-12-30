@@ -1,0 +1,47 @@
+<div class="modal fade" id="detail-event" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Edit Event</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag(schedule_event_path(@schedule, 2), method: :put, id: "edit-event-form") do %>
+          <table class="width-table-new">
+            <tr>
+              <td><%= label_tag 'Name' %></td>
+              <td><%= text_field_tag "name-event", class:"form-control width-name"%></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'Start'%></td>
+              <td><%= text_field_tag "start-event", class:'clockpicker form-control'%></td>
+              <td><%= label_tag 'Finish' %></td>
+              <td><%= text_field_tag "finish-event", class:'clockpicker form-control'%>  </td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'Day'%></td>
+              <td>      
+                <%= text_field_tag "day-event", class:"form-control"%></td>
+            </tr>
+          </table>              
+          <%= submit_tag "Submit ", class: "btn btn-default"%>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#start-event').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+    $('#finish-event').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+</script>

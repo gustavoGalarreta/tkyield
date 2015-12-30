@@ -17,7 +17,8 @@
           <% @schedule.events.each do |e| %>
             <% if e.day_of_week.to_date.wday == i %>
               <li class="list-group-item">
-                <%= link_to e.name, "#", class:"prueba", data: {toggle:"modal", id:"#{e.id}", name:"#{e.name}", start:"#{e.inTime}", finish:"#{e.outTime}", day:"#{e.day_of_week}"  } %>
+                <%= link_to e.name, "#", class:"prueba", data: { toggle: "modal", "edit-event-path": "#{schedule_event_path(@schedule, e)}", event: e  } %>
+
               </li>
             <% end %>
           <% end %>
@@ -27,18 +28,19 @@
   </tbody>
 </table>
 
-<%= render 'schedules/detail_event' %>
+<%= render 'events/detail_event' %>
 
 <script type="text/javascript">
   $(document).ready(function(){
     $(".prueba").click(function(e){
       e.preventDefault();
-      $("#id-event").val($(this).data("id"));
-      $("#name-event").val($(this).data("name"));
-      $("#start-event").val($(this).data("start"));
-      $("#finish-event").val($(this).data("finish"));
-      $("#day-event").val($(this).data("day"));      
+      $("#edit-event-form").attr("action", $(this).data("edit-event-path"));
+      var eventJSON = $(this).data("event");
+      $("#name-event").val(eventJSON["name"]);
+      $("#start-event").val(eventJSON["inTime"]);
+      $("#finish-event").val(eventJSON["outTime"]);
+      $("#day-event").val(eventJSON["day_of_week"]);
       $("#detail-event").modal("show");
     })
-  })  
+  })
 </script>
