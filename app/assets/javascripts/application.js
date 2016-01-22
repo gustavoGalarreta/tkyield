@@ -22,7 +22,7 @@
 //= require bootstrap-datepicker
 //= require bootstrap-timepicker
 //= require jquery/clockpicker
-//= require datetimepicker
+//= require bootstrap-datetimepicker
 //= require_tree .
 
  jQuery(document).ready(function () {

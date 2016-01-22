@@ -1,4 +1,4 @@
-<table class="table table-hover table-striped">
+<table class="schedule table table-hover table-striped">
   <thead>
     <tr>
       <th>SUNDAY</th>
@@ -17,8 +17,11 @@
           <% @schedule.events.each do |e| %>
             <% if e.day_of_week.to_date.wday == i %>
               <li class="list-group-item">
-                <%= link_to e.name, "#", class:"prueba", data: { toggle: "modal", "edit-event-path": "#{schedule_event_path(@schedule, e)}", event: e  } %>
-
+              <%= link_to "#", data: { toggle: "modal", "edit-event-path": "#{schedule_event_path(@schedule, e)}", event: e }, class:"edit-current-event" do %>
+                  <%= e.name %><br>
+                  <%= e.inTime.to_time.strftime("%H:%M %p") %>
+                  <%= e.outTime.to_time.strftime("%H:%M %p") %>
+                <%end%>
               </li>
             <% end %>
           <% end %>
@@ -30,16 +33,20 @@
 
 <%= render 'events/detail_event' %>
 
+
+
 <script type="text/javascript">
   $(document).ready(function(){
-    $(".prueba").click(function(e){
+    $(".edit-current-event").click(function(e){
       e.preventDefault();
-      $("#edit-event-form").attr("action", $(this).data("edit-event-path"));
+      $("#edit_event_form").attr("action", $(this).data("edit-event-path"));
+      $("#edit_event_form").attr("data-event",$(this).data("event").id);
       var eventJSON = $(this).data("event");
-      $("#name-event").val(eventJSON["name"]);
-      $("#start-event").val(eventJSON["inTime"]);
-      $("#finish-event").val(eventJSON["outTime"]);
-      $("#day-event").val(eventJSON["day_of_week"]);
+      $("#name_event").val(eventJSON["name"]);
+      $("#start_event").val(eventJSON["inTime"]);
+      $("#finish_event").val(eventJSON["outTime"]);
+      $("#day_event").val(eventJSON["day_of_week"]);
+      $("launch").val(eventJSON["launch"]);
       $("#detail-event").modal("show");
     })
   })

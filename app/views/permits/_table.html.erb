@@ -1,0 +1,26 @@
+<% if permits.empty? %>
+    You don't have permits 
+<% else %>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>From</th>
+            <th>To</th>        
+          </tr>
+        </thead>
+        <tbody>
+            <% permits.each do |permit| %>
+                <tr>
+                    <td><%= permit.id%></td>
+                    <td><%= permit.name%></td>
+                    <td><%= permit.start%></td>
+                    <td><%= permit.finish%></td>
+                </tr>
+            <%end%>
+        </tbody>
+      </table>
+    </div>
+<%end%>

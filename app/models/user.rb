@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   belongs_to :team
   has_many :timesheets
   has_many :schedules
+  has_many :event_logs, dependent: :destroy
   has_many :permits
   has_many :events, through: :schedules
   has_many :time_stations

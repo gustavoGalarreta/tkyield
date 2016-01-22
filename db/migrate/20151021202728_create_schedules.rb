@@ -6,7 +6,6 @@ class CreateSchedules < ActiveRecord::Migration
     	t.string :name, null: false
       t.date :start
       t.date :finish
-      
       t.timestamps null: false
     end
   end

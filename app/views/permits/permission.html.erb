@@ -1,33 +1,32 @@
-<%= form_for permits_path ,url: send_email_permits_path, method: 'get' do |f|%>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">Reason</span>
-      <%= f.text_field :name, class: "form-control",placeholder: "Vacation" %>
+<h1 class="page-header">
+   Days Off
+</h1>
+<%= form_for Permit.new , url: permits_path, method: 'post' do |f|%>
+  <div class="form-inline">
+    <div class="start input-group">
+      <span class="reason-text input-group-addon">Reason:</span>
+      <%= f.select :type_permits, options_for_select(@requests.collect { |r| r['name']} ), {}, prompt: "- Select a type of permission-", class: "form-control type-permission" %>
     </div>
-    <br>
   </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">From:</span>
-      <%= f.date_field :start, class: "form-control" %>
+  <div class="form-inline">
+    <div class="start form-input input-group" >
+      <span class="text input-group-addon">From:</span>
+      <%= f.text_field :start, class: "form-control", id:"asd" %>
     </div>
-    <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">To:</span>
-      <%= f.date_field :end, class: "form-control" %>
+    <div class="form-input input-group" id="finish-container">
+      <span class="text input-group-addon">To:</span>
+      <%= f.text_field :finish, class: "form-control" %>
     </div>
-    <br>
   </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">Description</span>
-      <%= f.text_area :description, class: "form-control",placeholder: "Vacation" %>
-    </div>
-    <br>
+  <div class="description">
+    <%= f.text_area :description, class: "description-text form-control ",placeholder: "Description...." %>
   </div>
+  <br>
+  <%= link_to "Back", permits_path, class: "btn btn-default" %>
+
   <%= f.submit "Ask for Permission" ,class: "btn btn-default" %>
 <% end %>
 
-
+<script type="text/javascript">
+  $("#asd").datetimepicker();
+</script>

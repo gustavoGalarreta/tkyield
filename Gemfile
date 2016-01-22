@@ -72,6 +72,8 @@ gem 'whenever', '~> 0.9.4'
 # Add a comment summarizing the current schema to the top or bottom
 gem 'annotate', '~> 2.6.6'
 
+gem 'bootstrap-datetimepicker-rails', '~> 0.0.11'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -88,12 +90,21 @@ gem 'momentjs-rails', '2.10.6'
 gem 'fullcalendar-rails', '2.0.2.0'
 
 #
+gem "font-awesome-rails"
+#
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 
 gem "combined_time_select", "~> 1.0.1"
+
 gem 'bootstrap-timepicker-rails'
 #A clock-style timepicker for Bootstrap
 gem 'clockpicker-rails', '~> 0.0.2'
+
+#Chronic is a natural language date/time parser written in pure Ruby.
+gem 'chronic', '~> 0.10.2'
+
+gem 'rails-erd'
+gem 'ruby-graphviz'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug','~>  3.5.1'
@@ -103,11 +114,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.3.3'
-end
-
-#datetime picker -rails
-source 'https://rails-assets.org' do
-  gem 'rails-assets-datetimepicker'
 end
 
 group :development do

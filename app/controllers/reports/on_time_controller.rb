@@ -10,6 +10,10 @@ module Reports
       @time_stations_summary = TimeStation.total_in_dates_by_users(@time_stations, @filtered_users)
       @teams = current_account.teams.order("name ASC")
       @collaborators = current_account.users.order("first_name, last_name")
+      @reports = [{"type"=>"Daily"},{"type"=>"Summary"},{"type"=>"Calendar"}]
+      @current_report = params[:report]
+      @date = params[:date] ? Date.parse(params[:date]) : Date.today
+      @selected = User.find(params[:collaborator]) unless params[:collaborator].blank?
     end
 
     def daily_excel
@@ -58,6 +62,7 @@ module Reports
       def filter_time_stations
         @filtered_users = current_account.users.filter(@selected_team, @selected_collaborator)
         @time_stations = TimeStation.between_dates_and_users(@beginning, @end, @filtered_users).includes(:user)
+        @time_stations_tmp = @time_stations.group_by{|x| x.created_at.to_date }
       end
   end
 end

@@ -69,6 +69,9 @@ Rails.application.routes.draw do
       get 'send_email',on: :collection
       get 'permission', on: :collection
     end
+    
+    resource :calendar, only: [:show], controller: :calendar
+
     devise_for :users, :controllers => { :sessions => 'user_device/sessions', :passwords => 'user_device/passwords', :registrations => 'user_device/registrations', :confirmations => 'user_device/confirmations' }
     devise_scope :user do
 

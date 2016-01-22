@@ -1,0 +1,36 @@
+<div id="show-calendar">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="well controls">
+        <%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, reports_on_time_index_path(date: @date - 1.month, collaborator: @selected_collaborator.id), class: "btn btn-default", remote: true%>
+        <%= "#{@date.strftime("%B")} #{@date.year}" %>
+        <%= link_to '<i class="fa fa-arrow-right"></i>'.html_safe, reports_on_time_index_path(date: @date + 1.month, collaborator: @selected_collaborator.id), class: "btn btn-default", remote: true%>
+      </div>
+    </div>
+  </div><div class="row">
+    <div class="col">
+      <%= calendar @date do |date| %>
+        <% inTime = TimeStation.get_inTime(date,@selected_collaborator) %>
+        <% outTime = TimeStation.get_outTime(date,@selected_collaborator) %>
+        <div class="day-schedule"><%= date.day %></div>
+        <% if inTime.empty? %>
+          <div class="text-schedule">
+            <%= inTime.blank? ? "" : inTime %><br>
+            <%= outTime.blank? ? "" : outTime %>
+          </div>
+          <div class="text-schedule">
+            <div class="be-blue">
+              <%= inTime.blank? ? "" : "IN" %><br>
+            </div>
+            <div class="be-red">
+              <%= outTime.blank? ? "" : "OUT" %>
+            </div>
+          </div>
+        <% else %>
+
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
