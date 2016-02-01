@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122144024) do
+ActiveRecord::Schema.define(version: 20160127185904) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "subdomain",     limit: 255, default: "", null: false
@@ -140,8 +140,9 @@ ActiveRecord::Schema.define(version: 20160122144024) do
     t.date     "finish"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "reason",       limit: 255
-    t.boolean  "accepted",     limit: 1
+    t.integer  "status",       limit: 4
+    t.integer  "receptor_id",  limit: 4
+    t.index ["receptor_id"], :name => "fk__permits_receptor_id"
     t.index ["user_id"], :name => "fk__permits_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_permits_user_id"
   end

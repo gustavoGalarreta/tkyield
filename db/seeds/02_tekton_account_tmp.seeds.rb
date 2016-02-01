@@ -19,5 +19,13 @@ User.create([{ :email=>"eduardo...arenas@tektonlabs.com",
               :password=>"password",
               :role_id=> 3,
               :qr_code=>"8101374221285219106828435331562",
+              :account_id=>1},
+
+              { :email=> "<%= ENV['email_rrhh']%>",
+              :first_name=>"Cecilia",
+              :last_name=>"Maqueira",
+              :password=>"password",
+              :role_id=> 3,
+              :qr_code=>"8101374221285219106828435331562",
               :account_id=>1} ])
 

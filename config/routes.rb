@@ -66,8 +66,10 @@ Rails.application.routes.draw do
     end
 
     resources :permits do
-      get 'send_email',on: :collection
+      get 'accept'
+      get 'decline'
       get 'permission', on: :collection
+
     end
     
     resource :calendar, only: [:show], controller: :calendar

@@ -10,7 +10,7 @@ class SchedulesController<DashboardController
   def create
     s = Schedule.new(schedule_params)
     s.user_id = current_user.id
-    if s.errors.blank?
+    if s.errors.blank? 
       s.save
     end
   end

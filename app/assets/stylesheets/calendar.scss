@@ -13,7 +13,26 @@
 
 .calendar tbody td {
 	width: 16%; 
+	&.td-vacation {
+		background: #000;
+	}
+	&.td-medical {
+		background: #54FFFF;
+	}
+	&.td-absent {
+		background: #9C74CE;
+	}
+	&.td-late {
+		background: #F44336
+	}
+	&.td-excused-delay{
+		background: #FFC107
+	}	
+	&.td-at-time{
+		background: #FFFFFF
+	}
 }
+
 .calendar tbody tr th {
 	background-color: white;
 }
@@ -68,10 +87,6 @@
 
 .be-red{
 	color: red;
-}
-
-.asd{
-	vertical-align: middle;
 }
 
 .well {

@@ -22,7 +22,8 @@
 					<% time_stations = time_stations_in_date[date_format(date)] %>
 					<td><%= time_stations ? total_time_excel_format(time_stations[:total_same_day]) : "" %></td>
 				<% end %>
-				<td rowspan="<%= different_day.size + 1 %>"><%= total_time_excel_format(time_stations_in_date[:total]) %></td>
+				<td rowspan="<%= different_day.size + 1 %>">
+				<%= total_time_excel_format(time_stations_in_date[:total]) %></td>
 			</tr>
 			<% if different_day.size > 0 %>
 				<% different_day.each do |dd| %>

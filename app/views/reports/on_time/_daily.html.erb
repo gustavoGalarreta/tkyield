@@ -8,8 +8,8 @@
 			<th>Date</t	h>
 			<th>Name</th>
 			<th>Time</th>  
-			<th>Estimated</th>
-			<th>Offset worked minutes</th>    
+			<th>Schedule</th>
+			<th>Offset minutes</th>    
 			<th>Reason</th>
 			<th>Worked hours</th>
 		</tr>
@@ -29,8 +29,9 @@
 						<td><div class="be-blue"><%= time_format(time_station.created_at) %></td></div>
 						<td><div class="be-blue"><%= TimeStation.get_inTime_events(time_station.get_event_logs)%></td></div>
 					<% end%>
-					<td><%=TimeStation.get_offset_worked_hours(time_station.created_at,time_station.parent_id,time_station.get_event_logs)%></td>
-					<td></td>
+					<% offset, status = TimeStation.get_offset_worked_hours(time_station.created_at,time_station.parent_id,time_station.get_event_logs)%>
+					<td><%= offset %></td>
+					<td><%= status %></td>
 					<% if (index % 2 == 0) || (index == 0) %>
 						<td rowspan="2">
 							<% if time_station.parent_id? %>

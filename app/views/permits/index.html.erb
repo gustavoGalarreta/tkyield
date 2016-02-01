@@ -8,12 +8,16 @@
   </div>
   <div class="form-inline">
     <%= label_tag :start, "Start" %>
-    <%= date_field_tag :start, "", class: "form-control search-option" %>
+    <%= text_field_tag :start, date_format(Date.today), class: "form-control search-option datepicker" %>
     <%= label_tag :finish, "Finish" %>
-    <%= date_field_tag :finish, "", class: "form-control search-option"%>
+    <%= text_field_tag :finish, date_format(Date.today), class: "form-control search-option datepicker"%>
     <%= submit_tag "Search", id: "search-input-button", class: "btn btn-default" %>
   </div>
 <% end %>
 <div id="permit-table">
   <%= render "table", permits: @permits %>
 </div>
+
+<script type="text/javascript">
+  $(".datepicker").datepicker();
+</script>
