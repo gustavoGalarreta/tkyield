@@ -32,7 +32,7 @@
           </table>                
           <%= submit_tag "Submit ", class: "btn btn-default"%>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <%= link_to "Delete", schedule_event_path(@schedule,0), method: :delete, remote: true, data: { confirm: 'This event will be removed. Are you sure?'}, class: "btn btn-default"%>
+          <%= link_to "Delete","#{}", data: { confirm: 'This event will be removed. Are you sure?'}, class: "btn btn-default delete_event"%>
         <% end %>
       </div>
     </div>
@@ -40,6 +40,18 @@
 </div>
 
 <script type="text/javascript">
+
+  $('.delete_event').click(function(){
+    var current_event = $("#edit_event_form")
+    var current_schedule = $(".edit-current-event")
+    jQuery.ajax({
+      type: "delete",
+      url:  '/tektonlabs' + '/schedules/' + current_schedule.data()["event"]["schedule_id"] + '/events/' + current_event.data()["event"],
+      data: {delete_event: {event_id: current_event.data()["event"]} },
+      dataType: 'script'
+    });
+  })
+
   $('#start_event').clockpicker({
     autoclose: true,
     afterShow: function() {

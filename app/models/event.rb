@@ -9,7 +9,14 @@ class Event < ActiveRecord::Base
   def day(day)
     where(day_of_week: day)    
   end
-
+  def belongs_at_this_time(hour)
+    current_hour = (7+hour)*60
+    start = self.inTime.to_time.strftime("%H:%M").split(':')
+    start = (start[0].to_i)*60 + (start[1].to_i)
+    finish = self.outTime.to_time.strftime("%H:%M").split(':')
+    finish = (finish[0].to_i)*60 + (finish[1].to_i)
+    return (current_hour >= start) && (current_hour < finish)
+  end
   private
 
     def finish_cannot_be_earlier_than_start

@@ -39,6 +39,9 @@ class EventsController < DashboardController
 	end
 
 	def destroy
+		event_to_delete = Event.find(delete_event_params[:event_id])
+		EventLog.find(event_to_delete.last_event_log).destroy
+		event_to_delete.destroy
 	end
 
 	private
@@ -50,5 +53,8 @@ class EventsController < DashboardController
 		end
 		def get_schedule
 			@schedule = Schedule.find(params[:schedule_id])			
+		end
+		def delete_event_params
+			params.require(:delete_event).permit(:event_id)
 		end
 end

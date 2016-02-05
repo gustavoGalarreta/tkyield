@@ -42,3 +42,33 @@
 .worked-hours{
   font-size: -webkit-xxx-large;
 }
+
+.schedule .event {
+  width: 7%;
+  height: 18px;
+  border: 1px solid #DEDEDE;
+  border-collapse: collapse;
+}
+.schedule .hour {
+  font-size: 18px;
+  border: none;
+}
+.schedule .day{
+  text-align: center;
+  border: none;
+}
+
+.schedule .no-day{
+  border: none;
+  background-color: #F2F2F2;
+}
+
+.grill{
+  z-index: 1;
+  position: absolute;
+}
+
+.data{
+  z-index: 100;
+  position: relative;
+}

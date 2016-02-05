@@ -4,7 +4,6 @@ module Reports
     before_action :reporting_options, only: :index
     before_action :set_collaborator, only: :index
     before_action :calendar_options, only: :index
-    before_action :validation, only: :index
     before_action :filter_time_stations, only: [:index, :daily_excel, :summary_excel]
     add_breadcrumb "Dashboard", :dashboard_path 
     add_breadcrumb "Reports", :reports_list_path 
@@ -68,7 +67,6 @@ module Reports
     def reporting_options
       @reports = [{"type"=>"Daily"},{"type"=>"Summary"},{"type"=>"Calendar"}]
       @current_report = params[:report]
-      @status = params[:report].blank? ? "error" : nil
     end
 
     def set_collaborator
@@ -76,11 +74,6 @@ module Reports
     end
     def calendar_options
       @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    end
-    def validation
-      unless @selected_collaborator.nil?
-        redirect_to reports_on_time_index_path
-      end
     end
   end
 end

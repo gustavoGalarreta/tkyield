@@ -148,7 +148,8 @@ class TimeStation < ActiveRecord::Base
   end
 
   def get_total_hours 
-    return (self.total_time / 60).to_d.truncate(2).to_f
+    return ( (self.created_at - TimeStation.find(self.parent_id).created_at) / 3600 ).to_d.truncate(2).to_f
   end  
+
 end
 

@@ -20,7 +20,6 @@ class PermitsController < DashboardController
 		unless current_user.team_leader?
 		 	permit.receptor_id = current_user.get_team_leader.id
 		end 
-
 		if permit.save
 			redirect_to permits_path
 		else
@@ -29,15 +28,25 @@ class PermitsController < DashboardController
 	end
 
 	def accept
-		@permit.status = 1
-		@permit.save
-		render :nothing => true
+		if (@permit.status == 2)
+			@permit.status = 1
+			@permit.save
+			flash[:success] = "the request was sent correctly"
+		else
+			flash[:error] = "the request wasn't sent correctly"
+		end
+		redirect_to permits_path
 	end
 
 	def decline
-		@permit.status = 2
-		@permit.save
-		render :nothing => true
+		if (@permit.status == 2)
+			@permit.status = 0
+			@permit.save
+			flash[:notice] = "the request has been rejected"
+		else
+			flash[:notice] = "the request hasn't been rejected"
+		end
+		redirect_to permits_path
 	end
 
 
