@@ -36,6 +36,7 @@ class EventsController < DashboardController
 			                      false)
 		#event_log.set_launch(params[:event][:launch]), por ahora false
 		@current_event.update_attributes({:name=>params[:name_event], :inTime=>params[:start_event], :outTime=>params[:finish_event], :last_event_log=>event_log.id})
+		@events_duration_array = Event.events_duration_array(@schedule.events)
 	end
 
 	def destroy

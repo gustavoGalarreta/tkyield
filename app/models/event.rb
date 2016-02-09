@@ -9,16 +9,35 @@ class Event < ActiveRecord::Base
   def day(day)
     where(day_of_week: day)    
   end
+
   def belongs_at_this_time(hour)
-    current_hour = (7+hour)*60
+    current_hour = (7+hour)
+    start = self.inTime.to_time.strftime("%H:%M").split(':')
+    start = (start[0].to_i)
+    return (current_hour == start)
+  end
+
+  def get_number_of_hours
     start = self.inTime.to_time.strftime("%H:%M").split(':')
     start = (start[0].to_i)*60 + (start[1].to_i)
     finish = self.outTime.to_time.strftime("%H:%M").split(':')
     finish = (finish[0].to_i)*60 + (finish[1].to_i)
-    return (current_hour >= start) && (current_hour < finish)
+    return ( finish - start  ) / 30
   end
-  private
 
+  def self.events_duration_array(events)
+    array = Array.new
+    events.each do |current_event|
+      events_duration = Hash.new
+      start_inTime = current_event.inTime.to_time.strftime("%H:%M").split(':')
+      events_duration["id"] = start_inTime[0] + "-" + (current_event[:day_of_week]+1).to_s
+      events_duration["factor"] = current_event.get_number_of_hours
+      array.push(events_duration)
+    end
+    return array
+  end
+
+  private
     def finish_cannot_be_earlier_than_start
       unless inTime.nil? || outTime.nil?
         time_error if outTime.to_time <= inTime.to_time
