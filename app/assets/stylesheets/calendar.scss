@@ -1,0 +1,94 @@
+// Place all the styles related to the Calendar controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.calendar {
+	width:1024px;
+	height:455px;
+}
+
+.calendar thead td {
+	height:25px;
+	font: normal normal bold Arial, Helvetica, Sans-Serif;
+}
+
+.calendar tbody td {
+	width: 16%; 
+	&.td-vacation {
+		background: #000;
+	}
+	&.td-medical {
+		background: #54FFFF;
+	}
+	&.td-absent {
+		background: #9C74CE;
+	}
+	&.td-late {
+		background: #F44336
+	}
+	&.td-excused-delay{
+		background: #FFC107
+	}	
+	&.td-at-time{
+		background: #FFFFFF
+	}
+}
+
+.calendar tbody tr th {
+	background-color: white;
+}
+
+.day {
+	height:20%;
+	width:14.29%;
+	border-right:1px solid #e2e2e2;
+	border-top:1px solid #e2e2e2;
+	vertical-align:top;	
+}
+
+.day a {
+	display:block;
+	width:100%;
+	height:100%;
+	color:gray;
+	text-decoration:none;
+}
+
+.day a:hover {
+	background:#ddffff;
+}
+
+.not-month {
+	color: #aaa
+}
+
+.controls a {
+	color:black;
+}
+
+.controls {
+	font-size:16px;
+	font-weight:bold;
+}
+
+.day-schedule {
+	display: inline-block;
+	font-size: 25px;
+	font-weight: bold;
+	padding-top: 15px;
+}
+
+.text-schedule{
+	display: inline-block;
+}
+
+.be-blue{
+	color: #0558FF;
+}
+
+.be-red{
+	color: red;
+}
+
+.well {
+	background-color: #07C0E8;
+}

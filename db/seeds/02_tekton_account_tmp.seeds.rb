@@ -4,7 +4,7 @@ Task.all.each	{ |t| t.update_attributes(account_id: tekton_account.id) }
 Project.all.each{ |p| p.update_attributes(account_id: tekton_account.id) }
 Team.all.each	{ |t| t.update_attributes(account_id: tekton_account.id) }
 
-User.create([{ :email=>"eduardo.arenas@tektonlabs.com",
+User.create([{ :email=>"eduardo...arenas@tektonlabs.com",
               :first_name=>"Eduardo",
               :last_name=>"Arenas",
               :password=>"tektonlabs",
@@ -21,19 +21,11 @@ User.create([{ :email=>"eduardo.arenas@tektonlabs.com",
               :qr_code=>"8101374221285219106828435331562",
               :account_id=>1},
 
-              { :email=>"jorge.calvo@tektonlabs.com",
-              :first_name=>"Jorgito",
-              :last_name=>"Cavo",
+              { :email=> "<%= ENV['email_rrhh']%>",
+              :first_name=>"Cecilia",
+              :last_name=>"Maqueira",
               :password=>"password",
               :role_id=> 3,
               :qr_code=>"8101374221285219106828435331562",
-              :account_id=>1},
-              
-              { :email=>"john.pacco@tektonlabs.com",
-              :first_name=>"Bryam",
-              :last_name=>"Pacco",
-              :password=>"password",
-              :role_id=> 2,
-              :qr_code=>"8101374221285219106828435331562",
-              :account_id=>1}  ])
+              :account_id=>1} ])
 

@@ -3,7 +3,6 @@ class ReportsController < DashboardController
 
   def index
     add_breadcrumb "Reports", :reports_path
-
   end
 
 end

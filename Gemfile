@@ -27,9 +27,6 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'
 
@@ -72,28 +69,47 @@ gem 'whenever', '~> 0.9.4'
 # Add a comment summarizing the current schema to the top or bottom
 gem 'annotate', '~> 2.6.6'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
+# Use BootstrapDatetimepicker for having a format of selecting dates.
+gem 'bootstrap-datetimepicker-rails', '~> 0.0.11'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-#  
+#The Moment.js JavaScript library ready to play with the Rails Asset Pipeline  
 gem 'momentjs-rails', '2.10.6'
 
-# 
+# This gem for Ruby on Rails is a simple rebundling of the contents of the jQuery FullCalendar plugin
 gem 'fullcalendar-rails', '2.0.2.0'
 
-#
+#the font-awesome font bundled as an asset for the rails asset pipeline
+gem "font-awesome-rails"
+
+#jQuery UI's JavaScript, CSS, and image files packaged for the Rails 3.1+ asset pipeline
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 
+#A Rails time_select like Google Calendar with combined hour and minute time_select
 gem "combined_time_select", "~> 1.0.1"
+
 gem 'bootstrap-timepicker-rails'
+
 #A clock-style timepicker for Bootstrap
 gem 'clockpicker-rails', '~> 0.0.2'
+
+#Chronic is a natural language date/time parser written in pure Ruby.
+gem 'chronic', '~> 0.10.2'
+
+#Figaro was written to make it easy to securely configure Rails applications.
+gem "figaro"
+
+#Generate Entity-Relationship Diagrams for Rails applications 
+gem 'rails-erd'
+
+#Ruby/Graphviz provides an interface to layout and generate images of directed graphs in a variety of formats (PostScript, PNG, etc.) using GraphViz.
+gem 'ruby-graphviz'
+
+#It's an efficient way to view a list of structured data
+gem 'table_print', '~> 1.5', '>= 1.5.4'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug','~>  3.5.1'
@@ -103,11 +119,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.3.3'
-end
-
-#datetime picker -rails
-source 'https://rails-assets.org' do
-  gem 'rails-assets-datetimepicker'
 end
 
 group :development do

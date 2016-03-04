@@ -1,6 +1,6 @@
 class SchedulesController<DashboardController
 	add_breadcrumb "Dashboard", :dashboard_path
-  before_action :set_schedule, only: [:set, :destroy, :edit]
+  before_action :set_schedule, only: [:set, :destroy, :edit, :update]
   before_action :get_schedules, only: [:index, :set, :destroy, :create]
   before_action :get_events, only: [:create, :edit, :index]
 
@@ -10,7 +10,7 @@ class SchedulesController<DashboardController
   def create
     s = Schedule.new(schedule_params)
     s.user_id = current_user.id
-    if s.errors.blank?
+    if s.errors.blank? 
       s.save
     end
   end
@@ -21,6 +21,10 @@ class SchedulesController<DashboardController
   end
 
   def edit
+    @events_duration_array = Event.events_duration_array(@schedule.events)
+  end
+
+  def update
   end
 
   def destroy

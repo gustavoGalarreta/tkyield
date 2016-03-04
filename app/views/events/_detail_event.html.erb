@@ -1,0 +1,67 @@
+<div class="modal fade" id="detail-event" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Edit Event</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag(schedule_event_path(@schedule, 2),remote: true,  method: :put, id: "edit_event_form") do %>
+          <table class="width-table-new">
+            <tr>
+              <td><%= label_tag 'Name' %></td>
+              <td><%= text_field_tag "name_event", '', class:"form-control "%></td>
+            </tr>
+            <tr>
+              <td><%= label_tag 'Start'%></td>
+              <td><%= text_field_tag "start_event", '', class:'clockpicker form-control'%></td>
+              <td><%= label_tag 'Finish' %></td>
+              <td><%= text_field_tag "finish_event", '', class:'clockpicker form-control'%>  </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="text-launch">
+                    <div class="launch-input">
+                      <%= check_box_tag "launch", {} %>
+                    </div>
+                    <td class="launch-status">
+                      <%= label_tag "include launch time?" %>
+                    </td>
+                  </div>
+                  </td>         
+              </tr>   
+          </table>                
+          <%= submit_tag "Submit ", class: "btn btn-default"%>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= link_to "Delete","#{}", data: { confirm: 'This event will be removed. Are you sure?'}, class: "btn btn-default delete_event"%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $('.delete_event').click(function(){
+    var current_event = $("#edit_event_form")
+    var current_schedule = $(".edit-current-event")
+    jQuery.ajax({
+      type: "delete",
+      url:  '/tektonlabs' + '/schedules/' + current_schedule.data()["event"]["schedule_id"] + '/events/' + current_event.data()["event"],
+      data: {delete_event: {event_id: current_event.data()["event"]} },
+      dataType: 'script'
+    });
+  })
+
+  $('#start_event').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+    $('#finish_event').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+</script>

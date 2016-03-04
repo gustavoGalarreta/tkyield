@@ -16,8 +16,8 @@
  *= require fullcalendar
  *= require bootstrap-datepicker
  *= require jquery/clockpicker
- *= require datetimepicker
  *= require bootstrap-timepicker
+ *= require font-awesome
  */
  
 form{

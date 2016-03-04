@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218201451) do
+ActiveRecord::Schema.define(version: 20160127185904) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "subdomain",     limit: 255, default: "", null: false
@@ -101,28 +101,48 @@ ActiveRecord::Schema.define(version: 20151218201451) do
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_schedules_user_id"
   end
 
-  create_table "events", force: :cascade do |t|
+  create_table "event_logs", force: :cascade do |t|
     t.integer  "schedule_id", limit: 4,   null: false
+    t.integer  "user_id",     limit: 4,   null: false
+    t.string   "date",        limit: 255
     t.string   "inTime",      limit: 255
     t.string   "outTime",     limit: 255
-    t.integer  "day_of_week", limit: 4,   null: false
+    t.boolean  "edited",      limit: 1
+    t.boolean  "launch",      limit: 1,   null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.string   "name",        limit: 255, null: false
+    t.index ["schedule_id"], :name => "fk__event_logs_schedule_id"
+    t.index ["user_id"], :name => "fk__event_logs_user_id"
+    t.foreign_key ["schedule_id"], "schedules", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_event_logs_schedule_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_event_logs_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "schedule_id",    limit: 4,   null: false
+    t.integer  "last_event_log", limit: 4
+    t.string   "inTime",         limit: 255
+    t.string   "outTime",        limit: 255
+    t.integer  "day_of_week",    limit: 4,   null: false
+    t.boolean  "launch",         limit: 1
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "name",           limit: 255, null: false
     t.index ["schedule_id"], :name => "fk__events_schedule_id"
     t.foreign_key ["schedule_id"], "schedules", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_events_schedule_id"
   end
 
   create_table "permits", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4,     null: false
-    t.string   "name",        limit: 255
-    t.text     "description", limit: 65535
-    t.string   "type",        limit: 255
-    t.integer  "hours",       limit: 4
+    t.integer  "user_id",      limit: 4,     null: false
+    t.string   "name",         limit: 255
+    t.text     "description",  limit: 65535
+    t.string   "type_permits", limit: 255
     t.date     "start"
-    t.date     "end"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.date     "finish"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "status",       limit: 4
+    t.integer  "receptor_id",  limit: 4
+    t.index ["receptor_id"], :name => "fk__permits_receptor_id"
     t.index ["user_id"], :name => "fk__permits_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_permits_user_id"
   end

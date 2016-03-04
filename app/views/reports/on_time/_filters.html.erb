@@ -1,5 +1,17 @@
 <h1 class="page-header"> On Time Report <small> </small> </h1>
-<%= form_tag(reports_on_time_index_path,  {:method => :get} ) do %>
+<a class="btn btn-warning" role="button" data-toggle="collapse" href="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+  Search
+</a>
+
+<div class="collapse" id="collapseSearch">
+  <%= form_tag(reports_on_time_index_path,  {:method => :get} ) do %>
+    <br>
+    <div class="col-lg-1 text-center">
+        Report: 
+    </div>
+    <div class="col-lg-11 text-center">
+        <%= select_tag "report", options_for_select(@reports.collect { |r| r['type']} ), prompt: "- Select a Report -", class:"form-control" %>
+    </div><br><br>
     <div class="row">
         <div class="col-lg-6 text-center">
             <strong>Team</strong>
@@ -26,27 +38,18 @@
             <%= text_field_tag "end", date_format(@end), class:"form-control datepicker" %>
         </div>
     </div>
-    <br>
+    <br><br>
     <div class="align-right">
         <div><%= submit_tag 'Go', :data => {:team => @team, :collaborator => @collaborator , :beginning => @beginning, :end => @end}, class:"btn btn-warning" %></div>
     </div>
-<% end %>
-<br><br>
-<div class="row">
-    <div class="tabbable tabs-left" >
-        <ul class="nav nav-pills nav-justified">
-            <li class="<%= 'active' if @tab == 'tab1' %>"><a href="#tab1" data-toggle="tab">
-            <i class="fa fa-toggle-on"></i> Daily </a></li>
-            <li class="<%= 'active' if @tab == 'tab2' %>"> <a href="#tab2" data-toggle="tab">
-            <i class="fa fa-history"></i> Summary </a></li>
-        </ul>
-        <div class="tab-content" id="tabContainer">
-            <div class="<%= if @tab == 'tab1' then 'tab-pane active'  else 'tab-pane' end%>" id="tab1" style="overflow: auto;">
-                <%= render "daily" %>
-            </div>
-            <div class="<%= if @tab == 'tab2' then 'tab-pane active'  else 'tab-pane' end%>" id="tab2" style="overflow: auto;">
-                <%= render "summary" %>
-            </div>
-        </div>
-    </div>
+    <% end %>
+    <br><br>
 </div>
+<% case @current_report %>
+<% when "Daily" %>
+    <%= render 'daily' %>
+<% when "Summary" %>
+    <%= render 'summary'%>
+<% when "Calendar" %>
+    <%= render 'calendar', collaborator: @selected %>
+<% end %>

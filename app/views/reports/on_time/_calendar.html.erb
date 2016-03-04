@@ -1,0 +1,66 @@
+<div id="show-calendar">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="well controls">
+        <%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, reports_on_time_index_path(date: @date - 1.month, collaborator: @selected_collaborator.id), class: "btn btn-default", remote: true%>
+        <%= "#{@date.strftime("%B")} #{@date.year}" %>
+        <%= link_to '<i class="fa fa-arrow-right"></i>'.html_safe, reports_on_time_index_path(date: @date + 1.month, collaborator: @selected_collaborator.id), class: "btn btn-default", remote: true%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= calendar @date do |date| %>
+        <div class="day-schedule"><%= date.day %></div>
+          <% inTime, outTime =  TimeStation.get_checkIn_checkOut(@month_assistance_record, date, @date) %>
+          <div class="text-schedule">
+            <%= inTime.nil? ? "" : inTime %><br>
+            <%= outTime.nil? ? "" : outTime %>
+          </div>
+          <div class="text-schedule">
+            <div class="be-blue">
+              <%= inTime.nil? ? "" : "IN" %><br>
+            </div>
+            <div class="be-red">
+              <%= outTime.nil? ? "" : "OUT" %>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var month_record = [<%= raw @month_assistance_record.to_json %>]
+  for ( i = 0; i < month_record[0].length; i++){
+    var day = month_record[0][i]
+    if ( day["permit"] != null ){
+      switch (day["permit"]["type_permits"]){
+        case "vacation":
+          $(".day-" + i).addClass("td-vacation")
+          break;
+        case "medical rest":
+          $(".day-" + i).addClass("td-medical")
+          break;
+      }
+    } else {
+      if ( day["inTime"] == null ){
+        var current_day = $(".day-" + i).attr('id')
+        current_day = new Date(current_day)
+        if ( (current_day.getDay() == 5 )|| (current_day.getDay() == 6 )){
+          $(".day-" + i).addClass("td-at-time")
+        }
+        else{
+          $(".day-" + i).addClass("td-absent")
+        }
+      }
+      else {
+        if ( day["arrival"] == "late"){
+         $(".day-" + i).addClass("td-late")
+        }
+      }
+    }
+  }
+  
+</script>
+
