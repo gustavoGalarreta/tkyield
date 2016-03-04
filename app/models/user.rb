@@ -33,8 +33,8 @@
 #
 
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
-          :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+    :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
 
   scope :active, -> {where(archived_at: nil)}
   scope :archived, -> {where.not(archived_at: nil)}
@@ -53,14 +53,14 @@ class User < ActiveRecord::Base
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
   has_one :last_time_station, -> { order 'created_at desc' }, class_name: "TimeStation"
-  
+
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
   delegate :company_name, :to => :account, :prefix => true, allow_nil: true
-  
+
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
-  
+
   validates :account, presence: true
   validates :role, presence: true
   validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
@@ -155,7 +155,7 @@ class User < ActiveRecord::Base
       self.update_attributes(archived_at: Time.zone.now)
       self.cancel_active_timesheet
       self.check_out
-    else 
+    else
       false
     end
   end
@@ -259,9 +259,9 @@ class User < ActiveRecord::Base
   def total_time_per_day_til_now day
     a = 0
     if has_a_timer_running?
-      a = get_timesheet_active.current_time 
+      a = get_timesheet_active.current_time
     end
-    a += total_time_per_day day 
+    a += total_time_per_day day
   end
 
   def total_time_per_day day
@@ -290,7 +290,7 @@ class User < ActiveRecord::Base
   end
 
   def has_a_timer_running?
-    !get_timesheet_active.first.nil? 
+    !get_timesheet_active.first.nil?
   end
 
   def cancel_active_timesheet
@@ -316,4 +316,3 @@ class User < ActiveRecord::Base
   end
 
 end
-

@@ -1,29 +1,29 @@
 <h1 class="page-header">
-   Days Off
+  Request a Permission
 </h1>
-<%= form_for Permit.new , url: permits_path, method: 'post' do |f|%>
+<%= form_for @permit , url: permits_path, method: 'post' do |f|%>
   <div class="form-inline">
     <div class="start input-group">
       <span class="reason-text input-group-addon">Reason:</span>
-      <%= f.select :type_permits, options_for_select(@requests.collect { |r| r['name']} ), {}, prompt: "- Select a type of permission-", class: "form-control type-permission" %>
+      <%= f.select :type_permit, options_for_select(@requests), {}, prompt: "- Select a type of permission-", class: "form-control type-permission" %>
     </div>
     <div class="day form-input input-group" id="day-container" >
       <span class="text input-group-addon">Day:</span>
-      <%= f.text_field :date,  value:  "", class: "form-control datepicker" %>
+      <%= f.text_field :date,  value: date_format(Date.today), class: "form-control datepicker" %>
     </div>
   </div>
   <div class="form-inline">
     <div class="start form-input input-group" id="start-container" >
       <span class="text input-group-addon">From:</span>
-      <%= f.text_field :start, value:  date_format(Date.today), class: "form-control datepicker" %>
+      <%= f.text_field :start, value: date_format(Date.today), class: "form-control datepicker" %>
     </div>
     <div class="form-input input-group" id="finish-container">
       <span class="text input-group-addon">To:</span>
-      <%= f.text_field :finish, value:  date_format(Date.today), class: "form-control datepicker" %>
+      <%= f.text_field :finish, value: date_format(Date.today), class: "form-control datepicker" %>
     </div>
   </div>
   <div class="description">
-    <%= f.text_area :description, class: "description-text form-control ",placeholder: "Description...." %>
+    <%= f.text_area :description, class: "description-text form-control ", placeholder: "I'm going to the hospital because I'm feeling sick..." %>
   </div>
   <br>
   <%= link_to "Back", permits_path, class: "btn btn-default" %>
@@ -35,7 +35,7 @@
   $(".datepicker").datepicker();
   $("#day-container").hide();
   $(".type-permission").change(function(){
-    if ( $(this).val() == "excused delay"){
+    if ( $(this).val() == "excused_delay"){
       $("#finish-container").hide();
       $("#start-container").hide();
       $("#day-container").show();

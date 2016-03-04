@@ -35,7 +35,7 @@
   for ( i = 0; i < month_record[0].length; i++){
     var day = month_record[0][i]
     if ( day["permit"] != null ){
-      switch (day["permit"]["type_permits"]){
+      switch (day["permit"]["type_permit"]){
         case "vacation":
           $(".day-" + i).addClass("td-vacation")
           break;

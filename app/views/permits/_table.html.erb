@@ -6,7 +6,7 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Type</th>
             <th>From</th>
             <th>To</th>      
             <th>Status</th>  
@@ -15,18 +15,18 @@
         <tbody>
             <% permits.each do |permit| %>
                 <tr>
-                    <td><%= permit.id%></td>
-                    <td><%= permit.type_permits%></td>
-                    <td><%= permit.start%></td>
-                    <td><%= permit.finish%></td>
-                    <td><%= permit.get_status%></td>
+                    <td><%= permit.id %></td>
+                    <td><%= permit.type_permit.gsub("_", " ").titleize %></td>
+                    <td><%= permit.start %></td>
+                    <td><%= permit.finish %></td>
+                    <td><%= permit.status %></td>
                 </tr>
-            <%end%>
+            <% end %>
         </tbody>
       </table>
     </div>
-<%end%>
+<% end %>
 
 <div class="center-text">
-  <%= will_paginate @permits%>
+  <%= will_paginate @permits %>
 </div>

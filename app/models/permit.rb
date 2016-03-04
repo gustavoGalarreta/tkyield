@@ -1,31 +1,46 @@
-  class Permit < ActiveRecord::Base
-  
+class Permit < ActiveRecord::Base
   belongs_to :user
   belongs_to :receptor, :foreign_key => :receptor_id, :class_name => "User"
+
   validate :finish_cannot_be_earlier_than_start
   validates :start, presence: true
   validates :finish, presence: true
+
+  enum status: [:rejected, :accepted, :pending]
+  enum type_permit: [:vacation, :medical_rest, :excused_delay, :days_off]
+
   after_create :send_permit_mail
 
-
-  def get_status
-    case self.status
-    when 0
-      return "reject"
-    when 1
-      return "accepted"
-    when 2
-      return "pending"
+  def send_request(params, date=nil)
+    begin
+      self.type_permit = params[:type_permit].to_sym
+      self.description = params[:description]
+      if self.excused_delay?
+        unless date.blank?
+          self.start = Date.strptime(date.to_s, "%m/%d/%Y")
+          self.finish = Date.strptime(date.to_s, "%m/%d/%Y")
+        end
+      else
+        self.start = Date.strptime(params[:start].to_s, "%m/%d/%Y") unless params[:start].blank?
+        self.finish = Date.strptime(params[:finish].to_s, "%m/%d/%Y") unless params[:finish].blank?
+      end
+      unless self.user.team_leader?
+        self.receptor_id = self.user.get_team_leader.id if self.user.get_team_leader
+      end
+      return self.save
+    rescue Exception => e
+      self.errors.add(:base, e)
+      return false
     end
   end
 
   def self.accepted_between_dates_and_user beginning, ending, user
-    where(user: user, status: 1).where("start >= ? AND finish <= ?", beginning.beginning_of_day, ending.end_of_day)
+    self.accepted.where(user: user).where("start >= ? AND finish <= ?", beginning.beginning_of_day, ending.end_of_day)
   end
 
   def self.get_assitance_record_between_dates_and_user user, date
     assistance_per_month = Array.new(32)
-    (0..32).each{ |day| 
+    (0..32).each{ |day|
       day_of_month = Hash.new
       day_of_month["permit"] = nil
       day_of_month["inTime"] = nil
@@ -36,9 +51,9 @@
     Permit.accepted_between_dates_and_user(date.beginning_of_month,date.end_of_month,user).each { |current_permit|
       start = current_permit.start.strftime("%e").to_i
       finish = current_permit.finish.strftime("%e").to_i
-      (start..finish).each { |day| 
-          assistance_per_month[day]["permit"] = current_permit
-        }
+      (start..finish).each { |day|
+        assistance_per_month[day]["permit"] = current_permit
+      }
     }
     TimeStation.in_current_month_per_user(date, user).each { |current_timeStation|
       day = current_timeStation.created_at.strftime("%e").to_i
@@ -51,18 +66,11 @@
     }
     return assistance_per_month
   end
+
   def self.search request, start, finish
-    unless request.present?
-      permits = Permit.all
-    else
-      permits = where(type_permits: request)
-    end
-    if start.present?
-      permits = permits.where(["start >= ?", start.to_datetime.beginning_of_day])
-    end
-    if finish.present?
-      permits = permits.where(["finish <= ?", finish.to_datetime.end_of_day])
-    end
+    permits = request.present? ? where(type_permit: self.type_permits[request.to_sym]) : all
+    permits = permits.where(["start >= ?", Date.strptime(start, "%m/%d/%Y").to_datetime.beginning_of_day]) if start.present?
+    permits = permits.where(["finish <= ?", Date.strptime(finish, "%m/%d/%Y").to_datetime.end_of_day]) if finish.present?
     return permits
   end
 
@@ -71,15 +79,14 @@
   end
 
   private
-    def finish_cannot_be_earlier_than_start
-      unless start.nil? || finish.nil?
-        time_error if finish.to_time < start.to_time
-      end
+  def finish_cannot_be_earlier_than_start
+    unless start.nil? || finish.nil?
+      time_error if finish.to_time < start.to_time
     end
+  end
 
-    def time_error
-      errors.add(:time_error, 'The fundamental laws of nature prevent time travel')
-    end
-
+  def time_error
+    errors.add(:time_error, 'The fundamental laws of nature prevent time travel')
+  end
 
 end

@@ -34,6 +34,12 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
+  def get_errors(object)
+    errors_str = ""
+    object.errors.full_messages.each{ |message| errors_str += " - #{message} <br>" }
+    return errors_str
+  end
+
   private
 
     def configure_permitted_parameters

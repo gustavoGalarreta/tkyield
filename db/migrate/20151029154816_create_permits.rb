@@ -4,10 +4,10 @@ class CreatePermits < ActiveRecord::Migration
       t.integer :user_id, null: false
       t.string :name
       t.text :description
-      t.string :type
-      t.integer :hours
+      t.integer :type_permit
       t.date :start
-      t.date :end
+      t.date :finish
+      t.integer :status
 
       t.timestamps null: false
     end
