@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <div id="event-row">
-        <% for j in 0..15 %>
+        <% for j in 0..14 %>
           <tr>
             <td class="hour">
               <% if (7+j) <= 12 %><%= 7+j %> AM
@@ -21,7 +21,7 @@
               <% end%>
             </td>
             <% for i in 1..6 %>
-              <td class="event" id="<%=(7+j).to_s + "-" + i.to_s%>">
+              <td class="event">
               </td>
             <% end %>
           </tr>
@@ -30,60 +30,27 @@
     </tbody>
   </table>
 </div>
+
 
 <div class="data">
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="no-day"></th>
-        <th class="day">MONDAY</th>
-        <th class="day">TUESDAY</th>
-        <th class="day">WEDNESDAY</th>
-        <th class="day">THURSDAY</th>
-        <th class="day">FRIDAY</th>
-        <th class="day">SATURDAY</th>
-      </tr>
-    </thead>
-    <tbody>
-      <div id="event-row">
-        <% for j in 0..15 %>
-          <tr>
-            <td class="event hour-data">
-            </td>
-            <% for i in 1..6 %>
-              <td class="event-data">
-                <% @schedule.events.each do |e| %>
-                  <% if ((e.day_of_week.to_date.wday == i) && e.belongs_at_this_time(j) ) %>
-                    <li class="list-group-item">
-                      <div style="white-space:nowrap;">
-                        <%= link_to "#", data: { toggle: "modal", "edit-event-path": "#{schedule_event_path(@schedule, e)}", event: e }, id: "#{(7+j)}-#{i}", class:"edit-current-event" do %>
-                            <%= e.name %><br>
-                        <%end%>
-                      </div>
-                    </li>
-                  <% end %>
-                <% end %>
-              </td>
-            <% end %>
-          </tr>
+  <% for j in 0..14 %>
+    <% for i in 1..6 %>
+      <div class="<%= "cell" + "-" + j.to_s + "-" +  i.to_s %>"> 
+        <% @schedule.events.each do |e| %>
+          <% if ((e.day_of_week.to_date.wday == i) && e.belongs_at_this_time(j) ) %>
+            <li class="list-group-item">
+              <div style="white-space:nowrap;">
+                <%= link_to "#", data: { toggle: "modal", "edit-event-path": "#{schedule_event_path(@schedule, e)}", event: e }, id: "#{(7+j)}-#{i}", class:"edit-current-event" do %>
+                    <%= e.name %><br>
+                  <%end%>
+              </div>
+            </li>
+          <% end %>
         <% end %>
       </div>
-    </tbody>
-  </table>
-</div>
-
-<div class="hola">
-  
-<% for j in 0..4 %>
-  <% for i in 0..4 %>
-    <div class="<%= "cell" + "-" + j.to_s + "-" +  i.to_s %>"> 
-       <%= link_to "#" do %>
-        <p>holi</p>
-        <%end %>
-    </div>
+    <% end %>
   <% end %>
-<% end %>
-</div>
+</div>  
 
 
 <%= render 'events/detail_event' %>
@@ -101,31 +68,23 @@
       $("#day_event").val(eventJSON["day_of_week"]);
       $("launch").val(eventJSON["launch"]);
       $("#detail-event").modal("show");
-    })
+      $(".edit-current-event").resizable();
+    })    
+    var set_top = 267;
+    for ( j = 0; j < 15; j++ ){
+      var set_right = 310;
+      for ( i = 1; i < 7; i++ ){
+        $(".cell"+ "-" + j.toString() + "-" + i.toString() ).css('position', 'absolute')
+        $(".cell"+ "-" + j.toString() + "-" + i.toString() ).offset({top: set_top, left: set_right});
+        $(".cell"+ "-" + j.toString() + "-" + i.toString() ).addClass('border');
+        set_right =  set_right + 161;
+      }
+      set_top = set_top + 75;
+    }
     var events_record = [<%= raw @events_duration_array.to_json%>]
     for ( i = 0; i < events_record[0].length; i++){
       var current_event = events_record[0][i]
-      console.log(current_event)
-      //$("#" + current_event["id"]).height( 30* current_event["factor"])
+      $("#" + current_event["id"]).height( 75 * current_event["factor"]);
     }
   })
-  var set_top = 80;
-  for ( j = 0; j < 5; j++ ){
-    var set_right = 500;
-    for ( i = 0; i < 5; i++ ){
-      $(".cell"+ "-" + j.toString() + "-" + i.toString() ).css('position', 'absolute')
-      $(".cell"+ "-" + j.toString() + "-" + i.toString() ).offset({top: set_top, left: set_right});
-      $(".cell"+ "-" + j.toString() + "-" + i.toString() ).addClass('border');
-      set_right =  set_right + 100;
-    }
-    set_top = set_top + 65;
-  }
-
-  $(".cell-0-1").height(80);
-  var pos = $(".cell-0-1").position();
-  s_top = pos.top + 100;
-  $(".cell-1-1").offset({top: s_top, left: pos.left });
-  
-
-
 </script>

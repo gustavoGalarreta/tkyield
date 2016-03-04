@@ -30,12 +30,13 @@
 }
 
 .edit-current-event {
-  padding: 7px 4px;
+  /*margin: 7px 4px;*/
+  padding: 0px;
   display: block;
 }
 
 .list-group-item{
-  padding: 1px 1px;
+  padding: 0px;
   display: block;
 }
 
@@ -45,14 +46,16 @@
 
 .base {
   top: 240px;
-  position: absolute;
   margin-top: -11px;
-  display: none;
-}
+  tr {
+    height: 75px;
+  }
 
+}
 .data{
-  z-index: 1000;
-  display: none;
+  z-index: 10000;
+  display: block;
+  border: 1px solid black;
 }
 
 .no-day{
@@ -62,45 +65,22 @@
 
 .hour {
   width: 2px !important;
+  font-size: 13px;
 }
 
 .event{
-  width: 155px !important;
-  height: 49px;
+  width: 159px !important;
+  height: 59px;
 }
 
 .event-data{
-  height: 49px;
+  height: 51px;
   /*border-style: hidden;*/
 }
-.hour-data{
-  border-style: hidden;
-}
-
-.col1{
-    top: -1px;
-    width: 120px;
-    border: 1px solid;
-    padding: 4px;
-    position: relative;
-}
-.col2{
-    border: 1px solid;
-    padding: 4px;
-    width: 120px;
-    position: relative;
-    top: -33px;
-    right: -131px;
-}
-
-.row2{
-  top: 12px;
-}
 .border{
-  border: 1px  solid;
-  width: 60px;
-  height: 60px;
+  width: 157px;
+  margin-top: 4px;
+  /*margin-bottom: 2px;
+  /*border: 1px solid black;*/
 }
-.hola{
-  
-}
+

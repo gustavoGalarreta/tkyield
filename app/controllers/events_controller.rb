@@ -19,6 +19,7 @@ class EventsController < DashboardController
 		if new_event.errors.blank?
 			new_event.save
 		end
+		@events_duration_array = Event.events_duration_array(@schedule.events)
 	end
 
 	def edit
@@ -43,6 +44,7 @@ class EventsController < DashboardController
 		event_to_delete = Event.find(delete_event_params[:event_id])
 		EventLog.find(event_to_delete.last_event_log).destroy
 		event_to_delete.destroy
+		@events_duration_array = Event.events_duration_array(@schedule.events)
 	end
 
 	private
