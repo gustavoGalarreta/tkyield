@@ -70,4 +70,7 @@ class TimeStation < ActiveRecord::Base
     self.joins(:user).where(users: { account_id: account.id })
   end
 
+  def find_schedule(user, start)
+    user.schedules.find_by(start: start)
+  end
 end

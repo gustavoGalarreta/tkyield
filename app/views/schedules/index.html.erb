@@ -1,8 +1,15 @@
-<%= link_to 'New Schedule', '#', :data => {:toggle => "modal"}, onClick: "javascript:openNewScheduleModal(this)", class: "btn btn-lg btn-warning align-right" %>
-<h1 class="page-header"> Schedules <small> Listing</small> </h1>
-<div class="col-md-12">
-	<table id="table-schedules" class="table table-responsive">
-		<%=render 'table_schedules' %>
-	</table>
-</div>
+<h1 class="page-header">Schedules <small>Listing</small></h1>
+<%= link_to 'New Schedule', '#', data: {toggle: "modal", target: "#new-schedule"}, class: "btn btn-lg btn-warning align-right" %>
 <%= render 'new_schedule_modal' %>
+<div id="index-table-schedules" class="table-respomsive">
+  <%= render 'table_schedules', schedules: @schedules %>
+</div>
+
+<script type="text/javascript">
+  $("#new-schedule").on('hide.bs.modal', function (e) {
+    $(this)
+      .find("input[type=text]")
+        .val('')
+        .end()
+  });
+</script>

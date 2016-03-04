@@ -1,33 +1,28 @@
-<%= form_for permits_path ,url: send_email_permits_path, method: 'get' do |f|%>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">Reason</span>
-      <%= f.text_field :name, class: "form-control",placeholder: "Vacation" %>
+<%= link_to 'Ask Permission', permission_permits_path, class: "btn btn-lg btn-primary align-right" %>
+<h1 class="page-header"> Permissions List <small> </small> </h1>
+<% if @permits.empty? %>
+    You don't have permits 
+<% else %>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>From</th>
+            <th>To</th>        
+          </tr>
+        </thead>
+        <tbody>
+            <% @permits.each do |permit| %>
+                <tr>
+                    <td><%= permit.id%></td>
+                    <td><%= permit.name%></td>
+                    <td><%= permit.start%></td>
+                    <td><%= permit.end%></td>                
+                </tr>
+            <%end%>
+        </tbody>
+      </table>
     </div>
-    <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">From:</span>
-      <%= f.date_field :start, class: "form-control" %>
-    </div>
-    <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">To:</span>
-      <%= f.date_field :end, class: "form-control" %>
-    </div>
-    <br>
-  </div>
-  <div class="field">
-    <div class="input-group">
-      <span class="input-group-addon">Description</span>
-      <%= f.text_area :description, class: "form-control",placeholder: "Vacation" %>
-    </div>
-    <br>
-  </div>
-  <%= f.submit "Ask for Permission" ,class: "btn btn-default" %>
-<% end %>
-
-
+<%end%>

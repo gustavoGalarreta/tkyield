@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   belongs_to :team
   has_many :timesheets
   has_many :schedules
+  has_many :permits
   has_many :events, through: :schedules
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
@@ -167,6 +168,10 @@ class User < ActiveRecord::Base
 
   def check_in
     self.time_stations.create
+  end
+
+  def current_schedule
+    self.schedules.where(current: true)
   end
 
   def check_out(check_in_obj=nil)
@@ -308,5 +313,5 @@ class User < ActiveRecord::Base
     User.find_by(team_id: self.team_id, team_leader: true)
   end
 
-
 end
+

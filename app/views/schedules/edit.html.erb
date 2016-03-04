@@ -1,0 +1,8 @@
+<h1>Schedule <small><%= @schedule.name %></small></h1>
+<div class="pull-right">
+  <%= link_to "Add events", '#', class: "btn btn-primary", data:{toggle: "modal", target: "#new-event"} %>
+  <%= render 'new_event_modal' %>
+</div>
+<div id ="event-table">
+  <%= render 'event_table'%>
+</div>

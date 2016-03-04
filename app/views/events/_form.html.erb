@@ -1,34 +1,35 @@
-<%= form_for @event, :html => {:class => "form-horizontal center"}, url: @url, method: @method, remote: true do |f| %>
-  <div class="table-body">
-    <table>
-      <tr>
-        <td><%= f.label :name %></td>
-        <td><%= f.text_field :name, class:"form-control" %></td>
-      </tr>
-      <tr>
-        <td><%= f.label :description %></td>
-        <td><%= f.text_field :description, class:"form-control" %></td>
-      </tr>
-      <tr>
-        <td><%= f.label :start %></td>
-        <td><%= f.text_field :start, :class => 'datetimepicker form-control' %></td>
-      </tr>
-      <tr>  
-        <td><%= f.label :finish %></td>
-        <td> <%= f.text_field :finish, :class => 'datetimepicker form-control'%></td>
-      </tr>
-      <tr>
-        <td><%= f.label :AllDay %></td>
-        <td><%= f.check_box :all_day, as: :boolean %></td>
-      </tr>
-      <td>
-        <%= f.submit "Submit" ,class: "btn btn-default" %>
-      </td>
-      <td>
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></td></td>
-    </table>
+<%= form_for Event.new, url: schedule_events_path(params[:id]), method: :post, remote: true do |f| %>
+  <table class="width-table-new">
+    <tr>
+      <td><%= f.label :name %></td>
+      <td><%= f.text_field :name, class:"form-control width-name" %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :start %></td>
+      <td><%= f.text_field :inTime, id: 'event_start', class:'clockpicker form-control'%></td>
+      <td><%= f.label :finish %></td>
+      <td><%= f.text_field :outTime, id: 'event_end', class:'clockpicker form-control' %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :day %></td>
+      <td><%= f.select :day_of_week, options_for_select([['Moday', 0], ['Tuesday', 1], ['Wednesday', 2], ['Thursday', 3], ['Friday', 4], ['Saturday', 5], ['Sunday', 6]]), {prompt:"-- Select day --"},{id:"event_day", class:"form-control"} %></td>
+    </tr>
+  </table>
+  <%= f.submit "Submit" ,class: "btn btn-default" %>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 <% end %>
-</div>
+
 <script type="text/javascript">
-  $('.datetimepicker').datetimepicker();
+  $('#event_start').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+    $('#event_end').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
 </script>

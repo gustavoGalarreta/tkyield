@@ -90,6 +90,10 @@ gem 'fullcalendar-rails', '2.0.2.0'
 #
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
 
+gem "combined_time_select", "~> 1.0.1"
+gem 'bootstrap-timepicker-rails'
+#A clock-style timepicker for Bootstrap
+gem 'clockpicker-rails', '~> 0.0.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug','~>  3.5.1'

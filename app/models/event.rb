@@ -1,17 +1,20 @@
 class Event < ActiveRecord::Base
   belongs_to :schedule
   validate :finish_cannot_be_earlier_than_start
-  
-  validates :name,        presence: true, length: { in: 2..100 }
-  validates :description, presence: true, length: { in: 2..1000 }
-  validates :start,       presence: true
-  validates :finish,      presence: true
+  validates :inTime, presence: true
+  validates :outTime, presence: true
+
+  enum day_of_week: [:Sun, :Mon, :Tue, :Wed, :Thu, :Fri, :Sat]
+
+  def day(day)
+    where(day_of_week: day)    
+  end
 
   private
 
     def finish_cannot_be_earlier_than_start
-      unless start.nil? || finish.nil?
-        time_error if finish < start
+      unless inTime.nil? || outTime.nil?
+        time_error if outTime.to_time <= inTime.to_time
       end
     end
 

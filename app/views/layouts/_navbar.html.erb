@@ -47,7 +47,7 @@
 			<% end %>
 			<% if can? :manage, Schedule %>   
 				<li class="<%= 'active' if controller.controller_name == 'schedules'  %>">
-					<%= link_to  current_schedule_schedules_path do %>
+					<%= link_to  schedules_path do %>
 						<i class="fa fa-calendar-o"></i> My Schedule
 					<% end %>
 				</li>

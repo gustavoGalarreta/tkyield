@@ -94,7 +94,7 @@ class UsersController < DashboardController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :archived_at)
+      params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :archived_at, :team_leader)
     end
 
     def user_project_params
