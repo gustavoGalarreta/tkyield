@@ -54,7 +54,7 @@ gem 'flipclockjs-rails', '~> 0.5.5b.1'
 # Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
 gem 'acts_as_xlsx', '~> 1.0.6'
 
-# Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates. 
+# Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates.
 gem 'axlsx_rails', '~> 0.3.0'
 
 ## Gemfile for Rails 3+, Sinatra, and Merb
@@ -75,7 +75,7 @@ gem 'bootstrap-datetimepicker-rails', '~> 0.0.11'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-#The Moment.js JavaScript library ready to play with the Rails Asset Pipeline  
+#The Moment.js JavaScript library ready to play with the Rails Asset Pipeline
 gem 'momentjs-rails', '2.10.6'
 
 # This gem for Ruby on Rails is a simple rebundling of the contents of the jQuery FullCalendar plugin
@@ -101,12 +101,6 @@ gem 'chronic', '~> 0.10.2'
 #Figaro was written to make it easy to securely configure Rails applications.
 gem "figaro"
 
-#Generate Entity-Relationship Diagrams for Rails applications 
-gem 'rails-erd'
-
-#Ruby/Graphviz provides an interface to layout and generate images of directed graphs in a variety of formats (PostScript, PNG, etc.) using GraphViz.
-gem 'ruby-graphviz'
-
 #It's an efficient way to view a list of structured data
 gem 'table_print', '~> 1.5', '>= 1.5.4'
 
@@ -122,8 +116,17 @@ group :development, :test do
 end
 
 group :development do
-  #gem 'better_errors', '2.1.1'
+  gem 'better_errors', '2.1.1'
   gem 'binding_of_caller', '0.7.2'
   gem 'bullet', '4.14.4'
   gem 'rails_best_practices', '1.15.6'
+  gem 'rdoc'
+  gem "awesome_print"
+  gem 'rubocop', require: false
+  #Generate Entity-Relationship Diagrams for Rails applications
+  gem 'rails-erd'
+  #Ruby/Graphviz provides an interface to layout and generate images of directed graphs in a variety of formats (PostScript, PNG, etc.) using GraphViz.
+  gem 'ruby-graphviz'
 end
+
+ruby '2.1.1'

@@ -12,7 +12,7 @@ class EventLog < ActiveRecord::Base
     end
     return hash_event[date_to_search]
   end
-  
+
   def set_launch(launch_status)
     if launch_status.nil?
       self.launch = false
@@ -31,4 +31,4 @@ class EventLog < ActiveRecord::Base
     self.save
   end
 end
-	
+

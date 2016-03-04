@@ -7,7 +7,7 @@ class UsersController < DashboardController
 
   def index
     @teams = current_account.teams.order("name")
-    @users_without_team = current_account.users.active.with971148373out_team.includes(:role).order("first_name, last_name")
+    @users_without_team = current_account.users.active.without_team.includes(:role).order("first_name, last_name")
   end
 
   def archives

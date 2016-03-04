@@ -16,11 +16,8 @@ class TkYieldMailer < ApplicationMailer
   def request_mail(permit)
     @permit = permit
     @controller_name = "#{permit.class.name.pluralize.downcase}"
-    @receptor_rrh = ENV['email_rrhh'] 
-    #posteriormente cambiar a los destinatarios correctos
-    #@permit_receptor = User.find(permit.receptor)
-    #@receptor_rrhh
-    mail( :to => ["gustavo.galarreta@tektonlabs.com","gustavo.galarreta@pucp.pe"],:subject => 'Resquest for permission' )
+    @receptor_rrh = ENV['EMAIL_RRHH'] 
+    mail( :to => @receptor_rrh, :subject => 'Resquest for permission' )
   end
   
 end

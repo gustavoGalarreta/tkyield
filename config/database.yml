@@ -5,7 +5,8 @@ default: &default
   timeout: 5000
   username: root
   password: root
-  socket: /var/run/mysqld/mysqld.sock
+  # socket: /var/run/mysqld/mysqld.sock
+  socket: /var/mysql/mysql.sock
 
 development:
   <<: *default
@@ -20,4 +21,7 @@ test:
 
 production:
   <<: *default
-  database: tkyield
+  username: tkyield
+  database: <%= ENV['TKYIELD_WEB_DATABASE'] %>
+  password: <%= ENV['TKYIELD_WEB_DATABASE_PASSWORD'] %>
+  host: <%= ENV['TKYIELD_WEB_DATABASE_HOST'] %>
