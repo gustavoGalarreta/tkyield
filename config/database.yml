@@ -20,6 +20,6 @@ test:
 
 production:
   <<: *default
-  username: tkyield
+  username: <%= ENV['TKYIELD_WEB_DATABASE_USERNAME'] %>
   database: <%= ENV['TKYIELD_WEB_DATABASE'] %>
   password: <%= ENV['TKYIELD_WEB_DATABASE_PASSWORD'] %>
