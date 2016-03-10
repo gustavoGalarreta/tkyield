@@ -1,5 +1,5 @@
 class TkYieldMailer < ApplicationMailer
-	default from: "info@tektonlabs.com"
+	default from: DEFAULT_MAIL
   
   def forgot_checkout(user, time_station)
     @user = user

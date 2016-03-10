@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'info@tektonlabs.com'
+  default from: DEFAULT_MAIL
   layout 'mailer'
 end

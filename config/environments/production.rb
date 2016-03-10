@@ -79,8 +79,8 @@ Rails.application.configure do
 
   config.action_controller.relative_url_root = ENV['RELATIVE_URL']
 
-  # Mail configuration
   config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] + ENV['RELATIVE_URL'] }
+
   ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
