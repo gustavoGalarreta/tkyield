@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "home#index"
+  #root to: "home#index"
+  root to: "dashboard#index"
+
   get "registration", to: "home#registration"
   post "registration", to: "home#register"
 

@@ -58,5 +58,13 @@ Rails.application.configure do
    :authentication => :login,
    :enable_starttls_auto => true
    }
+   
+  ActiveRecord::Base.establish_connection(
+  :adapter  => "postgresql",
+  :host     => "localhost",
+  :username => "root",
+  :password => "root",
+  :database => "tkerp_development"
+  )
 
 end
