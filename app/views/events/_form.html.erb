@@ -1,34 +1,45 @@
-<%= form_for @event, url: @url, method: @method, remote: true do |f| %>
-<table>
-<tr>
-  <td><%= f.label :name %></td>
-  <td><%= f.text_field :name %></td>
-</tr>
-<tr>
-  <td><%= f.label :description %></td>
-  <td><%= f.text_field :description, as: :text, input_html: { rows: 4, cols: 30 } %></td>
-</tr>
-<tr>
-  <td><%= f.label :start %></td>
-  <td><%= f.date_field :start %></td>
-</tr>
-<tr>
-  <td><%= f.label :finish %></td>
-  <td><%= f.date_field :finish %></td>
-</tr>
-<tr>
-  <td><%= f.label :AllDay %></td>
-  <td><%= f.check_box :all_day, as: :boolean %></td>
-</tr>
-<td>
-  <div class="modal-footer">
-    <span class="submit-right">
-      <%= f.submit  %>
-    </span>
-  </div>
-</td>
- 
-</table>
+<%= form_for Event.new, url: schedule_events_path(params[:id]), method: :post, remote: true do |f| %>
+  <table class="width-table-new">
+    <tr>
+      <td><%= f.label :name %></td>
+      <td><%= f.text_field :name, class:"form-control width-name" %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :start %></td>
+      <td><%= f.text_field :inTime, id: 'event_start', class:'clockpicker form-control'%></td>
+      <td><%= f.label :finish %></td>
+      <td><%= f.text_field :outTime, id: 'event_end', class:'clockpicker form-control' %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :day %></td>
+      <td><%= f.select :day_of_week, options_for_select([['Monday', 0], ['Tuesday', 1], ['Wednesday', 2], ['Thursday', 3], ['Friday', 4], ['Saturday', 5], ['Sunday', 6]] ), {prompt:"-- Select day --"},{id:"event_day", class:"form-control"} %></td>
+      <td>
+        <div class="text-launch">
+          <div class="launch-input">
+            <%= f.check_box :launch, {}, true, false %>
+          </div>
+          <td class="launch-status">
+            <%= f.label "include launch time?" %>
+          </td>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <%= f.submit "Submit", class: "btn btn-default" %>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 <% end %>
 
-
+<script type="text/javascript">
+  $('#event_start').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+    $('#event_end').clockpicker({
+    autoclose: true,
+    afterShow: function() {
+      $('.popover').css("z-index", "3000");
+    }
+  })
+</script>

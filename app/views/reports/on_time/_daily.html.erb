@@ -2,24 +2,47 @@
 <div class="align-right">
 <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, daily_excel_reports_on_time_index_path(format: "xlsx",:team => @selected_team, :collaborator => @selected_collaborator, :beginning => date_format(@beginning), :end => date_format(@end)), class: "btn btn-success"%>
 </div><br><br>
-<table class="table table-bordered table-responsive" style="overflow: auto;">
+<table class="reports table table-bordered table-responsive" style="overflow: auto;">
 	<thead>
 		<tr>
-			<th>Date</th>
+			<th>Date</t	h>
 			<th>Name</th>
-			<th>In/Out</th>
-			<th>Time</th>      
+			<th>Time</th>  
+			<th>Schedule</th>
+			<th>Offset minutes</th>    
+			<th>Reason</th>
+			<th>Worked hours</th>
 		</tr>
 	</thead>
-
 	<tbody>
-		<% @time_stations.each do |time_station| %>
-			<tr>
-				<td><%= date_format(time_station.created_at) %></td>
-				<td><%= time_station.user.full_name %></td>
-				<td><%= time_station.parent_id ? "OUT" : "IN" %></td>
-				<td><%= time_format(time_station.created_at) %></td>
-			</tr>
-		<% end %>
+		<% @time_stations_tmp.each do |key, time_stations| %>
+			<% time_stations.each_with_index do |time_station, index| %>
+				<tr>
+					<% if index == 0 %>
+						<td rowspan="<%= time_stations.size %>"><%= date_format_with_hyphen key %></td>
+						<td rowspan="<%= time_stations.size %>"><%= time_station.user.full_name %></td>
+					<% end %>
+					<% if time_station.parent_id? %>
+						<td><div class="be-red"><%= time_format(time_station.created_at) %></td></div>
+						<td><div class="be-red"><%= TimeStation.get_outTime_events(time_station.get_event_logs)%></td></div>
+					<% else %>
+						<td><div class="be-blue"><%= time_format(time_station.created_at) %></td></div>
+						<td><div class="be-blue"><%= TimeStation.get_inTime_events(time_station.get_event_logs)%></td></div>
+					<% end%>
+					<% offset, status = TimeStation.get_offset_worked_hours(time_station.created_at,time_station.parent_id,time_station.get_event_logs)%>
+					<td><%= offset %></td>
+					<td><%= status %></td>
+					<% if (index % 2 == 0) || (index == 0) %>
+						<td rowspan="2">
+							<% if time_station.parent_id? %>
+							<div class="worked-hours">
+								<%= time_station.get_total_hours %>
+							</div>
+							<% end %>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		<% end %>	
 	</tbody>
 </table>

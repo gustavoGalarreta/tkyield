@@ -3,7 +3,7 @@
 <%= link_to '<i class="fa fa-file-excel-o"></i>  Download as Excel'.html_safe, summary_excel_reports_on_time_index_path(format: "xlsx",:team => @selected_team, :collaborator => @selected_collaborator, :beginning => date_format(@beginning), :end => date_format(@end)), class: "btn btn-success"%>
 </div><br><br>
 <% between_days = days_between_dates(@beginning, @end) %>
-<table id="ontime-summary" class="table table-bordered table-responsive"
+<table id="ontime-summary" class="reports table table-bordered table-responsive"
 	<thead>
 			<tr>
 				<th>Collaborator</th>
@@ -22,7 +22,8 @@
 					<% time_stations = time_stations_in_date[date_format(date)] %>
 					<td><%= time_stations ? total_time_excel_format(time_stations[:total_same_day]) : "" %></td>
 				<% end %>
-				<td rowspan="<%= different_day.size + 1 %>"><%= total_time_excel_format(time_stations_in_date[:total]) %></td>
+				<td rowspan="<%= different_day.size + 1 %>">
+				<%= total_time_excel_format(time_stations_in_date[:total]) %></td>
 			</tr>
 			<% if different_day.size > 0 %>
 				<% different_day.each do |dd| %>

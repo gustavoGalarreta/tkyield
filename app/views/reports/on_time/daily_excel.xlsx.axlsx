@@ -13,15 +13,16 @@ wb.add_worksheet(name: "StaffReport") do |sheet|
   sheet.add_row ["From:", @beginning, "to", @end] 
   sheet.add_row [""] 
   
-  sheet.add_row ["Date","Name","In/Out","Time","Total(hrs)"] ## Header values of Excel
+  sheet.add_row ["Date","Name","In/Out","Time","Estimated","Offset worked hours","Total(hrs)"] ## Header values of Excel
 
   @time_stations.each do |time_station|
     row = [date_format(time_station.created_at),time_station.user.full_name]
     if time_station.parent_id.nil?
-      row.concat(["IN", time_format(time_station.created_at)])
+      row.concat(["IN", time_format(time_station.created_at),TimeStation.get_inTime(time_station.get_event_logs)])
     else
-      row.concat(["OUT", time_format(time_station.created_at),total_time_excel_format(time_station.total_time)])
+      row.concat(["OUT", time_format(time_station.created_at),TimeStation.get_outTime(time_station.get_event_logs)])
     end
+    row.concat([TimeStation.get_offset_worked_hours(time_station.created_at,time_station.parent_id,time_station.get_event_logs)])
     sheet.add_row row
   end
 

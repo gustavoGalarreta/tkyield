@@ -1,2 +1,2 @@
-$('#calendar').fullCalendar('refetchEvents');
-$('#event-modal').modal('hide');
+$("#new-event").modal('hide');
+$("#event-table").html('<%= escape_javascript render partial: "schedules/event_table", locals: {events: @events} %>')

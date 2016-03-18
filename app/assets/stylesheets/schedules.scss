@@ -1,0 +1,78 @@
+.pull-right{
+  text-align: right;
+  margin-bottom: 1%;
+}
+
+.align-left{
+  text-align: left;
+}
+
+.width-table-new{
+  width: 100%;
+}
+
+.width-name{
+  width: 267%;
+}
+.edit-event-name{
+	width: 255%;
+}
+.edit-event-time{
+	width: 35%;
+}
+.edit-event-day{
+	width: 28%;
+}
+
+.schedule th {
+  background-color: #333333;
+  color: white;
+}
+
+.edit-current-event {
+  /*margin: 7px 4px;*/
+  padding: 0px;
+  display: block;
+}
+
+.list-group-item{
+  padding: 0px;
+  display: block;
+}
+
+.worked-hours{
+  font-size: -webkit-xxx-large;
+}
+
+.base {
+  top: 240px;
+  margin-top: -11px;
+  tr {
+    height: 77px;
+  }
+}
+.data{
+  z-index: 10000;
+  display: block;
+  border: 1px solid black;
+}
+
+.no-day{
+  visibility: hidden;
+  width: 5%;
+}
+
+.hour {
+  width: 2px !important;
+  font-size: 13px;
+}
+
+.event{
+
+}
+
+.border{
+  width: 157px;
+  margin-top: 4px;
+}
+

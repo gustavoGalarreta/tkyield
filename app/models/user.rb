@@ -33,8 +33,8 @@
 #
 
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
-          :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+    :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
 
   scope :active, -> {where(archived_at: nil)}
   scope :archived, -> {where.not(archived_at: nil)}
@@ -45,21 +45,24 @@ class User < ActiveRecord::Base
   belongs_to :team
   has_many :timesheets
   has_many :schedules
+  has_many :event_logs, dependent: :destroy
+  has_many :permits
+  has_many :receptor, :foreign_key => 'receptor_id', :class_name => "Permit", dependent: :destroy
   has_many :events, through: :schedules
   has_many :time_stations
   has_many :user_projects, dependent: :destroy
   has_many :projects, :through => :user_projects
   has_one :last_time_station, -> { order 'created_at desc' }, class_name: "TimeStation"
-  
+
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
   delegate :company_name, :to => :account, :prefix => true, allow_nil: true
-  
+
   accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
-  
+
   validates :account, presence: true
-  validates :role, presence: true
+  #validates :role, presence: true
   validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
   validates_format_of       :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
   validates_presence_of     :password, :on=>:create, :if => :password_required?
@@ -152,7 +155,7 @@ class User < ActiveRecord::Base
       self.update_attributes(archived_at: Time.zone.now)
       self.cancel_active_timesheet
       self.check_out
-    else 
+    else
       false
     end
   end
@@ -169,9 +172,13 @@ class User < ActiveRecord::Base
     self.time_stations.create
   end
 
+  def current_schedule
+    self.schedules.where(current: true)
+  end
+
   def check_out(check_in_obj=nil)
     time_station = check_in_obj.nil? ? last_check_in_or_out_activity : check_in_obj
-    if time_station.is_checkin?
+    if time_station and time_station.is_checkin?
       self.time_stations.create(parent_id: time_station.id, total_time: Time.zone.now - time_station.created_at)
     end
   end
@@ -202,6 +209,7 @@ class User < ActiveRecord::Base
   def self.all_with_tasks_running
     joins(:timesheets).where("timesheets.running = ?", true)
   end
+=begin
 
   def is_administrator?
     self.role_id == Role::ADMINISTRATOR_ID
@@ -228,6 +236,7 @@ class User < ActiveRecord::Base
       errors.add(:role, "cannot be changed")
     end
   end
+=end
 
   def full_name
     "#{first_name} #{last_name}"
@@ -252,9 +261,9 @@ class User < ActiveRecord::Base
   def total_time_per_day_til_now day
     a = 0
     if has_a_timer_running?
-      a = get_timesheet_active.current_time 
+      a = get_timesheet_active.current_time
     end
-    a += total_time_per_day day 
+    a += total_time_per_day day
   end
 
   def total_time_per_day day
@@ -283,7 +292,7 @@ class User < ActiveRecord::Base
   end
 
   def has_a_timer_running?
-    !get_timesheet_active.first.nil? 
+    !get_timesheet_active.first.nil?
   end
 
   def cancel_active_timesheet
@@ -304,6 +313,8 @@ class User < ActiveRecord::Base
     Timesheet.where(belongs_to_day: beginning..ending,user: self, task: task).sum(:total_time)
   end
 
-
+  def get_team_leader
+    User.find_by(team_id: self.team_id, team_leader: true)
+  end
 
 end

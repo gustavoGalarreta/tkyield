@@ -1,5 +1,4 @@
 class UserDevice::SessionsController < Devise::SessionsController
-
   # POST /resource/sign_in
   def create
     self.resource = warden.authenticate!(auth_options)
@@ -19,6 +18,7 @@ class UserDevice::SessionsController < Devise::SessionsController
     yield if block_given?
     respond_to_on_destroy
   end
+
 
   private
 

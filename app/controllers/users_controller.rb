@@ -2,7 +2,8 @@ class UsersController < DashboardController
   load_and_authorize_resource
   add_breadcrumb "Dashboard", :dashboard_path
   add_breadcrumb "Collaborators", :users_path
-  before_action :set_user, only: [:resend_confirmation, :archive_user]
+  before_action :set_user, only: [:resend_confirmation, :archive_user, :schedule]
+  respond_to :html, :js, :json
 
   def index
     @teams = current_account.teams.order("name")
@@ -16,7 +17,8 @@ class UsersController < DashboardController
   end
 
   def schedule
-    @schedule=@user.schedules.is_current.first
+    add_breadcrumb "#{@user.first_name}'s schedule", :schedule_user_path
+    @schedule = @user.schedules.is_current.first
   end
 
   def archive
@@ -84,7 +86,6 @@ class UsersController < DashboardController
     redirect_to users_path, notice: "Email sent successfully"
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -93,7 +94,7 @@ class UsersController < DashboardController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :archived_at)
+      params.require(:user).permit(:avatar, :first_name, :last_name, :role_id, :team_id, :email, :archived_at, :team_leader)
     end
 
     def user_project_params

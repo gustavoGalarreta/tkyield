@@ -1,5 +1,5 @@
 class TkYieldMailer < ApplicationMailer
-	default from: "info@tektonlabs.com"
+	default from: DEFAULT_MAIL
   
   def forgot_checkout(user, time_station)
     @user = user
@@ -13,5 +13,11 @@ class TkYieldMailer < ApplicationMailer
   	mail(to: @user.email, subject: "Did you forget your timer?")
   end
 
+  def request_mail(permit)
+    @permit = permit
+    @controller_name = "#{permit.class.name.pluralize.downcase}"
+    @receptor_rrh = ENV['EMAIL_RRHH'] 
+    mail( :to => @receptor_rrh, :subject => 'Resquest for permission' )
+  end
   
 end

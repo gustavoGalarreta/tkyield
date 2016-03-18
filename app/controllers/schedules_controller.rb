@@ -1,76 +1,51 @@
 class SchedulesController<DashboardController
-	add_breadcrumb "Dashboard", :dashboard_path 
-  #before_action :set_event, only: [:edit, :update, :delete, :destroy]
-  before_action :set_schedule, only: [:set,:unset, :show]
-  before_action :schedule_params, only: [:create]
-  respond_to :html, :js, :json
+	add_breadcrumb "Dashboard", :dashboard_path
+  before_action :set_schedule, only: [:set, :destroy, :edit, :update]
+  before_action :get_schedules, only: [:index, :set, :destroy, :create]
+  before_action :get_events, only: [:create, :edit, :index]
 
-
-	def index
-		add_breadcrumb "Schedules", :schedules_path
-		@current_schedule = current_user.schedules.is_current
-    @events = current_user.events
-    @user=current_user
-  end
-
-  def list
-    @schedules=current_user.schedules
-  end
-
-  def current_schedule
-    #Este hardcode hay qe cambiar luego
-    @current = current_user.schedules.is_current.first
-    @events = @current.events
-  end
-
-  def set
-    @current_schedule = current_user.schedules.is_current.first
-    @current_schedule.unset! if @current_schedule
-    unless @schedule.set!
-      render js: "alert('An error has ocurred')"
-    end
-  end
-
-  def unset
-    @current_schedule = current_user.schedules.is_current.first
-    unless @schedule.unset!
-      render js: "alert('An error has ocurred')"
-    else
-      render :set
-    end
-  end
-
-  def show    
-  end
-
-  def new
+  def index
   end
 
   def create
     s = Schedule.new(schedule_params)
     s.user_id = current_user.id
-    s.save
-    @schedules=current_user.schedules
+    if s.errors.blank? 
+      s.save
+    end
+  end
+
+  def set
+    current_user.current_schedule.first.unset! unless current_user.current_schedule.blank?
+    @schedule.set!
   end
 
   def edit
-
+    @events_duration_array = Event.events_duration_array(@schedule.events)
   end
 
   def update
-    
   end
 
   def destroy
-    @event.destroy 
+    @schedule.destroy
   end
 
   private
-    def schedule_params
-       params.require(:schedule).permit(:name)   
+    def set_schedule
+      @schedule = Schedule.find(params[:id])
     end
 
-    def set_schedule
-      @schedule=Schedule.find(params[:id])
+    def get_schedules
+      @schedules = Schedule.all
     end
+
+    def schedule_params
+      params.require(:schedule).permit(:user_id, :name)
+    end
+
+    def get_events
+      @events = Event.all
+    end
+
 end
