@@ -61,15 +61,21 @@ Rails.application.routes.draw do
         get 'client_excel', to: 'clients#client_excel', on: :collection
       end
     end
-    resources :schedules do  
-      get :list, on: :collection
-      put "set", on: :member
-      put "unset", on: :member
-      get :current_schedule, on: :collection
+
+    resources :schedules do
       resources :events
+      put :set, on: :member
     end
 
-    resources :permits 
+    resources :permits do
+      get 'accept'
+      get 'decline'
+      get 'permission', on: :collection
+
+    end
+    
+    resource :calendar, only: [:show], controller: :calendar
+
     devise_for :users, :controllers => { :sessions => 'user_device/sessions', :passwords => 'user_device/passwords', :registrations => 'user_device/registrations', :confirmations => 'user_device/confirmations' }
     devise_scope :user do
 

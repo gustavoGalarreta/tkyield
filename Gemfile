@@ -27,9 +27,6 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 
@@ -54,10 +51,10 @@ gem "paperclip", "~> 4.2"
 # Use Flipclock for Javascript buttons and timer
 gem 'flipclockjs-rails', '~> 0.5.5b.1'
 
-#Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
+# Use acts_as_xlsx to turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
 gem 'acts_as_xlsx', '~> 1.0.6'
 
-#Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates. 
+# Axlsx-Rails provides a renderer and a template handler. It adds the :xlsx format and parses .xlsx.axlsx templates.
 gem 'axlsx_rails', '~> 0.3.0'
 
 ## Gemfile for Rails 3+, Sinatra, and Merb
@@ -66,17 +63,14 @@ gem 'will_paginate', '~> 3.0.6'
 # Use BootstrapDatepicker for having a format of selecting dates.
 gem 'bootstrap-datepicker-rails', '~> 1.1.1.1'
 
-#Clean ruby syntax for writing and deploying cron jobs.
+# Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.9.4'
 
-#Add a comment summarizing the current schema to the top or bottom
+# Add a comment summarizing the current schema to the top or bottom
 gem 'annotate', '~> 2.6.6'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
+# Use BootstrapDatetimepicker for having a format of selecting dates.
+gem 'bootstrap-datetimepicker-rails', '~> 0.0.11'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -84,6 +78,35 @@ gem 'annotate', '~> 2.6.6'
 gem 'scrollbar-rails'
 
 gem "awesome_print"
+
+#The Moment.js JavaScript library ready to play with the Rails Asset Pipeline
+gem 'momentjs-rails', '2.10.6'
+
+# This gem for Ruby on Rails is a simple rebundling of the contents of the jQuery FullCalendar plugin
+gem 'fullcalendar-rails', '2.0.2.0'
+
+#the font-awesome font bundled as an asset for the rails asset pipeline
+gem "font-awesome-rails"
+
+#jQuery UI's JavaScript, CSS, and image files packaged for the Rails 3.1+ asset pipeline
+gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
+
+#A Rails time_select like Google Calendar with combined hour and minute time_select
+gem "combined_time_select", "~> 1.0.1"
+
+gem 'bootstrap-timepicker-rails'
+
+#A clock-style timepicker for Bootstrap
+gem 'clockpicker-rails', '~> 0.0.2'
+
+#Chronic is a natural language date/time parser written in pure Ruby.
+gem 'chronic', '~> 0.10.2'
+
+#Figaro was written to make it easy to securely configure Rails applications.
+gem "figaro"
+
+#It's an efficient way to view a list of structured data
+gem 'table_print', '~> 1.5', '>= 1.5.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -97,7 +120,7 @@ group :development, :test do
 end
 
 
-gem 'momentjs-rails', '>= 2.8.1',  :github => 'derekprior/momentjs-rails'
+#gem 'momentjs-rails', '>= 2.8.1',  :github => 'derekprior/momentjs-rails'
 
 #Gem for datetimepicker
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
@@ -108,10 +131,13 @@ group :development do
   gem 'binding_of_caller', '0.7.2'
   gem 'bullet', '4.14.4'
   gem 'rails_best_practices', '1.15.6'
-
-
-  gem 'rabl', '~> 0.9.3'
-  gem 'simple_form', '3.1.0.rc1'
-  gem 'bootstrap-sass', '~> 3.1.1'
-
+  gem 'rdoc'
+  gem "awesome_print"
+  gem 'rubocop', require: false
+  #Generate Entity-Relationship Diagrams for Rails applications
+  gem 'rails-erd'
+  #Ruby/Graphviz provides an interface to layout and generate images of directed graphs in a variety of formats (PostScript, PNG, etc.) using GraphViz.
+  gem 'ruby-graphviz'
 end
+
+ruby '2.1.1'

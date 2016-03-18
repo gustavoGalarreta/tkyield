@@ -77,12 +77,12 @@
         $(".cell"+ "-" + j.toString() + "-" + i.toString() ).addClass('border');
         set_right =  set_right + 161;
       }
-      set_top = set_top + 77;
+      set_top = set_top + 75;
     }
     var events_record = [<%= raw @events_duration_array.to_json%>]
     for ( i = 0; i < events_record[0].length; i++){
       var current_event = events_record[0][i]
-      $("#" + current_event["id"]).height( 76 * current_event["factor"]);
+      $("#" + current_event["id"]).height( 75 * current_event["factor"]);
     }
   })
 </script>

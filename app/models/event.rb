@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   validates_with TimeValidator
   belongs_to :schedule
+  validate :finish_cannot_be_earlier_than_start
   validates :inTime, presence: true
   validates :outTime, presence: true
 
@@ -30,7 +31,7 @@ class Event < ActiveRecord::Base
     events.each do |current_event|
       events_duration = Hash.new
       start_inTime = current_event.inTime.to_time.strftime("%H:%M").split(':')
-      events_duration["id"] = start_inTime[0].to_i.to_s + "-" + (current_event[:day_of_week]+1).to_s
+      events_duration["id"] = start_inTime[0] + "-" + (current_event[:day_of_week]+1).to_s
       events_duration["factor"] = current_event.get_factor
       events_duration["row"] = start_inTime[0]
       events_duration["col"] = (current_event[:day_of_week]+1).to_s
@@ -39,5 +40,14 @@ class Event < ActiveRecord::Base
     return array
   end
 
+  private
+  def finish_cannot_be_earlier_than_start
+    unless inTime.nil? || outTime.nil?
+      time_error if outTime.to_time <= inTime.to_time
+    end
+  end
 
+  def time_error
+    errors.add(:time_error, 'The fundamental laws of nature prevent time travel')
+  end
 end

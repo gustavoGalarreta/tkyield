@@ -21,9 +21,9 @@
 //= require jquery.countdown.js 
 //= require bootstrap-datepicker
 //= require bootstrap-timepicker
-//= require bootstrap-datetimepicker
 //= require jquery/clockpicker
-//= require_tree.
+//= require bootstrap-datetimepicker
+//= require_tree .
 
  jQuery(document).ready(function () {
     $('select[data-option-dependent=true]').each(function (i) {
