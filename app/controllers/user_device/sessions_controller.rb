@@ -1,5 +1,6 @@
 class UserDevice::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
+=begin
   def create
     self.resource = warden.authenticate!(auth_options)
     if !self.resource.nil? and self.resource.account == current_account
@@ -11,6 +12,7 @@ class UserDevice::SessionsController < Devise::SessionsController
       redirect_to new_user_session_path
     end
   end
+=end
 
   def destroy
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
@@ -23,7 +25,7 @@ class UserDevice::SessionsController < Devise::SessionsController
   private
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me, :account_id) }
+      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
     end
 
 end

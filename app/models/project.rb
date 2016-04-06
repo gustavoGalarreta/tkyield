@@ -13,22 +13,19 @@
 #
 
 class Project < ActiveRecord::Base
-  belongs_to :account
   belongs_to :client
   has_many :timesheets
   has_many :task_projects, dependent: :nullify
   has_many :tasks, :through => :task_projects
-  has_many :user_projects, dependent: :nullify
-  has_many :users, :through => :user_projects
-
+  has_many :collaborator_projects, dependent: :nullify
+  has_many :collaborators, through: :collaborator_projects
   delegate :name, :to => :client, :prefix => true
   after_destroy :stop_timesheets
 
-  validates :account, presence: true
   validates :client, :name, :description, presence: true
   
   accepts_nested_attributes_for :task_projects, :allow_destroy => true, :reject_if => proc { |t| t['task_id'].blank? }
-  accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['user_id'].blank? }
+  accepts_nested_attributes_for :collaborator_projects, :allow_destroy => true, :reject_if => proc { |t| t['collaborator_id'].blank? }
   acts_as_paranoid
 
   def total_time_between_dates(beginning, ending)

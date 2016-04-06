@@ -33,57 +33,46 @@
 #
 
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-    :trackable, :confirmable, authentication_keys: [ :email, :account_id ]
-
-  scope :active, -> {where(archived_at: nil)}
-  scope :archived, -> {where.not(archived_at: nil)}
-  scope :without_team, -> {where(team_id: nil)}
+  devise  :database_authenticatable, :registerable, :recoverable, :rememberable,
+          :trackable, :confirmable, :authentication_keys => [ :email, :account_id ]
+          #:omniauthable, :omniauth_providers => [:google_oauth2]
 
   belongs_to :account
   belongs_to :role
-  belongs_to :team
   has_many :timesheets
-  has_many :schedules
-  has_many :event_logs, dependent: :destroy
   has_many :permits
   has_many :receptor, :foreign_key => 'receptor_id', :class_name => "Permit", dependent: :destroy
   has_many :events, through: :schedules
   has_many :time_stations
-  has_many :user_projects, dependent: :destroy
-  has_many :projects, :through => :user_projects
   has_one :last_time_station, -> { order 'created_at desc' }, class_name: "TimeStation"
 
   delegate :name, :to => :role, :prefix => true, allow_nil: true
   delegate :name, :to => :team, :prefix => true, allow_nil: true
-  delegate :company_name, :to => :account, :prefix => true, allow_nil: true
+  #delegate :company_name, :to => :account, :prefix => true, allow_nil: true
 
-  accepts_nested_attributes_for :user_projects, :allow_destroy => true, :reject_if => proc { |t| t['project_id'].blank? }
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
 
-  validates :account, presence: true
   #validates :role, presence: true
+
   validates_uniqueness_of   :email,    :case_sensitive => false, :allow_blank => true, :if => :email_changed?, scope: :account_id
   validates_format_of       :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
   validates_presence_of     :password, :on=>:create, :if => :password_required?
   validates_confirmation_of :password, :on=>:create
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
-  validates :qr_code, uniqueness: { :allow_blank => true }
   validates_length_of :pin_code, :within => 1..9999, :allow_blank => true
-  validates :pin_code, uniqueness: { scope: :account_id }, unless: Proc.new { |u| u.pin_code.blank? }
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
-  validate :freeze_role, :on => :update
-  before_create :generate_qr_code_and_access_token
+  #validate :freeze_role, :on => :update
+  #before_create :generate_qr_code_and_access_token
 
-  def generate_qr_code_and_access_token
-    self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
-    if self.role_id == Role::ADMINISTRATOR_ID
-      self.pin_code = 1
-      self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
-    else
-      self.pin_code = self.account.users.order("pin_code ASC").last.pin_code.to_i + 1
-    end
-  end
+  #def generate_qr_code_and_access_token
+  #  self.qr_code = "#{SecureRandom.hex}#{self.account_id}#{self.id}#{Time.now.strftime('%d%m%Y%H%M%S')}"
+  #  if self.role_id == Role::ADMINISTRATOR_ID
+  #    self.pin_code = 1
+  #    self.access_token = "#{SecureRandom.hex.tr('+/=', 'xyz')}#{self.account_id}"
+  #  else
+  #    self.pin_code = self.account.users.order("pin_code ASC").last.pin_code.to_i + 1
+  #  end
+  #end
 
   def total_time_between_dates beginning, ending
     Timesheet.where(belongs_to_day: beginning..ending, user_id: self.id).sum(:total_time)
@@ -122,14 +111,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def pin
-    sprintf '%04d', pin_code
-  end
-
-  def archived?
-    !archived_at.nil?
-  end
-
   def last_check_in_or_out_activity
     TimeStation.where(user: self).last
   end
@@ -150,30 +131,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def archive!
-    if self.archived_at.nil?
-      self.update_attributes(archived_at: Time.zone.now)
-      self.cancel_active_timesheet
-      self.check_out
-    else
-      false
-    end
-  end
-
-  def unarchive!
-    if self.archived_at.nil?
-      false
-    else
-      self.update_attributes(archived_at: nil)
-    end
-  end
-
   def check_in
     self.time_stations.create
-  end
-
-  def current_schedule
-    self.schedules.where(current: true)
   end
 
   def check_out(check_in_obj=nil)
@@ -209,7 +168,6 @@ class User < ActiveRecord::Base
   def self.all_with_tasks_running
     joins(:timesheets).where("timesheets.running = ?", true)
   end
-=begin
 
   def is_administrator?
     self.role_id == Role::ADMINISTRATOR_ID
@@ -236,7 +194,6 @@ class User < ActiveRecord::Base
       errors.add(:role, "cannot be changed")
     end
   end
-=end
 
   def full_name
     "#{first_name} #{last_name}"
@@ -317,4 +274,8 @@ class User < ActiveRecord::Base
     User.find_by(team_id: self.team_id, team_leader: true)
   end
 
+  def get_projects
+    Collaborator.where(code: self.pin_code).first.projects
+  end
+  
 end

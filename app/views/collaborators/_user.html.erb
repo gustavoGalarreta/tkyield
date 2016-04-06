@@ -10,14 +10,14 @@
 <td>
 	<%#= user.role_name %>
 <td>
-	<% if active %>
+	<%# if active %>
 		<%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_collaborator_path(collaborator),class: "btn btn-default" %>
 		<%# if collaborator.confirmed? %>
 			<%= link_to '<i class="fa fa-folder-open-o"></i> Projects'.html_safe, show_collaborator_project_collaborator_path(collaborator), class: "btn btn-default" %>
 		<%# else %>
 			<%#= link_to '<i class="fa  fa-reply-all"></i> Resend Confirmation'.html_safe, resend_confirmation_user_path(user), class: "btn btn-default" %>
 		<%# end %>
-	<% end %>
+	<%# end %>
 	<%= link_to '<i class="fa fa-calendar"></i> Schedule'.html_safe, schedule_collaborator_path(collaborator) ,class: "btn btn-default" %>
 	<%= link_to "<i class=#{icon}></i> #{text}".html_safe, active ? archive_collaborator_path(collaborator) : unarchive_collaborator_path(collaborator), class: "btn btn-default", remote: true, method: "put" %>
 <!-- 		# ,data: { confirm: "You are about to #{text} : #{collaborator.full_name}, this action involves:

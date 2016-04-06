@@ -7,7 +7,8 @@ class ProjectsController < DashboardController
   # GET /projects
   # GET /projects.json
   def index
-    @clients = current_account.clients.order("name")
+    @clients = current_account.clients
+    #.order("name")
   end
 
   # GET /project_tasks.js

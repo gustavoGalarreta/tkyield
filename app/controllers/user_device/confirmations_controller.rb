@@ -12,7 +12,8 @@ class UserDevice::ConfirmationsController < Devise::ConfirmationsController
       @original_token = params[resource_name][:confirmation_token]
     end
     self.resource = resource_class.find_by_confirmation_token Devise.token_generator.digest(self, :confirmation_token, @original_token)
-    if !resource.nil? and resource.is_administrator?
+    #and resource.is_administrator?
+    if !resource.nil? 
       set_flash_message :notice, :confirmed
       self.resource.confirm!
       redirect_to new_user_session_path

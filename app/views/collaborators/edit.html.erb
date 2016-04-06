@@ -1,0 +1,10 @@
+<p class="pull-right">
+	<span class="">Pin code:</span>
+	<%= @collaborator.pin %>
+  <br>
+  <%= link_to "See QR code", "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=#{@collaborator.qr_code}&chld=M|0", target: "blank" %>
+</p>
+<h1 class="page-header"> User <small> Editing</small> </h1>
+
+<%= render 'form', collaborator: @collaborator %>
+<%= link_to 'Back', collaborators_path , class: "btn btn-primary" %>

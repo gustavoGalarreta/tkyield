@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :validate_account_and_current_user
+  #before_action :validate_account_and_current_user
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_account
 
@@ -15,11 +15,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+=begin
   def validate_account_and_current_user
     if current_user and current_account and current_account.id != current_user.account_id
       sign_out_and_redirect(current_user)
     end
   end
+=end
 
   def current_account
     # @current_account ||= Account.find_by(subdomain: request.subdomain)

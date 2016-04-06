@@ -1,6 +1,6 @@
 class EventLog < ActiveRecord::Base
   belongs_to :schedule
-  belongs_to :user
+  belongs_to :collaborator
 
   def self.last_event date_to_search
     hash_event = EventLog.all.group_by{|event| event.date }
@@ -24,7 +24,7 @@ class EventLog < ActiveRecord::Base
     self.inTime = inTime
     self.outTime = outTime
     self.schedule_id = schedule_id
-    self.user_id = user_id
+    self.collaborator_id = user_id
     self.edited = true
     self.date = date
     self.set_launch(launch_status)

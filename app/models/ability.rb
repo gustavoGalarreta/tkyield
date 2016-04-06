@@ -1,7 +1,5 @@
 class Ability
-=begin
   include CanCan::Ability
-
   def initialize(user)
     user ||= User.new
     if user.is_administrator?
@@ -13,6 +11,4 @@ class Ability
       can :manage, Timesheet
     end
   end
-=end
-
 end

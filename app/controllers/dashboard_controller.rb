@@ -8,6 +8,7 @@ class DashboardController < ApplicationController
   end
 
   private
+  
     def validate_current_user
       if current_user and current_user.archived?
         #redirect_to destroy_user_session_path
@@ -16,4 +17,5 @@ class DashboardController < ApplicationController
       end
       return
     end
+
 end

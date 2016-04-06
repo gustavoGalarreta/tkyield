@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  #devise_for :users, :controllers => { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions", passwords: "users/passwords", registrations: "users/registrations" }
   namespace :api do
     namespace :v1 do
       resources :login_account, only: :create
@@ -8,8 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
-  #root to: "home#index"
-  root to: "dashboard#index"
+  root to: "home#index"
 
   get "registration", to: "home#registration"
   post "registration", to: "home#register"
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   # constraints(Subdomain) do
   scope ':route' do
     get '/', to: "dashboard#index", as: "dashboard"
-    resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborators" do
+    resources :users, only: [:index, :new, :edit, :create, :update], path: "collaborat" do
       get 'schedule', to: 'users#schedule' , on: :member
       get 'archives', to: 'users#archives', on: :collection
       get 'show_user_project', to: 'users#projects', on: :member
@@ -25,6 +24,14 @@ Rails.application.routes.draw do
       get 'resend_confirmation', to: 'users#resend_confirmation', on: :member
       put 'archive', to: 'users#archive', on: :member
       put 'unarchive', to: 'users#unarchive', on: :member
+    end
+    resources :collaborators, only: [:index, :new, :edit, :create, :update] do
+      get 'schedule', to: 'collaborators#schedule' , on: :member
+      get 'show_collaborator_project', to: 'collaborators#projects', on: :member
+      patch 'update_collaborator_project', to: 'collaborators#update_projects', on: :member
+      get 'archives', to: 'collaborators#archives', on: :collection
+      put 'archive', to: 'collaborators#archive', on: :member
+      put 'unarchive', to: 'collaborators#unarchive', on: :member
     end
     resources :tasks
     resources :clients

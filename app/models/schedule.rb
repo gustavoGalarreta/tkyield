@@ -1,5 +1,5 @@
 class Schedule < ActiveRecord::Base
-	belongs_to :user
+	belongs_to :collaborator
 	has_many :events, dependent: :destroy
 	has_many :event_logs, dependent: :destroy
 	scope :is_current, -> {where(current: true)}

@@ -50,11 +50,11 @@ class TimesheetsController < DashboardController
   def preload_variables(action="")
     if action == "index"
       @timesheets_per_date, @days_of_week = current_user.timesheets_of_week_by_date @day_selected
-      if current_user.projects.any?
-        @default_project = current_user.projects.order("name ASC").first
-        @tasks = @default_project.tasks.order("name ASC")
+      if current_user.get_projects.any?
+        @default_project = current_user.get_projects.first
+        @tasks = @default_project.tasks
         @tasks_hash = {}
-        current_user.projects.includes(:tasks).each do |pro| 
+        current_user.get_projects.includes(:tasks).each do |pro| 
           @tasks_hash[pro.id] = pro.tasks  
         end
       else
@@ -64,7 +64,7 @@ class TimesheetsController < DashboardController
     else
       @timesheets = current_user.get_timesheet_per_day @day_selected
       @default_project = @timesheet.project
-      @tasks = @default_project.tasks.order("name ASC")
+      @tasks = @default_project.tasks
     end
   end
 

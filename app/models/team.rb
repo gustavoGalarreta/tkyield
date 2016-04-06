@@ -11,11 +11,8 @@
 #
 
 class Team < ActiveRecord::Base
-  belongs_to :account
-  has_many :users , dependent: :nullify
-  
+  has_many :collaborators
   validates :name, presence: true
-  validates :account, presence: true
   
   acts_as_paranoid
 

@@ -10,11 +10,12 @@
 #
 
 class Client < ActiveRecord::Base
-  belongs_to :account
+  self.inheritance_column = nil
+  belongs_to :entity
   has_many :projects
-
-  validates :name, presence: true
-  validates :account, presence: true
+  delegate :name, :corporate_name, :address, :phone, :legal_id, :country, :country_name, to: :entity, allow_nil: true
+  
+  validates_associated :entity
 
   def total_time_between_dates(beginning, ending)
     Timesheet.joins(project: :client).where(projects: {client_id: self.id}, belongs_to_day: beginning..ending).sum(:total_time)
@@ -27,5 +28,7 @@ class Client < ActiveRecord::Base
   def total_time
     Timesheet.joins(project: :client).where(projects: {client_id: self.id}).sum(:total_time)
   end
+
+  
 
 end

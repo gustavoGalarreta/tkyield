@@ -1,4 +1,4 @@
-<%# if can? :manage, Timesheet %>
+<% if can? :manage, Timesheet %>
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-yellow">
       <%#= link_to timesheets_path do %>
@@ -20,8 +20,8 @@
       <%# end %>
     </div>
   </div>
-<%# end %>
-<%# if can? :manage, Client %>
+<% end %>
+<% if can? :manage, Client %>
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-primary">
       <%#= link_to clients_path do %>
@@ -43,8 +43,8 @@
       <%# end %>
     </div>
   </div>
-<%# end %>
-<%# if can? :manage, Task %>
+<% end %>
+<% if can? :manage, Task %>
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-green">
       <%#= link_to tasks_path do %>
@@ -66,8 +66,8 @@
       <%# end %>
     </div>
   </div>
-<%# end %>
-<%# if can? :manage, Project %>
+<% end %>
+<% if can? :manage, Project %>
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-red">
       <%#= link_to projects_path do %>
@@ -89,8 +89,8 @@
       <%# end %>
     </div>
   </div>
-<%# end %>
-<%# #if can? :manage, Team %>
+<% end %>
+<% if can? :manage, Team %>
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-yellow">
       <%#= link_to teams_path do %>
@@ -112,8 +112,8 @@
     <%# end %>
     </div>
   </div>
-<%# end %>
-<%# if can? :manage, User %>
+<% end %>
+<% if can? :manage, User %>
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-primary">
       <%#= link_to users_path do %>
@@ -135,7 +135,7 @@
       <%# end %>
     </div>
   </div>
-<%# end %> 
+<% end %> 
 <div class="col-lg-3 col-md-6">
     <div class="panel panel-green">
         <%#= link_to time_stations_path do %> 
@@ -157,7 +157,7 @@
       <%# end %>
     </div>
 </div>
-<%# if can? :manage, Report %> 
+<% if can? :manage, Report %> 
   <div class="col-lg-3 col-md-6">
     <div class="panel panel-red">
       <%#= link_to reports_list_path do %> 
@@ -179,4 +179,4 @@
       <%# end %>
     </div>
   </div>
-<% #end %>
+<% end %>

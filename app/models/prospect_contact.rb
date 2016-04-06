@@ -1,2 +1,2 @@
-class Prospect < ActiveRecord::Base
+class ProspectContact < ActiveRecord::Base
 end

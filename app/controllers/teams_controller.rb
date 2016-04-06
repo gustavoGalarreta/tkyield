@@ -6,7 +6,7 @@ class TeamsController < DashboardController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = current_account.teams.order("name ASC")
+    @teams = Team.all
   end
 
   def collaborators
@@ -31,7 +31,6 @@ class TeamsController < DashboardController
   # POST /teams.json
   def create
     @team = Team.new(team_params)
-    @team.account = current_account
     respond_to do |format|
       if @team.save
         format.html { redirect_to teams_path, notice: 'Team was successfully created.' }
@@ -70,7 +69,7 @@ class TeamsController < DashboardController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = current_account.teams.find(params[:id]) unless params[:id].blank?
+      @team = Team.find(params[:id]) unless params[:id].blank?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
