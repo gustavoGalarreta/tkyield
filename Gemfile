@@ -72,10 +72,10 @@ gem 'annotate', '~> 2.6.6'
 # Use BootstrapDatetimepicker for having a format of selecting dates.
 gem 'bootstrap-datetimepicker-rails', '~> 0.0.11'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-#gem for jQuery Custom Scrollbar
 gem 'scrollbar-rails'
+
+# Strategy to authenticate with Google via OAuth2 in OmniAuth.
+gem "omniauth-google-oauth2", '0.2.10'
 
 gem "awesome_print"
 
